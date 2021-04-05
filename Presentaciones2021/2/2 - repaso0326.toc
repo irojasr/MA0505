@@ -1,6 +1,0 @@
-\babel@toc {spanish}{}
-\beamer@sectionintoc {1}{Espacios normados}{3}{0}{1}
-\beamer@subsectionintoc {1}{1}{Normas en $\mathbb {R}^d$}{3}{0}{1}
-\beamer@sectionintoc {2}{Conexidad}{8}{0}{2}
-\beamer@subsectionintoc {2}{1}{Arcoconexidad}{8}{0}{2}
-\beamer@subsectionintoc {2}{2}{Conexidad}{14}{0}{2}
