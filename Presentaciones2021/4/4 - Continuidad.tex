@@ -1,0 +1,365 @@
+\documentclass[utf8]{beamer}
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  \setbeamercovered{transparent}
+}
+
+
+\usepackage{amsfonts,mathtools,amssymb}
+\usepackage[spanish]{babel}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+
+\title[MA0505]{MA0505 - An\'alisis I}
+\subtitle{Lecci\'on IV: Continuidad}
+
+\author{Pedro M\'endez\inst{1}}
+
+\institute[Universidad de Costa Rica] % (optional, but mostly needed)
+{
+  \inst{1}%
+  Departmento de Matem\'atica Pura y Ciencias Actuariales\\
+  Universidad de Costa Rica
+  }
+
+\date[I-2021] {Semestre I, 2021}
+
+%%%%%%%%% === Theorems and suchlike === %%%%%%%%%%%%%%
+
+\theoremstyle{plain}
+\newtheorem{Th}{Teorema}               %%% Theorem 1.1.1
+\newtheorem{Tmon}{Teoremón}
+\newtheorem{Prop}{Proposición}         %%% Proposition 1.1.2
+\newtheorem{Lem}{Lema}                 %%% Lemma 3
+\newtheorem{Cor}{Corolario}            %%% Corollary 4
+
+\theoremstyle{definition}
+\newtheorem{Def}{Definición}           %%% Definition 5
+\newtheorem{Ex}{Ejemplo}               %%% Example 6
+\newtheorem{Ej}{Ejercicio}             %%% Ejercicio 7
+\newtheorem{Hec}[Th]{Hecho}            %%% Hecho 1.1.8
+
+\theoremstyle{remark}
+\newtheorem{Rmk}[Th]{Observación}      %%%Remark 1.1.9
+\newtheorem*{nonum-Rmk}{Observación}         %%% No number Fact
+\newtheorem*{Notn}{Notaci\'on}        %% Notaciones
+\newtheorem*{Warn}{Advertencia}       %% Advertencias
+
+\numberwithin{equation}{section}
+
+% Greek letters:
+
+\newcommand{\al}{\alpha}                %% short for  \alpha
+\newcommand{\bt}{\beta}                 %% short for  \beta
+\newcommand{\Dl}{\Delta}                %% short for  \Delta
+\newcommand{\dl}{\delta}                %% short for  \delta
+\newcommand{\eps}{\varepsilon}          %% short for  \varepsilon
+\newcommand{\Ga}{\Gamma}                %% short for  \Gamma
+\newcommand{\ga}{\gamma}                %% short for  \gamma
+\newcommand{\kp}{\kappa}                %% short for  \kappa
+\newcommand{\La}{\Lambda}               %% short for  \Lambda
+\newcommand{\la}{\lambda}               %% short for  \lambda
+\newcommand{\Om}{\Omega}                %% short for  \Omega
+\newcommand{\om}{\omega}                %% short for  \omega
+\newcommand{\Sg}{\Sigma}                %% short for  \Sigma
+\newcommand{\sg}{\sigma}                %% short for  \sigma
+\newcommand{\Te}{\Theta}                %% short for  \Theta
+\newcommand{\te}{\theta}                %% short for  \theta
+\newcommand{\ups}{\upsilon}             %% short for  \upsilon
+\newcommand{\vf}{\varphi}               %% short for  \varphi
+\newcommand{\ze}{\zeta}                 %% short for  \zeta
+
+%Boldface letters
+
+\newcommand{\bC}{\mathbb{C}}    %%% números complejos
+\newcommand{\bN}{\mathbb{N}}    %%% números naturales
+\newcommand{\bP}{\mathbb{P}}        %% números enteros positivos
+\newcommand{\bQ}{\mathbb{Q}}    %%% números racionales
+\newcommand{\bR}{\mathbb{R}}    %%% números reales
+\newcommand{\bS}{\mathbb{S}}    %%% esfera
+\newcommand{\bZ}{\mathbb{Z}}    %%% números enteros
+
+%Script letters:
+
+\newcommand{\cA}{\mathcal{A}}           %% formas diferenciales
+\newcommand{\cB}{\mathcal{B}}           %% una base vectorial
+\newcommand{\cC}{\mathcal{C}}           %% otra base vectorial
+\newcommand{\cD}{\mathcal{D}}           %% funciones de prueba
+\newcommand{\cE}{\mathcal{E}}           %% un modulo proyectivo
+\newcommand{\cF}{\mathcal{F}}           %% espacio de Fock
+\newcommand{\cG}{\mathcal{G}}           %% funtor de Gelfand
+\newcommand{\cH}{\mathcal{H}}           %% espacio de Hilbert
+\newcommand{\cI}{\mathcal{I}}           %% un funtor de inclusion
+\newcommand{\cJ}{\mathcal{J}}           %% otro funtor
+\newcommand{\cK}{\mathcal{K}}           %% otro espacio de Hilbert
+\newcommand{\cL}{\mathcal{L}}           %% operadores lineales
+\newcommand{\cM}{\mathcal{M}}           %% multiplicadores
+\newcommand{\cN}{\mathcal{N}}           %% funciones nulas
+\newcommand{\cO}{\mathcal{O}}           %% funciones de crec-to lento
+\newcommand{\cP}{\mathcal{P}}           %% una particion
+\newcommand{\cR}{\mathcal{R}}           %% funciones representativas
+\newcommand{\cQ}{\mathcal{Q}}           %% otra particion
+\newcommand{\cS}{\mathcal{S}}           %% funciones de Schwartz
+\newcommand{\cT}{\mathcal{T}}           %% una topologia
+\newcommand{\cU}{\mathcal{U}}           %% cubrimiento abierto
+\newcommand{\cV}{\mathcal{V}}           %% vecindarios
+\newcommand{\cW}{\mathcal{W}}           %% grupo de Weyl
+
+
+%Brackets
+
+\newcommand{\bonj}[1]{\left\lbrack#1\right\rbrack}
+\newcommand{\obonj}[1]{\left\rbrack#1\right\lbrack}
+\newcommand{\rbonj}[1]{\left\rbrack#1\right\rbrack}
+\newcommand{\lbonj}[1]{\left\lbrack#1\right\lbrack}
+\newcommand{\snm}[1]{\|#1\|}           %small norma
+\newcommand{\nm}[1]{\left\|#1\right\|} %norma pegadita
+\newcommand{\pnm}[1]{\biggl|\biggl|#1\biggr|\biggr|}
+\newcommand{\set}[1]{\{\,#1\,\}}    %% set notation
+\newcommand{\floor}[1]{\lfloor#1\rfloor} %% mayor entero <= x
+\newcommand{\Set}[1]{\biggl\{\,#1\,\biggr\}} %% set notation (large)
+
+
+%Symbols 
+
+\renewcommand{\geq}{\geqslant}          %% mayor o igual (variante)
+\newcommand{\hookto}{\hookrightarrow}     %% inclusion arrow
+\newcommand{\isom}{\simeq}              %% isomorfismo
+\renewcommand{\l}{\ell}                   %% ele cursiva
+\renewcommand{\leq}{\leqslant}          %% menor o igual (variante)
+\newcommand{\less}{\setminus}           %% set difference
+\newcommand{\To}{\Rightarrow}
+\newcommand{\ov}{\overline}
+\newcommand{\un}{\underline}
+\newcommand{\del}{\partial}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Agenda}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{Continuidad}
+
+\subsection{Continuidad en n\'umeros reales}
+
+\begin{frame}{Recordemos\dots}%{Subtitles are optional.}
+  % - A title should summarize the slide in an understandable fashion
+  %   for anyone how does not follow everything on the slide itself.
+Si $f:\ I\to\bR$ decimos que $\lim_{x\to a}f(x)=\l$ si para $\eps>0$, existe $\dl>0$ tal que 
+
+$$|x-a|<\dl\To |f(x)-\l|<\eps.$$
+Note que $d(x,a)=|x-a|$ en el espacio de partida $X$. Adem\'as $|f(x)-\l|=\rho(f(x),\l)$ en el espacio de llegada $Y$. Es decir
+$$d(x,a)<\dl\To\rho(f(x),\l)<\eps.$$
+
+\end{frame}
+
+\subsection{Continuidad en Espacios M\'etricos}
+
+\begin{frame}{La definición\dots}
+
+    Sean $(X,d),(Y,\rho)$ dos espacios métricos y $f\colon X\to Y$. Decimos 
+    que $\lim_{z\to a}f(z)=\l$ si para $\eps>0$, existe $\dl>0$ tal que 
+    $$d(z,a)<\dl\To\rho(f(z),\l)<\eps.$$
+    Note que para definir el l\'imite en de $f$ en $a$ no es necesario que $f$ est\'e definida en $a$.
+    \begin{Def}\label{def:continudadEspMet}
+    La funci\'on $f:\ X\to Y$ es \alert{continua} en $a$ si $\lim_{z\to a}f(z)=f(a)$. En general $f$ es continua si es es continua en todo punto de $X$. En este caso
+    $$d(z,a)<\dl\To\rho(f(z),\l)<\eps.$$
+    \end{Def}
+    
+\end{frame}
+
+\begin{frame}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            Si comenzamos con 
+            $$\set{z:\ d(z,a)<\dl}\subseteq X$$
+            y aplicamos $f$, llegamos a 
+            $$\set{y:\ \rho(f(a),y)<\eps}\subseteq Y.$$
+            $\therefore f(B_x(a,\dl))\subseteq B_y(f(a),\eps).$
+        \end{column}
+        
+        \begin{column}{0.5\textwidth}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Ahora un ejemplo}
+    Si $(X,d)$ es un espacio m\'etrico y $a\in X$, tomemos $f(x)=d(x,a)$. Sabemos que 
+    $$|d(x,a)-d(y,a)|\leq d(x,y)$$
+    y de esta desigualdad extraemos que $f$ es continua. Esta funci\'on de hecho es un ejemplo de una funci\'on 1-\alert{Lipschitz}.
+    \begin{Def}\label{def:Lipschitz}
+        Una funci\'on $f: X\to Y$ es $\la$-Lipschitz si para $x,y\in X$ vale
+        $$\rho(f(x),f(y))\leq \la d(x,y).$$
+    \end{Def}
+    \begin{Ej}\label{ej:distConjEsLip}
+        Para $A\subseteq X$, verifique que $f(x)=d(x,A)$ es 1-Lipschitz.
+    \end{Ej}
+\end{frame}
+
+\begin{frame}{No nos olvidemos de las bolas}
+    
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item Sea $G\subseteq Y$ abierto y $y_0=f(x_0)\in G$.\pause
+                \item Entonces existe $\eps>0$ tal que $B(y_0,\eps)\subseteq G$.\pause
+                \item Si $f$ es continua, existe $\dl>0$ tal que 
+                $$f(B_x(x_0,\dl))\subseteq B_y(y_0,\eps)\subseteq G.$$
+            \end{itemize}
+            
+
+                \end{column} 
+                \begin{column}{0.5\textwidth}%dibujo
+                    
+                        \end{column}
+                    \end{columns}
+\end{frame}
+
+\begin{frame}{Esclareciendo la Relaci\'on}
+    Si $y_0\in G$, existe $\dl>0$ tal que si $z\in B_x(x_0,\dl)$ se tiene que $f(z)\in G$. Es decir,
+    $$B_X(x_0,\dl)\subseteq \set{z\in X:\ f(z)\in G}=f^{-1}(G).$$
+    Por tanto si $x_0\in f^{-1}(G)$, existe $\dl>0$ tal que 
+    $$B_X(x_0,\dl)\subseteq f^{-1}(G).$$
+    \begin{Lem}\label{lem:equiv1Cont}
+        Si $f:\ X\to Y$ es continua y $G\subseteq Y$ es abierto, entonces $f^{-1}(G)$ es abierto.
+    \end{Lem}
+
+\end{frame}
+
+\begin{frame}{No Olvidemos a los Cerrados}
+    Por otro lado si $F\subseteq Y$ es un cerrado, entonces 
+    $$f^{-1}(Y\less F)=X\less f^{-1}(F)$$
+    es un abierto. Entonces $f^{-1}(F)$ es un cerrado.\par 
+    \emph{En general recuerde que $f^{-1}(A\less B)=f^{-1}(A)\less f^{-1}(B)$.}
+\end{frame}
+
+\begin{frame}{El Teorema Resumen}
+    \begin{Th}\label{thm:teoremaResumenContinuidad}
+        Sea $f\colon X\to Y$, son equivalentes:
+        \begin{enumerate}
+          \item $f$ es continua
+          \item $f^{-1}(G)$ para todo $G\subseteq Y$ abierto.
+          \item $f^{-1}(F)$ es cerrado para todo $F\subseteq Y$ cerrado.
+          \item $f(\overline{B})\subseteq \overline{f(B)}$ para todo $B\subseteq X$. Donde la primera cerradura es respecto a $X$ y la segunda respecto a $Y$.
+        \end{enumerate}
+      \end{Th}
+\end{frame}
+
+\begin{frame}{Probando el resultado}
+    \begin{itemize}
+        \item La primera implicaci\'on de 1 a 2 est\'a lista. \pause
+        \item $(\mathit{2}\Rightarrow\mathit{1})$ Dado $\varepsilon>0$ y $a\in X$, $B(f(a),\varepsilon))$ abierto implica que $f^{-1}(B(f(a),\varepsilon))$ es abierto. Así $\exists\delta>0$ tal que $B(a,\delta)\subseteq f^{-1}( B(f(a),\varepsilon))\Rightarrow f(B(x_0,\delta))\subseteq B(f(x_0),\varepsilon)$.\pause
+        \item \alert{Las dem\'as equivalencias son ejercicios}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Caracterización por sucesiones}
+    \begin{Th}\label{thm:equivSuccCont}
+        Sea $f\colon X\to Y$, $f$ es continua en $a$ si y sólo si para cualquier sucesión $(x_n)_{n\in\bN}\subseteq X$ tal que $x_n\to a$ se tiene que $f(x_n)\to f(a)$.
+      \end{Th}
+      Si $f$ no fuese continua, existe $\eps>0$ tal que para todo $\dl$, existe $x_\dl\in X$ que satisface
+      $$d(x_\dl,a)<\dl\ \land\ \rho(f(x_\dl),f(a))>\eps.$$
+      En particular si $n\in\bN$, existe $x_n$ tal que 
+      $$d(x_n,a)<\frac{1}{n},\ \rho(f(x_n),f(a))\geq \eps.$$
+      Es decir, encontramos $(x_n)$ tal que $x_n\to a$ pero $f(x_n)\not\to a$.
+\end{frame}
+
+\begin{frame}{Homeomorfismos}
+    \begin{Def}\label{def:homeomorfismo}
+        Llamamos a $f:\ X\to Y$ un \alert{homeomorfismo} si es continua y biyectiva. Adem\'as debe cumplir que $f^{-1}$ es continua.\par 
+        En este caso diremos que $X$ y $Y$ son \alert{homeomorfos}.
+    \end{Def}
+   Si $A\subseteq X$ es abierto, entonces $f(A)=(f^{-1})^{-1}(A)$ es un abierto. Es decir $f$ env\'ia abiertos en abiertos.
+   \begin{Ej}\label{ej:homeomorfismoDeInterior}
+       En este caso muestre que $f(A^o)=(f(A))^o$.
+   \end{Ej}
+\end{frame}
+
+\section*{Resumen}
+
+\subsection*{Qu\'e vimos hoy}
+\begin{frame}{Resumen}
+
+  % Keep the summary *very short*.
+  \begin{itemize}
+  \item Funciones continuas en espacios m\'etricos. \ref{def:continudadEspMet}
+  \item Funciones Lipschitz continuas. \ref{def:Lipschitz}
+  \item El teorema resumen sobre continuidad \ref{thm:teoremaResumenContinuidad}
+  \item Equivalencia en continuidad secuencial y m\'etrica. \ref{thm:equivSuccCont}
+  \item Definición de homeomorfismo. \ref{def:homeomorfismo}
+  \end{itemize}
+  
+\end{frame}
+
+\subsection*{Ejercicios a trabajar}
+\begin{frame}{Ejercicios}
+    
+  \begin{itemize}
+    \item
+      Lista 4
+      \begin{itemize}
+      \item La distancia a conjuntos es Lipschitz. \ref{ej:distConjEsLip}
+      \item Las dem\'as equivalencias del teorema resumen. \ref{thm:teoremaResumenContinuidad}
+      \item Interiores y homeomorfismos \ref{ej:homeomorfismoDeInterior}
+      \end{itemize}
+    \end{itemize}
+  
+\end{frame}
+
+
+% All of the following is optional and typically not needed. 
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{Lectura adicional}
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{Lecturas adicionales}
+    
+  \begin{thebibliography}{10}
+    
+  \beamertemplatebookbibitems
+  % Start with overview books.
+
+  \bibitem{CambroNotas}
+    S.Cambronero.
+    \newblock {\em Notas MA0505}.
+    \newblock 20XX.
+
+    \bibitem{NachoNotas}
+    I.Rojas
+    \newblock {\em Notas MA0505}.
+    \newblock 2018.
+ 
+  \end{thebibliography}
+  
+\end{frame}
+%% 1:01:10
+\end{document}
+
+

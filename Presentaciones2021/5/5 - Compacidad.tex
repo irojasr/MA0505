@@ -1,0 +1,333 @@
+\documentclass[utf8]{beamer}
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  \setbeamercovered{transparent}
+}
+
+
+\usepackage{amsfonts,mathtools,amssymb}
+\usepackage[spanish]{babel}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+
+\title[MA0505]{MA0505 - An\'alisis I}
+\subtitle{Lecci\'on V: Compacidad}
+
+\author{Pedro M\'endez\inst{1}}
+
+\institute[Universidad de Costa Rica] % (optional, but mostly needed)
+{
+  \inst{1}%
+  Departmento de Matem\'atica Pura y Ciencias Actuariales\\
+  Universidad de Costa Rica
+  }
+
+\date[I-2021] {Semestre I, 2021}
+
+%%%%%%%%% === Theorems and suchlike === %%%%%%%%%%%%%%
+
+\theoremstyle{plain}
+\newtheorem{Th}{Teorema}               %%% Theorem 1.1.1
+\newtheorem{Tmon}{Teoremón}
+\newtheorem{Prop}{Proposición}         %%% Proposition 1.1.2
+\newtheorem{Lem}{Lema}                 %%% Lemma 3
+\newtheorem{Cor}{Corolario}            %%% Corollary 4
+
+\theoremstyle{definition}
+\newtheorem{Def}{Definición}           %%% Definition 5
+\newtheorem{Ex}{Ejemplo}               %%% Example 6
+\newtheorem{Ej}{Ejercicio}             %%% Ejercicio 7
+\newtheorem{Hec}[Th]{Hecho}            %%% Hecho 1.1.8
+
+\theoremstyle{remark}
+\newtheorem{Rmk}[Th]{Observación}      %%%Remark 1.1.9
+\newtheorem*{nonum-Rmk}{Observación}         %%% No number Fact
+\newtheorem*{Notn}{Notaci\'on}        %% Notaciones
+\newtheorem*{Warn}{Advertencia}       %% Advertencias
+
+\numberwithin{equation}{section}
+
+% Greek letters:
+
+\newcommand{\al}{\alpha}                %% short for  \alpha
+\newcommand{\bt}{\beta}                 %% short for  \beta
+\newcommand{\Dl}{\Delta}                %% short for  \Delta
+\newcommand{\dl}{\delta}                %% short for  \delta
+\newcommand{\eps}{\varepsilon}          %% short for  \varepsilon
+\newcommand{\Ga}{\Gamma}                %% short for  \Gamma
+\newcommand{\ga}{\gamma}                %% short for  \gamma
+\newcommand{\kp}{\kappa}                %% short for  \kappa
+\newcommand{\La}{\Lambda}               %% short for  \Lambda
+\newcommand{\la}{\lambda}               %% short for  \lambda
+\newcommand{\Om}{\Omega}                %% short for  \Omega
+\newcommand{\om}{\omega}                %% short for  \omega
+\newcommand{\Sg}{\Sigma}                %% short for  \Sigma
+\newcommand{\sg}{\sigma}                %% short for  \sigma
+\newcommand{\Te}{\Theta}                %% short for  \Theta
+\newcommand{\te}{\theta}                %% short for  \theta
+\newcommand{\ups}{\upsilon}             %% short for  \upsilon
+\newcommand{\vf}{\varphi}               %% short for  \varphi
+\newcommand{\ze}{\zeta}                 %% short for  \zeta
+
+%Boldface letters
+
+\newcommand{\bC}{\mathbb{C}}    %%% números complejos
+\newcommand{\bN}{\mathbb{N}}    %%% números naturales
+\newcommand{\bP}{\mathbb{P}}        %% números enteros positivos
+\newcommand{\bQ}{\mathbb{Q}}    %%% números racionales
+\newcommand{\bR}{\mathbb{R}}    %%% números reales
+\newcommand{\bS}{\mathbb{S}}    %%% esfera
+\newcommand{\bZ}{\mathbb{Z}}    %%% números enteros
+
+%Script letters:
+
+\newcommand{\cA}{\mathcal{A}}           %% formas diferenciales
+\newcommand{\cB}{\mathcal{B}}           %% una base vectorial
+\newcommand{\cC}{\mathcal{C}}           %% otra base vectorial
+\newcommand{\cD}{\mathcal{D}}           %% funciones de prueba
+\newcommand{\cE}{\mathcal{E}}           %% un modulo proyectivo
+\newcommand{\cF}{\mathcal{F}}           %% espacio de Fock
+\newcommand{\cG}{\mathcal{G}}           %% funtor de Gelfand
+\newcommand{\cH}{\mathcal{H}}           %% espacio de Hilbert
+\newcommand{\cI}{\mathcal{I}}           %% un funtor de inclusion
+\newcommand{\cJ}{\mathcal{J}}           %% otro funtor
+\newcommand{\cK}{\mathcal{K}}           %% otro espacio de Hilbert
+\newcommand{\cL}{\mathcal{L}}           %% operadores lineales
+\newcommand{\cM}{\mathcal{M}}           %% multiplicadores
+\newcommand{\cN}{\mathcal{N}}           %% funciones nulas
+\newcommand{\cO}{\mathcal{O}}           %% funciones de crec-to lento
+\newcommand{\cP}{\mathcal{P}}           %% una particion
+\newcommand{\cR}{\mathcal{R}}           %% funciones representativas
+\newcommand{\cQ}{\mathcal{Q}}           %% otra particion
+\newcommand{\cS}{\mathcal{S}}           %% funciones de Schwartz
+\newcommand{\cT}{\mathcal{T}}           %% una topologia
+\newcommand{\cU}{\mathcal{U}}           %% cubrimiento abierto
+\newcommand{\cV}{\mathcal{V}}           %% vecindarios
+\newcommand{\cW}{\mathcal{W}}           %% grupo de Weyl
+
+
+%Brackets
+
+\newcommand{\bonj}[1]{\left\lbrack#1\right\rbrack}
+\newcommand{\obonj}[1]{\left\rbrack#1\right\lbrack}
+\newcommand{\rbonj}[1]{\left\rbrack#1\right\rbrack}
+\newcommand{\lbonj}[1]{\left\lbrack#1\right\lbrack}
+\newcommand{\snm}[1]{\|#1\|}           %small norma
+\newcommand{\nm}[1]{\left\|#1\right\|} %norma pegadita
+\newcommand{\pnm}[1]{\biggl|\biggl|#1\biggr|\biggr|}
+\newcommand{\set}[1]{\{\,#1\,\}}    %% set notation
+\newcommand{\floor}[1]{\lfloor#1\rfloor} %% mayor entero <= x
+\newcommand{\Set}[1]{\biggl\{\,#1\,\biggr\}} %% set notation (large)
+
+
+%Symbols 
+
+\renewcommand{\geq}{\geqslant}          %% mayor o igual (variante)
+\newcommand{\hookto}{\hookrightarrow}     %% inclusion arrow
+\newcommand{\isom}{\simeq}              %% isomorfismo
+\renewcommand{\l}{\ell}                   %% ele cursiva
+\renewcommand{\leq}{\leqslant}          %% menor o igual (variante)
+\newcommand{\less}{\setminus}           %% set difference
+\newcommand{\To}{\Rightarrow}
+\newcommand{\ov}{\overline}
+\newcommand{\un}{\underline}
+\newcommand{\del}{\partial}
+
+%%% Small fractions in displays:
+
+\newcommand{\half}{{\mathchoice{\nhalf}{\thalf}{\shalf}{\shalf}}} %%display text script script^2
+\newcommand{\happi}{{\tfrac{\pi}{2}}} %% small fraction  \pi/2
+\newcommand{\quarter}{\tfrac{1}{4}} %% small fraction  1/4
+\newcommand{\nhalf}{\frac{1}{2}}
+\newcommand{\shalf}{{\scriptstyle\frac{1}{2}}} %% tiny fraction 1/2
+\newcommand{\thalf}{{\tfrac{1}{2}}} %% small fraction  1/2
+\newcommand{\third}{\tfrac{1}{3}}   %% small fraction  1/3 %Hay que renew porque mathabx toma second y third como x'' y x''' por ejemplo
+
+\newcommand{\ihalf}{{\tfrac{i}{2}}} %% small fraction  i/2
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Agenda}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{Compacidad Secuencial}
+
+\begin{frame}{La Definición de Compacidad}%{Subtitles are optional.}
+  % - A title should summarize the slide in an understandable fashion
+  %   for anyone how does not follow everything on the slide itself.
+  \begin{itemize}
+  \item Dado $C\subseteq X$, diremos que $C$ es \alert{secuencialmente compacto}\label{def:compacidadSecuencial} si cualquier sucesi\'on $(x_n)_{n=1}^\infty\subseteq C$ pose\'e una subsucesi\'on convergente.
+  \item Note que si $(x_{n_k})_{k=1}^\infty$ converge a $x_0$, tenemos que dado $\eps>0$, existe $k_0$ tal que 
+  $$k\geq k_0\To d(x_{n_k},x_0)<\eps.$$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Continuando la idea\dots}
+\begin{itemize}
+  \item De lo anterior, $x_{n_k}\in B(x_0,\eps)$ cuando $k\geq k_0$. As\'i para $k\geq 1$
+  $$B(x_0,\eps)\cap\set{x_m:\ m\geq k}\neq \emptyset.$$
+  \item Por lo tanto $x_0\in \ov{\set{x_m:\ m\geq k}}$ para $k\geq 1$ y en consecuencia 
+  $$x_0\in \bigcap_{k=1}^\infty\ov{\set{x_m:\ m\geq k}}$$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Una nueva idea\dots}
+  Tomemos $x_0\bigcap_{k=1}^\infty\ov{\set{x_m:\ m\geq k}}$ podemos tomar iterativamente:
+  \begin{itemize}
+    \item $x_k\in B(x_0,1)\cap\set{x_m:\ m\geq 1}$.
+    \item $x_{k_2}\in B\left(x_0,\half\right)\cap\set{x_m:\ m\geq k_1+1}$.
+  \end{itemize}
+  \hspace{1cm}$\vdots$
+  \begin{itemize}
+    \item $x_{k_n}\in B\left(x_0,\frac1n\right)\cap\set{x_m:\ m\geq k_{n+1}+1}$.
+  \end{itemize}
+  As\'i $x_{k_n}\to x_0$ y $(x_{n_k})$ es una subsucesi\'on de $(x_n)$
+\end{frame}
+
+\begin{frame}{Condensamos lo anterior}
+  \begin{Lem}\label{lem:equivSecCompYEncajados}
+    Si $(X,d)$ es un espacio m\'etrico y $C\subseteq X$, son equivalentes
+    \begin{enumerate}
+      \item $C$ es secuencialmente compacto.
+      \item $C\cap \bigcap_{k=1}^\infty\ov{\set{x_m:\ m\geq k}}\neq \emptyset$ para toda $(x_n)_{n=1}^\infty\subseteq C$.
+    \end{enumerate}
+  \end{Lem}
+\end{frame}
+
+\begin{frame}{Una conexi\'on con lo anterior}
+  Si $z\in\ov C$, existe $(x_n)\subseteq C$ tal que $x_n\to z$. Si $C$ es \emph{secuencialmente compacto}, existe una subsucesi\'on $(x_{n_k})_{k=1}^\infty$ que converge a un punto de $C$. Es decir, $z\in C$. 
+  \begin{Lem}\label{lem:equiv1Compacidad}
+Sea $C$ secuencialmente compacto, entonces $C$ es cerrado y acotado.
+  \end{Lem}
+
+  \begin{Ej}
+    Muestre que $C$ es acotado cuando es secuencialmente compacto.
+  \end{Ej}
+\end{frame}
+
+\section{Cubrimientos}
+
+\begin{frame}{Cubrimientos por abiertos}
+  \begin{Def}\label{def:recubrimiento}
+  A una colecci\'on $\cU=\set{U_\al:\ \al\in\La}$ de abiertos le llamamos un \alert{recubrimiento} de un conjunto $A$ si 
+  $$A\subseteq \bigcup_{\al\in\La}U_\al.$$
+  \end{Def}
+  \begin{Lem}\label{lem:lemaTecnico}
+    Si $C$ es secuencialmente compacto y $\cU$ es un recubrimiento de $C$, existe $\eps>0$ tal que para $x\in C$, existe $U\in\cU$ tal que
+    $$B(x,\eps)\cap C\subseteq\cU.$$
+  \end{Lem}
+\end{frame}
+
+\begin{frame}{Probemos lo anterior}
+  Supongamos que para $\eps>0$ existe $x_\eps\in C$ tal que 
+  $$B(x_\eps,\eps)\subsetneq U_\al,\ \al\in \La.$$
+  \begin{itemize}
+    \item En particular existe $(x_n)_{n=1}^\infty\subseteq C$ tal que $B\left(x_n,\frac1n\right)\subsetneq U_\al$, para $\al\in \La$.
+    \item Al ser $C$ secuencialmente compacto, existe $(x_{n_k})_{k=1}^\infty\subseteq C$ y $x_0\in C$ tal que $x_{n_k}\to x_0$.
+    \item Como $\cU$ es recubrimiento, existe $U_{\al_0}$ tal que $x_0\in U_{\al_0}$.
+  \end{itemize}
+  
+
+\end{frame}
+
+\begin{frame}{Terminemos}
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      Sea $\eps>0$ tal que $B(x_0,\eps)\subseteq U_{\al_0}$ y tomemos $k_0$ tal que 
+  $$k\geq k_0\To d(x_{n_k},x_0)<\frac{\eps}{2}.$$
+  Con argumentos usuales podemos probar que $B\left(x_{n_k},\frac{1}{n_k}\right)\subseteq B(x_0,\eps)$ cuando $\frac{1}{n_k}<\frac{\eps}{2}$. Es decir
+  \begin{align*}
+    B\left(x_{n_k},\frac{1}{n_k}\right)&\subseteq B(x_0,\eps)\\
+    &\subseteq U_{\al_0}.
+  \end{align*}
+    \end{column}
+    \begin{column}{0.5\textwidth}%dibujo
+      
+    \end{column}
+  \end{columns}
+\end{frame}
+\section*{Resumen}
+
+\subsection*{Qu\'e vimos hoy}
+\begin{frame}{Resumen}
+
+  % Keep the summary *very short*.
+  \begin{itemize}
+  \item Definición de compacidad secuencial. \ref{def:compacidadSecuencial}
+  \item Equivalencia entre compacidad secuencial y la propiedad de intersección. \ref{lem:equivSecCompYEncajados}.
+  \item Compacidad secuencial implica compacidad usual. \ref{lem:equiv1Compacidad}
+  \item Definición de recubrimiento por abiertos. \ref{def:recubrimiento} y el \'ultimo lema.
+  \end{itemize}
+  
+\end{frame}
+
+\subsection*{Ejercicios a trabajar}
+\begin{frame}{Ejercicios}
+    
+  \begin{itemize}
+    \item
+      Lista 5
+      \begin{itemize}
+      \item Terminar el detalle en la prueba del lema de compacidad secuencial a la usual. \ref{lem:equiv1Compacidad}.
+      \end{itemize}
+    \end{itemize}
+  
+\end{frame}
+
+
+% All of the following is optional and typically not needed. 
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{Lectura adicional}
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{Lecturas adicionales}
+    
+  \begin{thebibliography}{10}
+    
+  \beamertemplatebookbibitems
+  % Start with overview books.
+
+  \bibitem{CambroNotas}
+    S.Cambronero.
+    \newblock {\em Notas MA0505}.
+    \newblock 20XX.
+
+    \bibitem{NachoNotas}
+    I.Rojas
+    \newblock {\em Notas MA0505}.
+    \newblock 2018.
+ 
+  \end{thebibliography}
+  
+\end{frame}
+%% 1:01:10
+\end{document}
+
+

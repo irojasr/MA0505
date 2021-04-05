@@ -1,0 +1,298 @@
+\documentclass[utf8]{beamer}
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  \setbeamercovered{transparent}
+}
+
+
+\usepackage[spanish]{babel}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+
+\title[MA0505]{MA0505 - An\'alisis I}
+\subtitle{Lecci\'on I: Repaso}
+
+\author{Pedro M\'endez\inst{1}}
+
+\institute[Universidad de Costa Rica] % (optional, but mostly needed)
+{
+  \inst{1}%
+  Departmento de Matem\'atica Pura y Ciencias Actuariales\\
+  Universidad de Costa Rica
+  }
+
+\date[I-2021] {Semestre I, 2021}
+
+%%%%%%%%% === Theorems and suchlike === %%%%%%%%%%%%%%
+
+\theoremstyle{plain}
+\newtheorem{Th}{Teorema}               %%% Theorem 1.1.1
+\newtheorem{Tmon}{Teoremón}
+\newtheorem{Prop}{Proposición}         %%% Proposition 1.1.2
+\newtheorem{Lem}{Lema}                 %%% Lemma 3
+\newtheorem{Cor}{Corolario}            %%% Corollary 4
+
+\theoremstyle{definition}
+\newtheorem{Def}{Definición}           %%% Definition 5
+\newtheorem{Ex}{Ejemplo}               %%% Example 6
+\newtheorem{Ej}{Ejercicio}             %%% Ejercicio 7
+\newtheorem{Hec}[Th]{Hecho}            %%% Hecho 1.1.8
+
+\theoremstyle{remark}
+\newtheorem{Rmk}[Th]{Observación}      %%%Remark 1.1.9
+\newtheorem*{nonum-Rmk}{Observación}         %%% No number Fact
+\newtheorem*{Notn}{Notaci\'on}        %% Notaciones
+\newtheorem*{Warn}{Advertencia}       %% Advertencias
+
+\numberwithin{equation}{section}
+
+% Greek letters:
+
+\newcommand{\al}{\alpha}                %% short for  \alpha
+\newcommand{\bt}{\beta}                 %% short for  \beta
+\newcommand{\Dl}{\Delta}                %% short for  \Delta
+\newcommand{\dl}{\delta}                %% short for  \delta
+\newcommand{\eps}{\varepsilon}          %% short for  \varepsilon
+\newcommand{\Ga}{\Gamma}                %% short for  \Gamma
+\newcommand{\ga}{\gamma}                %% short for  \gamma
+\newcommand{\kp}{\kappa}                %% short for  \kappa
+\newcommand{\La}{\Lambda}               %% short for  \Lambda
+\newcommand{\la}{\lambda}               %% short for  \lambda
+\newcommand{\Om}{\Omega}                %% short for  \Omega
+\newcommand{\om}{\omega}                %% short for  \omega
+\newcommand{\Sg}{\Sigma}                %% short for  \Sigma
+\newcommand{\sg}{\sigma}                %% short for  \sigma
+\newcommand{\Te}{\Theta}                %% short for  \Theta
+\newcommand{\te}{\theta}                %% short for  \theta
+\newcommand{\ups}{\upsilon}             %% short for  \upsilon
+\newcommand{\vf}{\varphi}               %% short for  \varphi
+\newcommand{\ze}{\zeta}                 %% short for  \zeta
+
+%Boldface letters
+
+\newcommand{\bC}{\mathbb{C}}    %%% números complejos
+\newcommand{\bN}{\mathbb{N}}    %%% números naturales
+\newcommand{\bP}{\mathbb{P}}        %% números enteros positivos
+\newcommand{\bQ}{\mathbb{Q}}    %%% números racionales
+\newcommand{\bR}{\mathbb{R}}    %%% números reales
+\newcommand{\bS}{\mathbb{S}}    %%% esfera
+\newcommand{\bZ}{\mathbb{Z}}    %%% números enteros
+
+%Script letters:
+
+\newcommand{\cA}{\mathcal{A}}           %% formas diferenciales
+\newcommand{\cB}{\mathcal{B}}           %% una base vectorial
+\newcommand{\cC}{\mathcal{C}}           %% otra base vectorial
+\newcommand{\cD}{\mathcal{D}}           %% funciones de prueba
+\newcommand{\cE}{\mathcal{E}}           %% un modulo proyectivo
+\newcommand{\cF}{\mathcal{F}}           %% espacio de Fock
+\newcommand{\cG}{\mathcal{G}}           %% funtor de Gelfand
+\newcommand{\cH}{\mathcal{H}}           %% espacio de Hilbert
+\newcommand{\cI}{\mathcal{I}}           %% un funtor de inclusion
+\newcommand{\cJ}{\mathcal{J}}           %% otro funtor
+\newcommand{\cK}{\mathcal{K}}           %% otro espacio de Hilbert
+\newcommand{\cL}{\mathcal{L}}           %% operadores lineales
+\newcommand{\cM}{\mathcal{M}}           %% multiplicadores
+\newcommand{\cN}{\mathcal{N}}           %% funciones nulas
+\newcommand{\cO}{\mathcal{O}}           %% funciones de crec-to lento
+\newcommand{\cP}{\mathcal{P}}           %% una particion
+\newcommand{\cR}{\mathcal{R}}           %% funciones representativas
+\newcommand{\cQ}{\mathcal{Q}}           %% otra particion
+\newcommand{\cS}{\mathcal{S}}           %% funciones de Schwartz
+\newcommand{\cT}{\mathcal{T}}           %% una topologia
+\newcommand{\cU}{\mathcal{U}}           %% cubrimiento abierto
+\newcommand{\cV}{\mathcal{V}}           %% vecindarioas
+\newcommand{\cW}{\mathcal{W}}           %% grupo de Weyl
+
+
+%Brackets
+
+\newcommand{\bonj}[1]{\left\lbrack#1\right\rbrack}
+\newcommand{\obonj}[1]{\left\rbrack#1\right\lbrack}
+\newcommand{\rbonj}[1]{\left\rbrack#1\right\rbrack}
+\newcommand{\lbonj}[1]{\left\lbrack#1\right\lbrack}
+\newcommand{\snm}[1]{\|#1\|}           %small norma
+\newcommand{\nm}[1]{\left\|#1\right\|} %norma pegadita
+\newcommand{\pnm}[1]{\biggl|\biggl|#1\biggr|\biggr|}
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{Espacios m\'etricos}
+
+\subsection{Definiciones b\'asicas}
+
+\begin{frame}{Definci\'on de Espacios M\'etricos}%{Subtitles are optional.}
+  % - A title should summarize the slide in an understandable fashion
+  %   for anyone how does not follow everything on the slide itself.
+
+  Sea $E$ un conjunto, una \alert{m\'etrica} es una funci\'on 
+  $$d: E\times E\to[0,+\infty[$$
+  que satisface
+  \begin{enumerate}
+  \item $d(x,y)=d(y,x)$.
+  \item $d(x,y)=0$ si y s\'olo si $x=y$.
+  \item  $d(x,y)\leq d(x,z)+d(z,y)$. 
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{La m\'etrica en $\mathbb R^d$.}
+  Observemos que la tercera condici\'on es la desigualdad triangular en $\mathbb R^d$ pues si
+  $$d(x,y)=\left\| x-y\right\|$$
+  entonces
+  \begin{align*}
+      d(x,y)&=\left\| x-y\right\|=\left\| x-z+z-y\right\|\\
+      &\leq \left\| x-z\right\|+\left\| z-y\right\|\\
+      &=d(x,y)+d(z,y).
+  \end{align*}
+\end{frame}
+
+\section{Topolog\'ia de los Espacios M\'etricos}
+
+\subsection{Definiciones}
+
+\begin{frame}{Bolas, Unidades de la Topolog\'ia M\'etrica.}
+    Recordemos que 
+    $$B(x_0,r)=\left\lbrace y\in E:\ d(x_0,y)\leq r\right\rbrace.$$
+    Diremos que $D\subseteq E$ es un \alert{conjunto abierto} si para $x_0\in D$, existe un $r>0$ tal que 
+    $$B(x_0,r)\subseteq D.$$
+    De aqu\'i vemos que $\emptyset$ y $E$ son abiertos.
+\end{frame}
+
+\begin{frame}{Las Bolas Abiertas son Abiertos.}
+    \begin{Lem}
+        $B(x_0,r)$ es un abierto para todo $x_0\in E$ y $r>0$.
+    \end{Lem}
+        Sea $x_1\in B(x_0,r)$, debemos encontrar $r_1>0$ tal que $B(x_1,r_1)\subseteq B(x_0,r)$. Para ese efecto veremos que si 
+        $$r_1< r-d(x_0,x_1),$$
+        (es decir, $r_1+d(x_0,x_1)<r$), entonces $B(x_1,r_1)\subseteq B(x_0,r)$.\par 
+        Sean $r_1$ como pedimos y $y\in B(x_1,r_1)$, vale que
+        \begin{align*}
+          d(x_0,y)&\leq d(x_0,x_1)+d(x_1,y)\\
+          &< d(x_0,x_1)+r_1\\
+          &< d(x_0,x_1)+r-d(x_0,x_1)=r.
+        \end{align*}
+        Por lo tanto $y\in B(x_0,r)$.
+\end{frame}
+
+\subsection{Propiedades B\'asicas}
+
+\begin{frame}{Intersecciones.}
+  Supongamos que $G_1,G_2$ on abiertos. Si $x_0\in G_1\cap G_2$, entonces existen $r_1,r_2$ tales que 
+  $$B(x_0,r_1)\subseteq G_1,\ B(x_0,r_2)\subseteq G_2.$$
+  Si $r=\min(r_1,r_2)$, entonces 
+  $$B(x_0,r)\subseteq B(x_0,r_1)\cap B(x_0,r_2)\subseteq G_1\cap G_2.$$
+  Hemos probado as\'i que la intersecci\'on de abiertos es un abierto. M\'as generalmente, si $G_1,\dots,G_m$ es una colecci\'on de abiertos, entonces $\bigcap_{i=1}^mG_i$ es un abierto. (\alert{Ejercicio})
+\end{frame}
+
+\begin{frame}{Y ahora Uniones.}
+  Ahora si $(G_i)_{i=1}^\infty$ es una colecci\'on de abiertos, tome $x_0\in \bigcup_{i=1}^\infty$. As\'i $x_0\in G_{i_0}$ para alg\'un $i_0$. Como $G_{i_0}$ es abierto, existe $r>0$ tal que 
+  $$B(x_0,r)\subseteq G_{i_0}\bigcup_{i=1}^\infty G_i.$$
+  El resultado que hemos probado es
+  \begin{Lem}
+    Dados $G_\lambda$, $\lambda\in\Lambda$, abiertos vale que $\bigcup_{\lambda\in\Lambda}G_\lambda$ es abierto.
+  \end{Lem}
+\end{frame}
+
+\begin{frame}{Cerrados.}
+  Recuerde que $F$ es \alert{cerrado} si $E\setminus F$ es abierto.
+  \begin{enumerate}
+    \item Si $(F_\lambda)$ es una colecci\'on de cerrados, entonces 
+     $$E\setminus \bigcap_{\lambda\in\Lambda}F_\lambda=\bigcup_{\lambda\in\Lambda} E\setminus F_\lambda$$
+     es una uni\'on de abiertos. Es decir $\bigcap_{\lambda\in\Lambda}F_\lambda$ es cerrado.
+     \item De igual forma podemos probar que si $F_1,\dots, F_m$ son cerrados, entonces $\bigcup_{i=1}^mF_i$ es un cerrado.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Un par de ejemplos.}
+  
+  \begin{itemize}
+    \item Podemos ver que
+    $$\bigcap_{n=1}^\infty \left]a-\frac1n,a+\frac1n\right[=\{ a\}$$
+    no es un abierto. Es decir, no vale que la intersecci\'on contable de abiertos sea un abierto.
+    \item Adem\'as 
+    $$]a,b[=\bigcup_{m=1}^\infty \left[a+\frac1n,b-\frac1n\right]$$
+    no es un cerrado. As\'i la uni\'on contable de cerrados no es un cerrado.
+  \end{itemize}
+\end{frame}
+
+\section*{Resumen}
+
+\begin{frame}{Resumen}
+
+  % Keep the summary *very short*.
+  \begin{itemize}
+  \item Definici\'on de m\'etrica y de abiertos.
+  \item Las bolas abiertas son abiertos.
+  \item Definici\'on de cerrado.
+  \item Propiedades de abiertos y cerrados.
+  \end{itemize}
+  
+  \vskip0pt plus.5fill
+  \begin{itemize}
+  \item
+    Ejercicios
+    \begin{itemize}
+    \item La intersección finita de abiertos es un abierto.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+
+% All of the following is optional and typically not needed. 
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{Lectura adicional}
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{Lecturas adicionales}
+    
+  \begin{thebibliography}{10}
+    
+  \beamertemplatebookbibitems
+  % Start with overview books.
+
+  \bibitem{CambroNotas}
+    S.Cambronero.
+    \newblock {\em Notas MA0505}.
+    \newblock 20XX.
+
+    \bibitem{NachoNotas}
+    I.Rojas
+    \newblock {\em Notas MA0505}.
+    \newblock 2018.
+ 
+  \end{thebibliography}
+\end{frame}
+
+\end{document}
+
+

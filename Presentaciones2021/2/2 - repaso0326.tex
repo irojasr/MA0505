@@ -1,0 +1,356 @@
+\documentclass[utf8]{beamer}
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  \setbeamercovered{transparent}
+}
+
+
+\usepackage{amsfonts,mathtools,amssymb}
+\usepackage[spanish]{babel}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+
+\title[MA0505]{MA0505 - An\'alisis I}
+\subtitle{Lecci\'on II: Repaso}
+
+\author{Pedro M\'endez\inst{1}}
+
+\institute[Universidad de Costa Rica] % (optional, but mostly needed)
+{
+  \inst{1}%
+  Departmento de Matem\'atica Pura y Ciencias Actuariales\\
+  Universidad de Costa Rica
+  }
+
+\date[I-2021] {Semestre I, 2021}
+
+%%%%%%%%% === Theorems and suchlike === %%%%%%%%%%%%%%
+
+\theoremstyle{plain}
+\newtheorem{Th}{Teorema}               %%% Theorem 1.1.1
+\newtheorem{Tmon}{Teoremón}
+\newtheorem{Prop}{Proposición}         %%% Proposition 1.1.2
+\newtheorem{Lem}{Lema}                 %%% Lemma 3
+\newtheorem{Cor}{Corolario}            %%% Corollary 4
+
+\theoremstyle{definition}
+\newtheorem{Def}{Definición}           %%% Definition 5
+\newtheorem{Ex}{Ejemplo}               %%% Example 6
+\newtheorem{Ej}{Ejercicio}             %%% Ejercicio 7
+\newtheorem{Hec}[Th]{Hecho}            %%% Hecho 1.1.8
+
+\theoremstyle{remark}
+\newtheorem{Rmk}[Th]{Observación}      %%%Remark 1.1.9
+\newtheorem*{nonum-Rmk}{Observación}         %%% No number Fact
+\newtheorem*{Notn}{Notaci\'on}        %% Notaciones
+\newtheorem*{Warn}{Advertencia}       %% Advertencias
+
+\numberwithin{equation}{section}
+
+% Greek letters:
+
+\newcommand{\al}{\alpha}                %% short for  \alpha
+\newcommand{\bt}{\beta}                 %% short for  \beta
+\newcommand{\Dl}{\Delta}                %% short for  \Delta
+\newcommand{\dl}{\delta}                %% short for  \delta
+\newcommand{\eps}{\varepsilon}          %% short for  \varepsilon
+\newcommand{\Ga}{\Gamma}                %% short for  \Gamma
+\newcommand{\ga}{\gamma}                %% short for  \gamma
+\newcommand{\kp}{\kappa}                %% short for  \kappa
+\newcommand{\La}{\Lambda}               %% short for  \Lambda
+\newcommand{\la}{\lambda}               %% short for  \lambda
+\newcommand{\Om}{\Omega}                %% short for  \Omega
+\newcommand{\om}{\omega}                %% short for  \omega
+\newcommand{\Sg}{\Sigma}                %% short for  \Sigma
+\newcommand{\sg}{\sigma}                %% short for  \sigma
+\newcommand{\Te}{\Theta}                %% short for  \Theta
+\newcommand{\te}{\theta}                %% short for  \theta
+\newcommand{\ups}{\upsilon}             %% short for  \upsilon
+\newcommand{\vf}{\varphi}               %% short for  \varphi
+\newcommand{\ze}{\zeta}                 %% short for  \zeta
+
+%Boldface letters
+
+\newcommand{\bC}{\mathbb{C}}    %%% números complejos
+\newcommand{\bN}{\mathbb{N}}    %%% números naturales
+\newcommand{\bP}{\mathbb{P}}        %% números enteros positivos
+\newcommand{\bQ}{\mathbb{Q}}    %%% números racionales
+\newcommand{\bR}{\mathbb{R}}    %%% números reales
+\newcommand{\bS}{\mathbb{S}}    %%% esfera
+\newcommand{\bZ}{\mathbb{Z}}    %%% números enteros
+
+%Script letters:
+
+\newcommand{\cA}{\mathcal{A}}           %% formas diferenciales
+\newcommand{\cB}{\mathcal{B}}           %% una base vectorial
+\newcommand{\cC}{\mathcal{C}}           %% otra base vectorial
+\newcommand{\cD}{\mathcal{D}}           %% funciones de prueba
+\newcommand{\cE}{\mathcal{E}}           %% un modulo proyectivo
+\newcommand{\cF}{\mathcal{F}}           %% espacio de Fock
+\newcommand{\cG}{\mathcal{G}}           %% funtor de Gelfand
+\newcommand{\cH}{\mathcal{H}}           %% espacio de Hilbert
+\newcommand{\cI}{\mathcal{I}}           %% un funtor de inclusion
+\newcommand{\cJ}{\mathcal{J}}           %% otro funtor
+\newcommand{\cK}{\mathcal{K}}           %% otro espacio de Hilbert
+\newcommand{\cL}{\mathcal{L}}           %% operadores lineales
+\newcommand{\cM}{\mathcal{M}}           %% multiplicadores
+\newcommand{\cN}{\mathcal{N}}           %% funciones nulas
+\newcommand{\cO}{\mathcal{O}}           %% funciones de crec-to lento
+\newcommand{\cP}{\mathcal{P}}           %% una particion
+\newcommand{\cR}{\mathcal{R}}           %% funciones representativas
+\newcommand{\cQ}{\mathcal{Q}}           %% otra particion
+\newcommand{\cS}{\mathcal{S}}           %% funciones de Schwartz
+\newcommand{\cT}{\mathcal{T}}           %% una topologia
+\newcommand{\cU}{\mathcal{U}}           %% cubrimiento abierto
+\newcommand{\cV}{\mathcal{V}}           %% vecindarioas
+\newcommand{\cW}{\mathcal{W}}           %% grupo de Weyl
+
+
+%Brackets
+
+\newcommand{\bonj}[1]{\left\lbrack#1\right\rbrack}
+\newcommand{\obonj}[1]{\left\rbrack#1\right\lbrack}
+\newcommand{\rbonj}[1]{\left\rbrack#1\right\rbrack}
+\newcommand{\lbonj}[1]{\left\lbrack#1\right\lbrack}
+\newcommand{\snm}[1]{\|#1\|}           %small norma
+\newcommand{\nm}[1]{\left\|#1\right\|} %norma pegadita
+\newcommand{\pnm}[1]{\biggl|\biggl|#1\biggr|\biggr|}
+\newcommand{\set}[1]{\{\,#1\,\}}    %% set notation
+\newcommand{\floor}[1]{\lfloor#1\rfloor} %% mayor entero <= x
+\newcommand{\Set}[1]{\biggl\{\,#1\,\biggr\}} %% set notation (large)
+
+
+%Symbols 
+
+\renewcommand{\geq}{\geqslant}          %% mayor o igual (variante)
+\newcommand{\hookto}{\hookrightarrow}     %% inclusion arrow
+\newcommand{\isom}{\simeq}              %% isomorfismo
+\renewcommand{\l}{\ell}                   %% ele cursiva
+\renewcommand{\leq}{\leqslant}          %% menor o igual (variante)
+\newcommand{\less}{\setminus}           %% set difference
+\newcommand{\To}{\Rightarrow}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{Espacios normados}
+
+\subsection{Normas en $\bR^d$}
+
+\begin{frame}{Las normas en $\bR^d$}%{Subtitles are optional.}
+  % - A title should summarize the slide in an understandable fashion
+  %   for anyone how does not follow everything on the slide itself.
+
+  En $\bR^d$ tenemos las normas:
+  \begin{enumerate}
+    \item Eucl\'idea: $\nm{(x_1,\dots,x_d)}=(x_1^2+\dots+x_d^2)^{\frac12}$.
+    \item $\nm{(x_1,\dots,x_d)}_\infty=\max\set{|x_i|:\ 1\leq i\leq d}$.
+    \item $\nm{(x_1,\dots,x_d)}_p=(x_1^p+\dots+x_d^p)^{\frac1p}$.\par 
+     Note que el caso de $p=2$ coincide con la norma Eucl\'idea.
+  \end{enumerate}
+
+  En base a estas normas definimos:
+  $$B_p(x_0,r)=\set{x\in\bR^d:\ \nm{x-x_0}_p<r}.$$
+  \emph{Si $G$ es un abierto respecto a la norma $\nm{\cdot}$, es abierto respecto a la norma $\nm{\cdot}_p$?}
+\end{frame}
+
+\begin{frame}{Estudiamos la pregunta}
+    Si vale que para $x\in G$, existe $r>0$ tal que $B_2(x,r)\subseteq G$, entonces es cierto que tambi\'en existe $r_p>0$ tal que $B_p(x,r_p)\subseteq G$?\par 
+    Basta probar que dado $r>0$, existe $r_p>0$ tal que 
+    \begin{gather*}
+        B_p(x,r_p)\subseteq B_2(x,r)\\
+        \iff \set{y\in\bR^d: \nm{x-y}_p<r_p}\subseteq \set{y\in\bR^d: \nm{x-y}<r}.
+    \end{gather*}
+    \begin{center}
+        \emph{Hay una relaci\'on entre $\nm{\cdot}_p$ y $\nm\cdot$?}
+    \end{center}
+    
+\end{frame}
+
+\begin{frame}{Relaci\'on entre normas}
+    Consideremos $p=\infty$, entonces
+    \begin{align*}
+        \nm{(x_1,\dots,x_d)}&=\sqrt{x_1^2+\dots+x_d^2}\\
+        &\leq (d\max_{1\leq i\leq d}|x_i|^2)^{\frac12}\\
+        &=\sqrt{d}\nm{(x_1,\dots,x_d)}_\infty.
+    \end{align*}
+    Note que $|x_i|\leq \nm{(x_1,\dots,x_d)}$ para $1\leq i\leq d$. Es decir
+    $$\nm{(x_1,\dots,x_d)}_\infty\leq \nm{(x_1,\dots,x_d)}.$$
+\end{frame}
+
+\begin{frame}{Ahora con $p$ general}
+    De igual forma 
+    $$\nm{(x_1,\dots,x_d)}_p\leq d^{\frac1p}\nm{(x_1,\dots,x_d)}_\infty$$
+    y 
+    $$\nm{(x_1,\dots,x_d)}_\infty\leq \nm{(x_1,\dots,x_d)}_p.$$
+    Por lo que
+    $$\nm{(x_1,\dots,x_d)}\leq \sqrt{d}\nm{(x_1,\dots,x_d)}_p.$$
+\end{frame}
+
+\begin{frame}{Ya podemos responder la pregunta!}
+    Si ocurre que $\nm{x-y}_p<r_p$ entonces
+    $$\nm{x-y}\leq \sqrt{d}\nm{x-y}_p<\sqrt{d}r_p.$$
+    De manera que si tomamos $r_p=\frac{r}{\sqrt{d}}$, tenemos
+    $$B_p(x,r_p)=B_p\left(x,\frac{r}{\sqrt{d}}\right)\subseteq B(x,r).$$
+    De igual forma 
+    $$B\left(x,\frac{r}{d^{\frac{1}{p}}}\right)\subseteq B_p(x,r).$$
+    \begin{Lem}
+        Las normas $\nm{\cdot}_p$ definen los mismos abiertos en $\bR^d$.
+    \end{Lem}
+\end{frame}
+
+\section{Conexidad}
+
+\subsection{Arcoconexidad}
+
+\begin{frame}{Curvas y conjuntos arcoconexos}
+    Una \alert{curva} es un funci\'on $\ga:\ [a,b]\to\bR^d$ continua.
+    \begin{Def}
+        Decimos que $E\subseteq\bR^d$ es arcoconexo si dados $x_0, x_1$ en $E$, existe $\ga$ una curva tal que $\ga(a)=x_0,\ \ga(b)=x$
+        y $\ga(t)\in E$ para $t\in[a,b]$.
+    \end{Def}        
+    
+    Si $\ga:[a,b]\to\bR^d$ es continua, entonces $\ga_1:[0,1]\to\bR^d$ dada por $\ga_1(s)=\ga((b-a)s+a)$ es continua. Es decir, podemos tomar $a=0$ y $b=1$ en la definición.
+\end{frame}
+
+\begin{frame}{Podemos \emph{desconectar} un arcoconexo?}
+    Si $E$ es arcoconexo, pueden existir $G_0,G_1$ abiertos no vac\'ios tales que 
+    $$E=G_0\cup G_1\ \text{y}\ G_0\cap G_1=\emptyset?$$\par 
+    Tome $x_0\in G_0\ x_1\in G_1$. Entonces existe $\ga: [0,1]\to E$ tal que $\ga(0)=x_0$ y $\ga(1)=x_1$. \par Como $G_0$ es abierto, existe $r>0$ tal que $B(x_0,r)\subseteq G_0$. Al ser $\ga$ continua, existe $\dl>0$ tal que $\nm{\ga(0)-\ga(t)}<r$ cuando $|t|<\dl$.\par  Es decir $\nm{x_0-\ga(t)}<r$ y por tanto $\ga(t)\in B(x_0,r)\subseteq G_0$ para $0<t<\dl$.
+\end{frame}
+
+\begin{frame}{Un dibujo\dots}
+    
+\end{frame}
+
+\begin{frame}
+    Considere 
+    $$t_0=\sup\set{t>0: \ga(s)\in G_0,\ 0\leq s\leq t}.$$
+    Noe que $\frac\dl 2\leq t_0$. si $\ga(t_0)\in G_0$, existe $r_1$ tal que $B(\ga(t_0),r_1)\subseteq G_0$. Por continuidad, existe $\dl_1>0$ tal que 
+    $$|t_0-s|<\dl_1\To \nm{\ga(t_0)-\ga(s)}<r_1.$$
+    Luego 
+    $$t_0-\dl_1<s<t_0+\dl_1\To \ga(s)\in B(\ga(t_0),r_1)\subseteq G_0.$$
+    \begin{Ej}
+        Si $s_1<t_0$, entonces $\ga(s)\in G_0$ para $0<s<s_1$.
+    \end{Ej}
+\end{frame}
+
+\begin{frame}
+    De lo anterior vale que 
+    $$0<s\leq t_0-\frac{\dl_1}{2},\ t_0+\frac{\dl_1}{2}\To \ga(s)\in G_0.$$
+    Esto contradice que $t_0$ sea el supremo por lo que $\ga(t_0)\in E\less G_0=G_1$.\par 
+    Con un argumento similar mostramos que si $\ga(t_0)\in G_1$, existen $r_2, \dl_2$ tales que 
+    $$t_0-\dl_2<s<t_0+\dl_2\To \ga(s)\in B(\ga(t_0),r_2)\subseteq G_1.$$
+    En particular $t_0-\dl_2<s<t_0\To \ga(s)\in G_1\less G_0$ lo que es una contradicción.
+\end{frame}
+
+\begin{frame}{El resultado en cuestión}
+    \begin{Lem}
+        Sea $G$ arcoconexo y abierto. Entonces no existen $G_0, G_1$ abiertos no vac\'ios tales que $G=G_0\cup G_1$ y $G_0\cap G_1=\emptyset$.
+    \end{Lem}
+
+    \begin{center}
+        \emph{Hace falta que $G$ sea abierto?}
+    \end{center}
+    No, pero hay que tomar $G=G\cap (G_0\cup G_1)$.
+\end{frame}
+
+\subsection{Conexidad}
+
+\begin{frame}{Conjuntos conexos
+}
+    \begin{Def}
+        $G$ es \alert{disconexo} si existen $G_0,G_1$ tales que 
+        $$G_0\cap G, G_1\cap G\neq\emptyset = G_0\cap G_1$$
+        y $G\subseteq G_0\cup G_1$. Un conjunto se dice \alert{conexo} si no es disconexo.
+    \end{Def}
+    \begin{Th}
+        \begin{enumerate}
+            \item Si $G$ es arcoconexo, es conexo.
+            \item Si $G$ es abierto y conexo, es arcoconexo.
+        \end{enumerate}
+    \end{Th}
+\end{frame}
+\section*{Resumen}
+
+\begin{frame}{Resumen}
+
+  % Keep the summary *very short*.
+  \begin{itemize}
+  \item Definici\'on de normas en $\bR^d$.
+  \item Equivalencia de normas y su consecuencia.
+  \item Definici\'on de camino y arcoconexo.
+  \item Un conjunto arcoconexo no es disconexo.
+  \item Definci\'on de conexidad y resultados.
+  \end{itemize}
+  
+  \vskip0pt plus.5fill
+  \begin{itemize}
+  \item
+    Ejercicios
+    \begin{itemize}
+    \item Detalle en prueba sobre que los arcoconexos no son disconexos.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+
+% All of the following is optional and typically not needed. 
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{Lectura adicional}
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{Lecturas adicionales}
+    
+  \begin{thebibliography}{10}
+    
+  \beamertemplatebookbibitems
+  % Start with overview books.
+
+  \bibitem{CambroNotas}
+    S.Cambronero.
+    \newblock {\em Notas MA0505}.
+    \newblock 20XX.
+
+    \bibitem{NachoNotas}
+    I.Rojas
+    \newblock {\em Notas MA0505}.
+    \newblock 2018.
+ 
+  \end{thebibliography}
+  \alert{Existen m\'as pruebas que muestran que un arcoconexo es conexo. Investigue!}
+\end{frame}
+
+\end{document}
+
+

@@ -1,0 +1,2 @@
+\babel@toc {spanish}{}
+\beamer@sectionintoc {1}{Definición de Completitud}{3}{0}{1}

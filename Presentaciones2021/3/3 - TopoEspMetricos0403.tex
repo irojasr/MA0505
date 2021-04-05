@@ -1,0 +1,454 @@
+\documentclass[utf8]{beamer}
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  \setbeamercovered{transparent}
+}
+
+
+\usepackage{amsfonts,mathtools,amssymb}
+\usepackage[spanish]{babel}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+
+\title[MA0505]{MA0505 - An\'alisis I}
+\subtitle{Lecci\'on III}
+
+\author{Pedro M\'endez\inst{1}}
+
+\institute[Universidad de Costa Rica] % (optional, but mostly needed)
+{
+  \inst{1}%
+  Departmento de Matem\'atica Pura y Ciencias Actuariales\\
+  Universidad de Costa Rica
+  }
+
+\date[I-2021] {Semestre I, 2021}
+
+%%%%%%%%% === Theorems and suchlike === %%%%%%%%%%%%%%
+
+\theoremstyle{plain}
+\newtheorem{Th}{Teorema}               %%% Theorem 1.1.1
+\newtheorem{Tmon}{Teoremón}
+\newtheorem{Prop}{Proposición}         %%% Proposition 1.1.2
+\newtheorem{Lem}{Lema}                 %%% Lemma 3
+\newtheorem{Cor}{Corolario}            %%% Corollary 4
+
+\theoremstyle{definition}
+\newtheorem{Def}{Definición}           %%% Definition 5
+\newtheorem{Ex}{Ejemplo}               %%% Example 6
+\newtheorem{Ej}{Ejercicio}             %%% Ejercicio 7
+\newtheorem{Hec}[Th]{Hecho}            %%% Hecho 1.1.8
+
+\theoremstyle{remark}
+\newtheorem{Rmk}[Th]{Observación}      %%%Remark 1.1.9
+\newtheorem*{nonum-Rmk}{Observación}         %%% No number Fact
+\newtheorem*{Notn}{Notaci\'on}        %% Notaciones
+\newtheorem*{Warn}{Advertencia}       %% Advertencias
+
+\numberwithin{equation}{section}
+
+% Greek letters:
+
+\newcommand{\al}{\alpha}                %% short for  \alpha
+\newcommand{\bt}{\beta}                 %% short for  \beta
+\newcommand{\Dl}{\Delta}                %% short for  \Delta
+\newcommand{\dl}{\delta}                %% short for  \delta
+\newcommand{\eps}{\varepsilon}          %% short for  \varepsilon
+\newcommand{\Ga}{\Gamma}                %% short for  \Gamma
+\newcommand{\ga}{\gamma}                %% short for  \gamma
+\newcommand{\kp}{\kappa}                %% short for  \kappa
+\newcommand{\La}{\Lambda}               %% short for  \Lambda
+\newcommand{\la}{\lambda}               %% short for  \lambda
+\newcommand{\Om}{\Omega}                %% short for  \Omega
+\newcommand{\om}{\omega}                %% short for  \omega
+\newcommand{\Sg}{\Sigma}                %% short for  \Sigma
+\newcommand{\sg}{\sigma}                %% short for  \sigma
+\newcommand{\Te}{\Theta}                %% short for  \Theta
+\newcommand{\te}{\theta}                %% short for  \theta
+\newcommand{\ups}{\upsilon}             %% short for  \upsilon
+\newcommand{\vf}{\varphi}               %% short for  \varphi
+\newcommand{\ze}{\zeta}                 %% short for  \zeta
+
+%Boldface letters
+
+\newcommand{\bC}{\mathbb{C}}    %%% números complejos
+\newcommand{\bN}{\mathbb{N}}    %%% números naturales
+\newcommand{\bP}{\mathbb{P}}        %% números enteros positivos
+\newcommand{\bQ}{\mathbb{Q}}    %%% números racionales
+\newcommand{\bR}{\mathbb{R}}    %%% números reales
+\newcommand{\bS}{\mathbb{S}}    %%% esfera
+\newcommand{\bZ}{\mathbb{Z}}    %%% números enteros
+
+%Script letters:
+
+\newcommand{\cA}{\mathcal{A}}           %% formas diferenciales
+\newcommand{\cB}{\mathcal{B}}           %% una base vectorial
+\newcommand{\cC}{\mathcal{C}}           %% otra base vectorial
+\newcommand{\cD}{\mathcal{D}}           %% funciones de prueba
+\newcommand{\cE}{\mathcal{E}}           %% un modulo proyectivo
+\newcommand{\cF}{\mathcal{F}}           %% espacio de Fock
+\newcommand{\cG}{\mathcal{G}}           %% funtor de Gelfand
+\newcommand{\cH}{\mathcal{H}}           %% espacio de Hilbert
+\newcommand{\cI}{\mathcal{I}}           %% un funtor de inclusion
+\newcommand{\cJ}{\mathcal{J}}           %% otro funtor
+\newcommand{\cK}{\mathcal{K}}           %% otro espacio de Hilbert
+\newcommand{\cL}{\mathcal{L}}           %% operadores lineales
+\newcommand{\cM}{\mathcal{M}}           %% multiplicadores
+\newcommand{\cN}{\mathcal{N}}           %% funciones nulas
+\newcommand{\cO}{\mathcal{O}}           %% funciones de crec-to lento
+\newcommand{\cP}{\mathcal{P}}           %% una particion
+\newcommand{\cR}{\mathcal{R}}           %% funciones representativas
+\newcommand{\cQ}{\mathcal{Q}}           %% otra particion
+\newcommand{\cS}{\mathcal{S}}           %% funciones de Schwartz
+\newcommand{\cT}{\mathcal{T}}           %% una topologia
+\newcommand{\cU}{\mathcal{U}}           %% cubrimiento abierto
+\newcommand{\cV}{\mathcal{V}}           %% vecindarios
+\newcommand{\cW}{\mathcal{W}}           %% grupo de Weyl
+
+
+%Brackets
+
+\newcommand{\bonj}[1]{\left\lbrack#1\right\rbrack}
+\newcommand{\obonj}[1]{\left\rbrack#1\right\lbrack}
+\newcommand{\rbonj}[1]{\left\rbrack#1\right\rbrack}
+\newcommand{\lbonj}[1]{\left\lbrack#1\right\lbrack}
+\newcommand{\snm}[1]{\|#1\|}           %small norma
+\newcommand{\nm}[1]{\left\|#1\right\|} %norma pegadita
+\newcommand{\pnm}[1]{\biggl|\biggl|#1\biggr|\biggr|}
+\newcommand{\set}[1]{\{\,#1\,\}}    %% set notation
+\newcommand{\floor}[1]{\lfloor#1\rfloor} %% mayor entero <= x
+\newcommand{\Set}[1]{\biggl\{\,#1\,\biggr\}} %% set notation (large)
+
+
+%Symbols 
+
+\renewcommand{\geq}{\geqslant}          %% mayor o igual (variante)
+\newcommand{\hookto}{\hookrightarrow}     %% inclusion arrow
+\newcommand{\isom}{\simeq}              %% isomorfismo
+\renewcommand{\l}{\ell}                   %% ele cursiva
+\renewcommand{\leq}{\leqslant}          %% menor o igual (variante)
+\newcommand{\less}{\setminus}           %% set difference
+\newcommand{\To}{\Rightarrow}
+\newcommand{\ov}{\overline}
+\newcommand{\un}{\underline}
+\newcommand{\del}{\partial}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{Topolog\'ia en espacios m\'etricos}
+
+\subsection{Interiores}
+
+\begin{frame}{El interior de un conjunto}%{Subtitles are optional.}
+  % - A title should summarize the slide in an understandable fashion
+  %   for anyone how does not follow everything on the slide itself.
+Sea $(E,d)$ un espacio m\'etrico.
+  \begin{Def}
+    Dado $A\subseteq E$, decimos que $x_0\in A$ es un \alert{punto interior} de $A$ si existe $r>0$ tal que $B(x_0,r)\subseteq A$.\par
+    Análogamente definimos el \alert{interior} de $A$ como el conjunto de los puntos interiores de $A$. Denotamos $A^o$ al interior.
+  \end{Def}
+  Sea $G\subseteq A$ con $G$ abierto. Si $x_0\in G$ existe $r>0$ tal que $$B(x_0,r)\subseteq G\subseteq A.$$ 
+  Luego $x_0\in A^o$ y \alert{$G\subseteq A^o$}.
+\end{frame}
+
+
+\begin{frame}{De la Observación al Resultado}
+    \begin{Lem}
+        Si $G\subseteq A$ con $G$ abierto, entonces $G\subseteq A^o$. Es decir, \underline{$A^o$ es el abierto m\'as grande contenido en $A$.}
+    \end{Lem}
+    Por lo tanto, al ser $A_1^o\cap A_2^o$ abierto y $A_1^o\cap A_2^o\subseteq A_1\cap A_2$, entonces
+    $$A_1^o\cap A_2^o\subseteq(A_1\cap A_2)^o.$$
+    \begin{Ej}\label{ej:interiorAbierto}
+        Muestre que $A^o$ es un abierto.
+    \end{Ej}
+\end{frame}
+
+\begin{frame}
+    Si ahora $x\in(A_1\cap A_2)^o$, entonces 
+    $$B(x,r)\subseteq A_1\cap A_2, r>0.$$
+    As\'i $B(x,r)\subseteq A_1,A_2$ y por tanto $x\in A_1^o$ y $x\in A_2^o$. Concluimos 
+    $$(A_1\cap A_2)^o\subseteq A_1^o\cap A_2^o.$$
+    \begin{Lem}
+        $A_1^o\cap A_2^o=(A_1\cap A_2)^o$.
+    \end{Lem}
+    \begin{Ej}\label{ej:interiorRespetaSubconj}
+        Si $A\subseteq B$ entonces $A^o\subseteq B^o$.
+    \end{Ej}
+    \alert{Use el lema $G\subseteq A^o$ para probar este lema y el ejercicio de una forma alternativa.}
+\end{frame}
+
+\begin{frame}{La Distancia entre Conjuntos}
+    \begin{Def}
+        Dados $A,B\subseteq E$ definimos su distancia como
+        $$d(A,B) = \inf\set{d(x,y): (x,y)\in A\times B}.$$
+      \end{Def}
+      Si $x\in E$ y $A\subseteq E$ con $d(x,A)=0$, entonces existe $x_n\in A$ tal que $d(x,x_n)<\frac1n$ para todo $n\in\bN$.\par 
+      Es decir $(x_n)_{n=1}^\infty\subseteq A$ es una sucesión tal que $x_n\to x$ cuando $n\to \infty$.
+      
+\end{frame}
+
+\subsection{Clausuras}
+
+\begin{frame}{La Clausura de un Conjunto}
+    \begin{Lem}
+        Dados $x\in E$ y $A\subseteq E$ son equivalentes:
+        \begin{enumerate}
+            \item $d(x,A)=0$.
+            \item Existe $(x_n)_{n=1}^\infty\subseteq A$ tal que $x_n\to x$ cuando $n\to \infty$.
+        \end{enumerate}
+    \end{Lem}
+    Dado $A\subseteq E$, definimos la \alert{clausura} de $A$ como 
+    $$\ov A=\set{x\in E:\ d(x,A)=0}.$$
+    Inmediatamente vemos que $A\subseteq \ov A$.\par 
+    A los elementos de $\ov A$, les llamaremos \alert{puntos de adherencia} de $A$.
+\end{frame}
+
+\begin{frame}{Propiedades de la Clausura}
+    Sea $z\in \ov A$, existe $a_r\in A$ tal que $d(a_r,z)<r$ para $r>0$ pues $d(z,A)=0$. Entonces 
+    $$a_r\in B(z,r)\cap A.$$
+    Si $F\subseteq E$ con $A\subseteq F$, como 
+    $$\forall x\in E,\ \inf_{f\in F} d(x,f)\leq \inf_{a\in A} d(x,a),$$
+    entonces $d(x,F)\leq d(x,A)$. As\'i $d(x,A)=0$ implica $d(x,F)=0$ por lo que
+    $$\ov A\subseteq \ov F.$$
+\end{frame}
+
+\begin{frame}{Trabajamos con la Clausura}
+    Si $A$ es cerrado y $x\not\in A$, $E\less A$ es abierto y 
+    $$B(x,r)\subseteq E\less A,\ r>0\To B(x,r)\cap A=\emptyset.$$
+    Luego si $a\in A$, $d(x,a)\geq r$ y as\'i $x\not\in\ov A$. Por lo tanto, si $A$ es cerrado entonces $A=\ov A$.
+    \begin{center}
+        \emph{Es $\ov A$ un cerrado?}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Respondamos la pregunta\dots}
+    \begin{columns}
+    \begin{column}{0.5\textwidth}
+        \begin{itemize}
+            \item  Si $z\in\ov A$, entonces 
+            $$d(z,A)=r>0.$$ 
+            \pause
+            \item As\'i para $a\in A$, $d(z,a)\geq r$.
+            \pause
+            \item  Si $w\in B\left(z,\frac r2\right)$, entonces $d(w,A)\geq \frac r2$. 
+        \end{itemize}
+       
+     \end{column}
+     \begin{column}{0.5\textwidth}  %%dibujo
+        
+     \end{column}
+     \end{columns}
+\end{frame}
+
+\begin{frame}
+    Mostremos que  
+    $$w\in B\left(z,\frac r2\right)\To d(w,A)\geq \frac r2 $$
+    Sabemos que\par
+    $$r\leq d(z,a)\leq d(z,w)+d(w,a)<\frac r2+d(w,a)$$
+    y as\'i $\frac r2<d(w,a)$.\par 
+    Por tanto 
+    $$B\left(z,\frac r2\right)\subseteq E\less\ov A$$
+    concluimos que $\ov A$ es cerrado.
+\end{frame}
+
+\begin{frame}{Ampliemos las propiedades}
+    \begin{Lem}
+        Dado $A\subseteq E$, $A$ es cerrado si y s\'olo si $A=\ov A$.
+    \end{Lem}
+    \begin{Ej}\label{ej:abiertoIffInterior}
+        Dado $B\subseteq E$, $B$ es abierto si y s\'olo si $B=B^o$. 
+    \end{Ej}
+    \begin{Ej}\label{ej:propsClausura}
+        Dados $A,B\subseteq E$, vale que 
+        \begin{enumerate}
+            \item $\ov{A\cup B}=\ov A\cup\ov B$.
+            \item $\ov{A\cap B}\subseteq \ov A\cap \ov B$.
+        \end{enumerate}
+    \end{Ej}
+\end{frame}
+
+\subsection{Acumulaci\'on y Frontera}
+\begin{frame}{Puntos de Acumulaci\'on}
+    \begin{Def}
+        Un punto $x_0\in E$ es un \alert{punto de acumulaci\'on} de $A$ si 
+        $$\left(B(x_0,r)\setminus\set{x_0}\right)\cap A \neq \emptyset$$
+         para todo $r>0$. 
+    \end{Def}
+
+    Es decir, $B(x,r)$ contiene puntos de $A$ distintos de $x$.
+   \begin{Ej}\label{ej:ptosAccumComoSuccs}
+        Caracterice los puntos de acumulación en términos de sucesiones.
+      \end{Ej}
+
+\end{frame}
+
+\begin{frame}{Puntos Frontera}
+    \begin{Def}
+        Dado $A\subseteq E$ y $x\in E$, diremos que $x$ es un \alert{punto frontera} de $A$ si para $r>0$
+        $$B(x,r)\cap A\neq\emptyset,\ B(x,r)\cap A^c\neq\emptyset.$$
+        
+    \end{Def}
+    Es decir $d(x,A)=d(x,A^c)=0$. Denotamos
+    $$\del A=\set{\text{puntos frontera}}=\set{x:\ d(x,A)=d(x,A^c)=0}.$$
+\end{frame}
+
+\begin{frame}{Ejemplos}
+    \begin{enumerate}
+        \item Si $A=\Set{\frac1n:\ n\geq 1}$ tenemos que $\ov A=A\cup\set0$. El punto 0 es de acumulaci\'on y es el \'unico pues $B\left(\frac 1n,\frac{1}{(n+1)^2}\right)\cap A=\set{\frac1n}$ si $n\geq 1$.
+        \item Sean $A=\Set{n+\frac1n}$, $B=\bN$. Ambos son cerrados pero 
+        $$d\left(n+\frac1n,n\right)=\frac{1}{n}\to 0$$
+        por lo que $d(A,B)=0$.
+    \end{enumerate}
+    
+\end{frame}
+
+\begin{frame}
+    Si $A,B$ son como antes, entonces 
+    $$\bR\less B=\bigcup_{n\in\bZ}]n,n+1[$$
+    es un conjunto abierto. 
+    \begin{center}
+        \emph{Qu\'e es $\bR\less A$?}
+    \end{center}
+\end{frame}
+
+%%%Ended 1:31:11 37 faltan pgs 9 y 10
+
+\subsection{Vecindarios}
+
+\begin{frame}{El Vecindario de un Punto} %(no del Chavo)}
+Dado $x\in E$, diremos que $V$ es un \alert{vecindario} de $x$ si existe $r>0$ tal que $B(x,r)\subseteq V$.\par 
+\begin{itemize}
+    \item Si $V$ es un abierto, $V$ es un vecindario de todos sus puntos.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{El de un conjunto}
+    Sea $A\subseteq E$, definimos 
+    $$V_r(A)=\set{x\in E:\ d(x,A)<r}.$$
+    \begin{itemize}
+        \item Si $a\in A$, $d(x,A)\leq d(x,a)$. 
+        \item Y si $x\in B(a,r)$, vale
+        $$d(x,A)\leq d(x,a)<r.$$
+    \end{itemize}
+    Por tanto $B(a,r)\subseteq V_r(A)$.
+    \begin{Ej}\label{ej:bolasEnVecindarios}
+        Para $x\in V_r(A)$ y $r_1<r-d(x,A)$, muestre que 
+        $$B(x,r_1)\subseteq V_r(A).$$
+    \end{Ej}
+    
+\end{frame}
+
+\begin{frame}{Propiedades del Vecindario}
+    \begin{Lem}
+        Si $A\subseteq E$, $V_r(A)$ es abierto para $r>0$. 
+    \end{Lem}
+
+    ahora si $x\in \bigcap_rV_r(A)$, entonces $d(x,A)<r$ para $r>0$. Es decir, $d(x,A)=0$. Por lo tanto $\ov A=\bigcap_rV_r(A)$.\par 
+    \emph{Es decir, la clausira de un conjunto se puede escribir como intersecci\'on de abiertos.}
+\end{frame}
+
+\begin{frame}{Densidad} %en este caso no es masa entre volumen
+    \begin{Def}
+        A un conjunto $A\subseteq E$ le llamaremos \alert{denso} en $E$ si $\ov A=E$.\par
+        A un espacio m\'etrico $(E,d)$ lo llamamos \alert{separable} si pose\'e un conjunto denso y numerable.
+    \end{Def}
+    
+    Por ejemplo, $(\bR,|\cdot|)$ es separable pues $\bQ$ es denso en $\bR$. En general $(\bR^d,\nm{\cdot})$ es separable pues $\bQ^d$ es denso en $\bR^d$.
+\end{frame}
+\section*{Resumen}
+
+\subsection*{Qu\'e vimos hoy}
+\begin{frame}{Resumen}
+
+  % Keep the summary *very short*.
+  \begin{itemize}
+  \item Definici\'on de interior y propiedades.
+  \item Definición de distancia entre conjuntos.
+  \item Definici\'on de clausura y la clausura en efecto es un cerrado.
+  \item Propiedades de clausura.
+  \item Definición de puntos de acumulaci\'on y puntos frontera.
+  \item Ejemplos de lo mencionado anteriormente.
+  \end{itemize}
+  
+\end{frame}
+
+\subsection*{Ejercicios a trabajar}
+\begin{frame}{Ejercicios}
+    
+  \begin{itemize}
+    \item
+      Lista 3
+      \begin{itemize}
+      \item El interior en efecto es un abierto. \ref{ej:interiorAbierto} 
+      \item Interior respeta subconjuntos. \ref{ej:interiorRespetaSubconj}
+      \item Pruebas alternativas usando maximalidad del interior. $(\ast)$
+      \item Caracterizaci\'on de abiertos por interiores. \ref{ej:abiertoIffInterior}
+      \item Uniones e intersecciones de clausuras. \ref{ej:propsClausura}
+      \item Puntos de acumulación como sucesiones. \ref{ej:ptosAccumComoSuccs}
+      \item Las bolas est\'an dentro de los vecindarios. \ref{ej:bolasEnVecindarios}
+      \end{itemize}
+    \end{itemize}
+  
+\end{frame}
+
+
+% All of the following is optional and typically not needed. 
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{Lectura adicional}
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{Lecturas adicionales}
+    
+  \begin{thebibliography}{10}
+    
+  \beamertemplatebookbibitems
+  % Start with overview books.
+
+  \bibitem{CambroNotas}
+    S.Cambronero.
+    \newblock {\em Notas MA0505}.
+    \newblock 20XX.
+
+    \bibitem{NachoNotas}
+    I.Rojas
+    \newblock {\em Notas MA0505}.
+    \newblock 2018.
+ 
+  \end{thebibliography}
+  
+\end{frame}
+
+\end{document}
+
+
