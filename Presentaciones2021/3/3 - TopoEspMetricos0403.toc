@@ -1,6 +1,0 @@
-\babel@toc {spanish}{}
-\beamer@sectionintoc {1}{Topolog\'ia en espacios m\'etricos}{3}{0}{1}
-\beamer@subsectionintoc {1}{1}{Interiores}{3}{0}{1}
-\beamer@subsectionintoc {1}{2}{Clausuras}{7}{0}{1}
-\beamer@subsectionintoc {1}{3}{Acumulaci\'on y Frontera}{15}{0}{1}
-\beamer@subsectionintoc {1}{4}{Vecindarios}{19}{0}{1}

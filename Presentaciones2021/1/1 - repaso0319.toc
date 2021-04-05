@@ -1,6 +1,0 @@
-\babel@toc {spanish}{}
-\beamer@sectionintoc {1}{Espacios m\'etricos}{3}{0}{1}
-\beamer@subsectionintoc {1}{1}{Definiciones b\'asicas}{3}{0}{1}
-\beamer@sectionintoc {2}{Topolog\'ia de los Espacios M\'etricos}{5}{0}{2}
-\beamer@subsectionintoc {2}{1}{Definiciones}{5}{0}{2}
-\beamer@subsectionintoc {2}{2}{Propiedades B\'asicas}{7}{0}{2}

@@ -1,4 +1,0 @@
-\babel@toc {spanish}{}
-\beamer@sectionintoc {1}{Continuidad}{3}{0}{1}
-\beamer@subsectionintoc {1}{1}{Continuidad en n\'umeros reales}{3}{0}{1}
-\beamer@subsectionintoc {1}{2}{Continuidad en Espacios M\'etricos}{4}{0}{1}
