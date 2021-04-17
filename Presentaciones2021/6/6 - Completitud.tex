@@ -120,7 +120,22 @@
 \newcommand{\set}[1]{\{\,#1\,\}}    %% set notation
 \newcommand{\floor}[1]{\lfloor#1\rfloor} %% mayor entero <= x
 \newcommand{\Set}[1]{\biggl\{\,#1\,\biggr\}} %% set notation (large)
-
+\newcommand\quot[2]{
+        \mathchoice
+            {% \displaystyle
+                \text{\raise1ex\hbox{$#1$}\Big/\lower1ex\hbox{$#2$}}%
+            }
+            {% \textstyle
+                {^{ #1}/_{ #2}}
+            }
+            {% \scriptstyle
+                {^{ #1}/_{ #2}}
+            }
+            {% \scriptscriptstyle
+                {^{ #1}/_{ #2}}
+            }
+    }
+\newcommand*\squot[2]{{^{ #1}/_{ #2}}}%%%small quotient
 
 %Symbols 
 
@@ -146,6 +161,9 @@
 \newcommand{\third}{\tfrac{1}{3}}   %% small fraction  1/3 %Hay que renew porque mathabx toma second y third como x'' y x''' por ejemplo
 
 \newcommand{\ihalf}{{\tfrac{i}{2}}} %% small fraction  i/2
+
+\newcommand{\sucn}{_{n=1}^\infty} %% diminutivo
+\newcommand{\suck}{_{k=1}^\infty} %% diminutivo
 
 \begin{document}
 
@@ -201,6 +219,224 @@ $$d_\infty(f,g)=\sup_{x\in[0,1]}|f(x)-g(x)|.$$
 Si $x\in[0,1]$ y $(f_n)_{n=1}^\infty$ es de Cauchy, entonces existe $n_0\in\bN$ tal que $d_\infty(f_n,f_m)<\frac{\eps}{2}$ cuando $n,m\geq n_0$.
 \end{frame}
 
+\begin{frame}{Continuamos el ejemplo}
+  Entonces vale que 
+  $$|f_n(x)-f_m(x)|\leq d_\infty(f_n,f_m)<\eps$$
+  por lo que $(f_n(x))_{n=1}^\infty$ es de Cauchy en $\bR$. Al ser $\bR$ completo, llamemos
+  $$f(x)=\lim_{n\to\infty}f_n(x)$$
+  Vamos a mostrar que $f\in X$, es decir que $f$ es continua. Para ello, si $x\in[0,1]$, existe $m_1\geq n_0$ tal que 
+  $$m\geq m_1\To |f(x)-f_m(x)|<\frac{\eps}{2}.$$
+\end{frame}
+
+\begin{frame}{¡Aquí concluimos!}
+  Entonces 
+  \begin{align*}
+    |f(x)-f_n(x)|&\leq |f(x)-f_{m_1}(x)|+|f_{m_1}(x)-f_n(x)|\\
+    &<\half\eps+\half\eps=\eps
+  \end{align*}
+  cuando $n\geq n_0$.\par 
+  Por lo tanto $f_n\xrightarrow[n\to\infty]{} f$ uniformemente y concluimos que $f$ es continua.
+  \begin{Rmk}
+    Como es usual para probar que una sucesión de Cauchy converge, empezamos encontrando un candidato para el límite.
+  \end{Rmk}
+\end{frame}
+
+\section{Topología y Completitud}
+
+\subsection{Cerrados}
+
+\begin{frame}{Espacios Completos y Conjuntos Cerrados}
+  Tomemos $C\subseteq X$ cerrado y $X$ completo. Sea $(x_n)\sucn\subseteq C\subseteq X$ de Cauchy.\par 
+  Como $X$ es completo, existe $x_0\in X$:
+  $$x_n\xrightarrow[n\to\infty]{}x_0.$$
+  Como $C$ es cerrado, $x_0\in C$ y así $(C,d)$ es un espacio completo.\par 
+  
+\end{frame}
+
+\begin{frame}{El Otro Lado}
+  Por otro lado si $(C,d)$ es completo con $C\subseteq X$, tomemos $(x_n)\sucn\subseteq C$ y $x_0\in\ov C$ tal que en $X$ vale:
+  $$x_n\xrightarrow[n\to\infty]{}x_0.$$
+  Dado que toda sucesión convergente es de Cauchy, tenemos que para $\eps>0$, existe $n_0$ tal que 
+  $$n,m\geq n_0\To d(x_n,x_m)<\eps.$$
+  Entonces $(x_n)\sucn$ es de Cauchy en $(C,d)$ y por tanto 
+  $$x_n\xrightarrow[n\to\infty]{}x_0'\in C\To \ov C\subseteq C.$$
+  %Es decir, $x_0=x_0'\in C$ lo que nos dice que $\ov C\subseteq C$.
+\end{frame}
+
+\begin{frame}{El Resultado}
+  \begin{Lem}
+    Sea $(X,d)$ un espacio métrico, entonces 
+    \begin{enumerate}
+      \item Si $(C,d)$ es completo, entonces $C$ es cerrado en $(X,d)$.
+      \item Si $C\subseteq X$ es cerrado, entonces $(C,d)$ es completo.
+    \end{enumerate}
+  \end{Lem}
+\end{frame}
+
+\subsection{Compactos}
+
+\begin{frame}{Analicemos los Compactos}
+  Por otro lado si $(X,d)$ es compacto y $(x_n)\sucn$ es de Cauchy, existe $(x_{n_k})\suck\subseteq(x_n)\sucn$ que converge a $x_0\in X$.\par 
+  Existe $n_0$ tal que 
+  $$n,m\geq n_0\To d(x_n,x_m)<\half\eps.$$
+  Sea $k_0\geq n_0$ tal que 
+  $$k\geq k_0\To d(x_0,x_{n_k})<\half\eps.$$
+\end{frame}
+
+\begin{frame}{Juntamos lo Anterior}
+  Vale que 
+  \begin{align*}
+    d(x_n,x_0)&\leq  d(x_n,x_{n_k})+d(x_{n_k},x_0)\\
+    &<\half\eps+\half\eps=\eps
+  \end{align*}
+  cuando $n\geq n_0$. 
+  \begin{Lem}
+    Sea $(X,d)$ un espacio métrico compacto. Entonces $(X,d)$ es completo.
+  \end{Lem}
+
+  \begin{Rmk}
+    Compacto $\To$ completo. Pero completo $\not\To$ compacto. Vea por ejemplo que $\bR$ es completo pero no compacto. 
+  \end{Rmk}
+\end{frame}
+
+\begin{frame}{¿Completo + (Algo) $\To$ Compacto?}
+  La siguiente propiedad junto con completitud implica compacidad.
+  \begin{Def}
+    Llamamos a un espacio métrico \alert{totalmente acotado} (o \emph{paracompacto}) si para $\eps>0$ existen $x_1,\dots,x_m$ tales que
+    $$X\subseteq \bigcup_{i=1}^mB(x_i,\eps).$$
+  \end{Def}
+  Note que si
+  $$X\subseteq \bigcup_{x\in X}B(x,\eps),$$
+  entonces todo espacio compacto es totalmente acotado.
+\end{frame}
+
+\begin{frame}{¿Acotado y Totalmente Acotado?}
+  \begin{Ex}
+    Consideremos la métrica definida en $\bN$: 
+    $$\rho(n,m)=\left\lbrace\begin{aligned}
+      1,\ n\neq m,\\
+      0,\ n=m.
+    \end{aligned}\right.$$
+    Podemos ver que $\bN= B(n,2)$ para cualquier $n$. Sin embargo $B\left(n,\half\right)=\set{n}$ y por lo tanto no podemos cubrir $\bN$ por un número finito de bolas de radio $\half$.\par 
+    Se sigue que $(\bN,\rho)$ es acotado pero no totalmente acotado.
+  \end{Ex}
+  \end{frame}
+
+\begin{frame}{Vizlumbrando la relación}
+  Analicemos la relación entre compacidad, completitud y ser totalmente acotado.\par 
+  Tomemos $(x_n)\sucn$ en $(X,d)$ totalmente acotado.
+  \begin{Ej}
+    Si el conjunto $\set{x_n:\ n\in \bN}$ es finito, entonces existe $(x_{n_k})\suck\subseteq(x_n)\sucn$ que converge a un punto de la sucesión.
+  \end{Ej}
+  Así, asumimos que $(x_n)\sucn$ tiene una cantidad infinita de puntos distintos. Vamos a ver que existe una subsucesión de Cauchy.
+\end{frame}
+
+\begin{frame}
+  Como $X$ es totalmente acotado, existen $y_1,\dots,y_m$ tales que 
+  $$X\subseteq \bigcup_{i=1}^m B(y_i,1).$$
+  Luego existe $y_{i_1}$ tal que $B(y_{i_1},1)$ contiene una cantidad infinita de puntos de $(x_n)\sucn$. Sea $(x_{n_{k,1}})\suck$ la subsucesión de todos los puntos dentro de $B(y_{i_1},1)$.
+  \begin{Rmk}
+    Recordemos que $n_{k,1}\leq n_{k+1,1}$ se cumple puesto que estamos en $\bN$.
+  \end{Rmk}
+\end{frame}
+
+\begin{frame}
+  De igual forma existe $\tilde{y}_2\in X$ con $B\left(\tilde{y}_2,\half\right)$ que contiene infinitos puntos de $(x_{n_{k,1}})\suck$.\par 
+  Llamemos $(x_{n_{k,2}})\suck$ a la subsucesión de estos puntos. Iterando el proceso, existe
+  $$(x_{n_{k,\l}})\suck\subseteq B\left(\tilde{y}_\l,\frac1\l\right)$$
+   y un punto $\tilde{y}_{\l+1}$ tal que $B\left(\tilde{y}_{\l+1},\frac{1}{\l+1}\right)$ contiene una cantidad infinita de puntos de la subsucesión $(x_{n_{k,\l}})\suck$.
+\end{frame}
+
+\begin{frame}
+  Sea $(x_{n_{k,\l+1}})\suck$ la subsucesión de estos puntos. Note que 
+  $$d(x_{n_{k,\l+1}},x_{n_{s,\l+1}})<\frac{2}{\l+1}.$$
+  Consideremos la subsucesión de los $x_{n_{\l,\l}}$. Si $\l\leq s$, entonces 
+  $$d(x_{n_{\l,\l}},x_{n_{s,s}})\leq \frac{2}{\l+1}$$
+  lo que nos permite concluir que $(x_{n_{\l,\l}})_{\l=1}^\infty$ es de Cauchy.
+\end{frame}
+
+\begin{frame}{El Resultado}
+  \begin{Lem}
+  Un espacio $(X,d)$ es totalmente acotado si y sólo si toda sucesión $(x_n)\sucn\subseteq X$ poseé una subsucesión de Cauchy.
+  \end{Lem}
+  Con lo anterior hemos probado una dirección, resta por ver la otra.
+\end{frame}
+
+\begin{frame}{La Otra Dirección}
+  En la otra dirección, supongamos que $(X,d)$ no es totalmente acotado. Entonces existe $\eps>0$ tal que
+    $$X\not\subseteq \bigcup_{i=1}^m B(x_i,\eps)$$
+    para cualquier conjunto $\set{x_1,\dots,x_m}$. Dado $x_0\in X$, existe $x_1\in X\less B(x_0,\eps)$.\par 
+  Iteramos y obtenemos que existe $x_n$:
+    $$x_n\in X\less \bigcup_{i=1}^{n-1}B(x_i,\eps).$$
+    Así obtenemos una sucesión tal que $d(x_i,x_j)\geq \eps$ cuando $i\neq j$. 
+\end{frame}
+
+\begin{frame}{Podemos probar que\dots}
+  \begin{Th}
+    Un espacio métrico es compacto si y sólo si es completo y totalmente acotado.
+  \end{Th}
+  Ya sabemos que todo espacio compacto es totalmente acotado y completo.\par 
+  Tomemos entonces $(x_n)\sucn$, poseé $(x_{n_k})\suck\subseteq(x_n)\sucn$ una subsucesión de Cauchy. Esta converge al ser el espacio completo. 
+\end{frame}
+
+\section{Compleción}
+
+\begin{frame}{La Idea}
+  Vamos a finalizar probando que dado un espacio métrico $(X,d)$, existe un espacio métrico completo $(X^\sharp,d^\sharp)$ y una función inyectiva que preserva distancia $i:\ X\to X^\sharp$.\par 
+  Note que si $X\subseteq X^\sharp$ y $(x_n)\sucn\subseteq X$ es de Cauchy, entonces existe $y\in X^\sharp$ tal que $x_n\xrightarrow[n\to\infty]{}y$. Esto significa que $X^\sharp$ contiene todos los posibles límites. Vamos a definir una clase de equivalencia entre sucesiones de Cauchy. Los límites serán las distintas clases de equivalencia.
+\end{frame}
+
+\begin{frame}{El Primer Paso}
+  Definimos una métrica entre sucesiones de Cauchy. Sean $(x_n)\sucn,(y_n)\sucn$ dos sucesiones de Cauchy. Note que 
+  $$d(x_m,y_m)\leq d(x_m,x_n)+d(x_n,y_n)+d(y_n,y_m).$$
+  Luego 
+  $$d(x_m,y_m)-d(x_n,y_n)\leq d(x_m,x_n)+d(y_m,y_n)$$
+  y la simetría del argumento nos muestra que 
+  $$|d(x_m,y_m)-d(x_n,y_n)|\leq d(x_m,x_n)+d(y_m,y_n).$$
+  
+  \end{frame}
+
+  \begin{frame}{Una Nueva Métrica}
+    Basado en lo anterior, existe $n_0$ tal que 
+    $$n,m\geq n_0\To |d(x_m,y_m)-d(x_n,y_n)|<\eps$$
+    y por tanto $(d(x_m,y_m))_{m=1}^\infty$ es una sucesión de Cauchy en $\bR$.\par 
+    Definimos 
+    $$\tilde{d}((x_n)\sucn,(y_n)\sucn)=\lim_{m\to\infty}d(x_m,y_m).$$
+    
+  \end{frame}
+
+  \begin{frame}{En efecto, sí es métrica*}
+    Si $x_m\xrightarrow[m\to\infty]{}z$ y $y_m\xrightarrow[m\to\infty]{}z$, entonces
+    $$d(x_m,y_m)\leq d(x_m,z)+d(z,y_m)$$ converge a cero cuando $m\to\infty$. Es decir $\tilde{d}((x_n)\sucn,(y_n)\sucn)=0$. Además como $d(x_m,y_m)=d(y_m,x_m)$, entonces 
+    $$\tilde{d}((x_n)\sucn,(y_n)\sucn)=\tilde{d}((y_n)\sucn,(x_n)\sucn).$$
+    Y dada otra sucesión de Cauchy $(z_n)\sucn$, vale 
+    \begin{gather*}
+    d(x_m,y_m)\leq d(x_m,z_m)+d(z_m,y_m)\\
+    \To \tilde{d}((x_n)\sucn,(y_n)\sucn)\leq \tilde{d}((x_n)\sucn,(z_n)\sucn)+\tilde{d}((z_n)\sucn,(y_n)\sucn)
+    \end{gather*} 
+    
+  \end{frame}
+
+  \begin{frame}{Una\dots semimétrica}
+    La función $\tilde{d}$ satisface la definición de ser métrica excepto por la condición 
+    $$\tilde{d}((x_n)\sucn,(y_n)\sucn)=0\iff (x_n)\sucn=(y_n)\sucn.$$
+     A estas funciones les llamamos \alert{semimétricas}. Para obtener una métrica, diremos que $(x_n)\sucn\sim(y_n)\sucn$ cuando 
+     $$\tilde{d}((x_n)\sucn,(y_n)\sucn)=0.$$
+     
+  \end{frame}
+\begin{frame}{El siguiente paso}
+  Vamos a probar que si
+     $$X^\sharp=\quot{\set{(x_n)\sucn\subseteq X\ \text{de Cauchy}}}{\sim}$$
+     es el conjunto de clases de equivalencia y 
+     $$d^\sharp(\un x,\un y)=\tilde{d}((x_n)\sucn,(y_n)\sucn),$$
+     con $\un x=[(x_n)\sucn]$ y $\un y=[(y_n)\sucn]$, entonces $(X^\sharp,d^\sharp)$ es el espacio buscado.
+\end{frame}
+
+\begin{frame}{El Argumento Diagonal}
+  %%Do Dibujo
+\end{frame}
+
+%Llevamos 1:33:29:57 y estamos por empezar pag 14
 \section*{Resumen}
 
 \subsection*{Qu\'e vimos hoy}
