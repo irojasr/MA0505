@@ -162,8 +162,9 @@
 
 \newcommand{\ihalf}{{\tfrac{i}{2}}} %% small fraction  i/2
 
-\newcommand{\sucn}{_{n=1}^\infty} %% diminutivo
+\newcommand{\sucm}{_{m=1}^\infty} %% diminutivo
 \newcommand{\suck}{_{k=1}^\infty} %% diminutivo
+\newcommand{\sucn}{_{n=1}^\infty} %% diminutivo
 
 \begin{document}
 
@@ -264,7 +265,7 @@ Si $x\in[0,1]$ y $(f_n)_{n=1}^\infty$ es de Cauchy, entonces existe $n_0\in\bN$ 
 \end{frame}
 
 \begin{frame}{El Resultado}
-  \begin{Lem}
+  \begin{Lem}\label{lem:completoYCerrado}
     Sea $(X,d)$ un espacio métrico, entonces 
     \begin{enumerate}
       \item Si $(C,d)$ es completo, entonces $C$ es cerrado en $(X,d)$.
@@ -290,7 +291,7 @@ Si $x\in[0,1]$ y $(f_n)_{n=1}^\infty$ es de Cauchy, entonces existe $n_0\in\bN$ 
     &<\half\eps+\half\eps=\eps
   \end{align*}
   cuando $n\geq n_0$. 
-  \begin{Lem}
+  \begin{Lem}\label{lem:compactoToCompleto}
     Sea $(X,d)$ un espacio métrico compacto. Entonces $(X,d)$ es completo.
   \end{Lem}
 
@@ -301,7 +302,7 @@ Si $x\in[0,1]$ y $(f_n)_{n=1}^\infty$ es de Cauchy, entonces existe $n_0\in\bN$ 
 
 \begin{frame}{¿Completo + (Algo) $\To$ Compacto?}
   La siguiente propiedad junto con completitud implica compacidad.
-  \begin{Def}
+  \begin{Def}\label{def:paracompacidad}
     Llamamos a un espacio métrico \alert{totalmente acotado} (o \emph{paracompacto}) si para $\eps>0$ existen $x_1,\dots,x_m$ tales que
     $$X\subseteq \bigcup_{i=1}^mB(x_i,\eps).$$
   \end{Def}
@@ -325,7 +326,7 @@ Si $x\in[0,1]$ y $(f_n)_{n=1}^\infty$ es de Cauchy, entonces existe $n_0\in\bN$ 
 \begin{frame}{Vizlumbrando la relación}
   Analicemos la relación entre compacidad, completitud y ser totalmente acotado.\par 
   Tomemos $(x_n)\sucn$ en $(X,d)$ totalmente acotado.
-  \begin{Ej}
+  \begin{Ej}\label{ej:sucesiones}
     Si el conjunto $\set{x_n:\ n\in \bN}$ es finito, entonces existe $(x_{n_k})\suck\subseteq(x_n)\sucn$ que converge a un punto de la sucesión.
   \end{Ej}
   Así, asumimos que $(x_n)\sucn$ tiene una cantidad infinita de puntos distintos. Vamos a ver que existe una subsucesión de Cauchy.
@@ -356,7 +357,7 @@ Si $x\in[0,1]$ y $(f_n)_{n=1}^\infty$ es de Cauchy, entonces existe $n_0\in\bN$ 
 \end{frame}
 
 \begin{frame}{El Resultado}
-  \begin{Lem}
+  \begin{Lem}\label{lem:caractParacompacidadCauchy}
   Un espacio $(X,d)$ es totalmente acotado si y sólo si toda sucesión $(x_n)\sucn\subseteq X$ poseé una subsucesión de Cauchy.
   \end{Lem}
   Con lo anterior hemos probado una dirección, resta por ver la otra.
@@ -372,7 +373,7 @@ Si $x\in[0,1]$ y $(f_n)_{n=1}^\infty$ es de Cauchy, entonces existe $n_0\in\bN$ 
 \end{frame}
 
 \begin{frame}{Podemos probar que\dots}
-  \begin{Th}
+  \begin{Th}\label{thm:compactoIffCompletoYParacompacto}
     Un espacio métrico es compacto si y sólo si es completo y totalmente acotado.
   \end{Th}
   Ya sabemos que todo espacio compacto es totalmente acotado y completo.\par 
@@ -437,6 +438,68 @@ Si $x\in[0,1]$ y $(f_n)_{n=1}^\infty$ es de Cauchy, entonces existe $n_0\in\bN$ 
 \end{frame}
 
 %Llevamos 1:33:29:57 y estamos por empezar pag 14
+
+\begin{frame}{$d^\sharp$ está bien definida}
+Tomemos $(x_n)\sucn,(x_n')\sucn$ tales que $(x_n)\sucn\sim(x_n')\sucn$. Entonces vale que $\lim_{m\to\infty}d(x_m,x_m')=0$. Dada $(y_n)\sucn$ sucesión de Cauchy vale que
+$$d(x_m,y_m)\leq d(x_m,x_m')+d(x_m',y_m)$$
+y por tanto $\lim_{m\to\infty}d(x_m,y_m)\leq\lim_{m\to\infty}d(x_m',y_m)$. De igual forma probamos 
+$$\lim_{m\to\infty}d(x_m',y_m)\leq\lim_{m\to\infty}d(x_m,y_m)$$
+y así $\lim_{m\to\infty}d(x_m',y_m)=\lim_{m\to\infty}d(x_m,y_m)$.
+\end{frame}
+
+\begin{frame}{Paso 2: Densidad}
+  Tomemos $x\in X$ y $x_n=x$ para $n\in\bN$. Definimos $i(x)=[(x_n)\sucn]$ y vemos que 
+  $$d^\sharp(i(x),i(y))=\lim_{m\to\infty}d(x_m,y_m)=d(x,y)$$
+  por lo que vemos que $i$ preserva distancias. Si $(x_n)\sucn$ es de Cauchy y $\eps>0$, existe un $n_0$ tal que 
+  $$n\geq n_0\To d(x_n,x_{n_0})<\eps.$$
+  Así $\lim_{m\to\infty}d(x_m,d_{n_0})\leq\eps$ por lo tanto 
+  $$d^\sharp([(x_n)\sucn],i(x_{n_0}))\leq\eps$$
+  y así $i(X)$ es denso en $X^\sharp$.
+\end{frame}
+
+\begin{frame}{Tercero: $X^\sharp$ es completo}
+Tomemos $(\un x^m)\sucm$ una sucesión de Cauchy de clases de equivalencia y $y_n\in X$ tal que $d^\sharp(\un x^n,i(y_n))<\frac1n$. Notemos que
+\begin{align*}
+  &d(y_m,y_n)=d^\sharp(i(y_m),i(y_n))\\
+  \leq&d^\sharp(i(y_m),\un x^m)+d^\sharp(\un x^m,\un x^n)+d^\sharp(\un x^n,i(y_n))\\
+  \leq&\frac 1n+\frac1m+d^\sharp(\un x^m,\un x^n)
+\end{align*}  
+y con esto vemos que $(y_m)\sucm$ también es de Cauchy.
+\end{frame}
+
+\begin{frame}{Continuamos con el Tercer Paso}
+Finalmente
+\begin{align*}
+  &d^\sharp(\un x^m,[(y_m)\sucm])\\
+\leq& d^\sharp(\un x^m,i(y_m))+d^\sharp(i(y_m),[(y_m)\sucm])\\
+\leq & \frac{1}{m}+d^\sharp(i(y_m),[(y_m)\sucm]).
+\end{align*}  
+Como $i(y_\l)\xrightarrow[\l\to\infty]{}[(y_m)\sucm]$ entonces podemos concluir que 
+$$\un x^n\xrightarrow[n\to\infty]{}[(y_m)\sucm].$$
+\end{frame}
+
+\begin{frame}{El Resultado}
+  \begin{Th}\label{thm:ExistenciaDeComplec}
+    Sea $(X,d)$ un espacio métrico. Entonces 
+    \begin{enumerate}
+      \item Existe un espacio métrico $(X^\sharp,d^\sharp)$ completo y una función inyectiva $i:X\to X^\sharp$ que preserva distancias.
+      \item Si $(X,d)$ es completo, entonces $(X^\sharp,d^\sharp)$ es isométrico a $(X,d)$.
+    \end{enumerate}
+  \end{Th}
+ 
+\end{frame}
+
+\begin{frame}{¡Pero falta una parte!}
+  Falta que veamos la segunda parte: Tomemos $(x_n)\sucn$ de Cauchy. Si $(X,d)$ es completo, existe $y\in X$ tal que $x_n\xrightarrow[n\to\infty]{}y$.\par 
+  Dado $\eps>0$, 
+  $$d^\sharp([(x_n)\sucn],i(y))=\lim_{m\to\infty}d(x_m,y)=0.$$
+  Por lo tanto $\un i(y)=[(x_n)\sucn]$ y así $i$ es sobreyectiva.
+
+  \begin{Lem}\label{lem:propUnivEspacioCompleto}
+    Sea $(Y,\rho)$ un espacio métrico completo y $j:X\to Y$ que preserva distancias con $j(X)\subseteq Y$ denso en $Y$. Entonces existe $\te: X^\sharp\to Y$, una isometría tal que $\te\circ i=j$.
+  \end{Lem}
+  La prueba de este lema es un \alert{ejercicio}.
+\end{frame}
 \section*{Resumen}
 
 \subsection*{Qu\'e vimos hoy}
@@ -444,7 +507,15 @@ Si $x\in[0,1]$ y $(f_n)_{n=1}^\infty$ es de Cauchy, entonces existe $n_0\in\bN$ 
 
   % Keep the summary *very short*.
   \begin{itemize}
-  \item 
+  \item Hemos recordado la definición de sucesiones de Cauchy.
+  \item Qué era un espacio en el que todas las sucesiones Cauchy eran convergentes. \ref{def:EspacioCompleto}
+  \item El comportamiento de conjuntos cerrados respecto a completitud. \ref{lem:completoYCerrado}
+  \item Que los compactos son completos. \ref{lem:compactoToCompleto}
+  \item Qué es que un conjunto sea totalmente acotado. \ref{def:paracompacidad}
+  \item Una caracterización de la propiedad anterior. \ref{lem:caractParacompacidadCauchy}
+  \item Una equivalencia de compacidad. \ref{thm:compactoIffCompletoYParacompacto}
+  \item La existencia de un espacio completo que contiene a los espacios métricos. \ref{thm:ExistenciaDeComplec}
+  \item La propiedad universal de la compleción de un espacio. \ref{lem:propUnivEspacioCompleto}
   \end{itemize}
   
 \end{frame}
@@ -454,9 +525,11 @@ Si $x\in[0,1]$ y $(f_n)_{n=1}^\infty$ es de Cauchy, entonces existe $n_0\in\bN$ 
     
   \begin{itemize}
     \item
-      Lista 5
+      Lista 6
       \begin{itemize}
-      \item 
+      \item Un recordatorio sobre sucesiones de Cauchy. \ref{ej:RecordatorioCauchy}
+      \item Un detalle sobre convergencia en sucesiones que alcanzan finitos valores. \ref{ej:sucesiones}
+      \item La prueba de la propiedad universal. \ref{lem:propUnivEspacioCompleto}
       \end{itemize}
     \end{itemize}
   
@@ -489,7 +562,7 @@ Si $x\in[0,1]$ y $(f_n)_{n=1}^\infty$ es de Cauchy, entonces existe $n_0\in\bN$ 
   \end{thebibliography}
   
 \end{frame}
-%% 1:01:10
+%% 2:10:52 48
 \end{document}
 
 
