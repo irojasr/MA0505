@@ -134,6 +134,8 @@
 \newcommand{\ov}{\overline}
 \newcommand{\un}{\underline}
 \newcommand{\del}{\partial}
+\newcommand{\x}{\times}
+\newcommand{\xyx}{\times\dots\times}
 
 %%% Small fractions in displays:
 
@@ -146,6 +148,9 @@
 \newcommand{\third}{\tfrac{1}{3}}   %% small fraction  1/3 %Hay que renew porque mathabx toma second y third como x'' y x''' por ejemplo
 
 \newcommand{\ihalf}{{\tfrac{i}{2}}} %% small fraction  i/2
+\newcommand{\sucm}{_{m=1}^\infty} %% diminutivo
+\newcommand{\suck}{_{k=1}^\infty} %% diminutivo
+\newcommand{\sucn}{_{n=1}^\infty} %% diminutivo
 
 \begin{document}
 
@@ -178,36 +183,45 @@
 
 \section{Compacidad Secuencial}
 
-\begin{frame}{La Definición de Compacidad}%{Subtitles are optional.}
+\begin{frame}{La Definición de Compacidad Secuencial}%{Subtitles are optional.}
   % - A title should summarize the slide in an understandable fashion
   %   for anyone how does not follow everything on the slide itself.
-  \begin{itemize}
-  \item Dado $C\subseteq X$, diremos que $C$ es \alert{secuencialmente compacto}\label{def:compacidadSecuencial} si cualquier sucesi\'on $(x_n)_{n=1}^\infty\subseteq C$ pose\'e una subsucesi\'on convergente.
-  \item Note que si $(x_{n_k})_{k=1}^\infty$ converge a $x_0$, tenemos que dado $\eps>0$, existe $k_0$ tal que 
-  $$k\geq k_0\To d(x_{n_k},x_0)<\eps.$$
-  \end{itemize}
+   Dado $C\subseteq X$, diremos que $C$ es \alert{secuencialmente compacto}\label{def:compacidadSecuencial} si cualquier 
+   sucesi\'on $\{x_n\}_{n=1}^\infty\subseteq C$ pose\'e una subsucesi\'on convergente.\vspace{1cm}
+   
+  
+  Ahora si $\{x_{n_k}\}_{k=1}^\infty$ converge a $x_0$, tenemos que dado $\eps>0$, existe $k_0$ tal que 
+   $$k\geq k_0\To d(x_{n_k},x_0)<\eps.$$
+  
 \end{frame}
 
-\begin{frame}{Continuando la idea\dots}
-\begin{itemize}
-  \item De lo anterior, $x_{n_k}\in B(x_0,\eps)$ cuando $k\geq k_0$. As\'i para $k\geq 1$
-  $$B(x_0,\eps)\cap\set{x_m:\ m\geq k}\neq \emptyset.$$
-  \item Por lo tanto $x_0\in \ov{\set{x_m:\ m\geq k}}$ para $k\geq 1$ y en consecuencia 
-  $$x_0\in \bigcap_{k=1}^\infty\ov{\set{x_m:\ m\geq k}}$$
-\end{itemize}
+\begin{frame}{Analizando la definici\'on}
+
+  De lo anterior, 
+  $$x_{n_k}\in B(x_0,\eps),$$ 
+  cuando $k\geq k_0$. Dado que $n_k \geq k$ 
+  $$B(x_0,\eps)\cap\set{x_m:\ m\geq k}\neq \emptyset,$$
+  para $k\geq 1$.
+  Por lo tanto, para todo  $k\geq 1$
+  $$x_0\in \ov{\set{x_m:\ m\geq k}},$$   y en consecuencia 
+  $$x_0\in \bigcap_{k=1}^\infty\ov{\set{x_m:\ m\geq k}}.$$
+
 \end{frame}
 
-\begin{frame}{Una nueva idea\dots}
-  Tomemos $x_0\bigcap_{k=1}^\infty\ov{\set{x_m:\ m\geq k}}$ podemos tomar iterativamente:
+\begin{frame}{Analizando la definici\'on}
+  Por otro lado, si  $x_0 \in \bigcap_{k=1}^\infty\ov{\set{x_m:\ m\geq k}}$ podemos tomar iterativamente:
+  
   \begin{itemize}
-    \item $x_k\in B(x_0,1)\cap\set{x_m:\ m\geq 1}$.
+    \item $x_{k_1}\in B(x_0,1)\cap\set{x_m:\ m\geq 1}$.
     \item $x_{k_2}\in B\left(x_0,\half\right)\cap\set{x_m:\ m\geq k_1+1}$.
   \end{itemize}
   \hspace{1cm}$\vdots$
   \begin{itemize}
-    \item $x_{k_n}\in B\left(x_0,\frac1n\right)\cap\set{x_m:\ m\geq k_{n+1}+1}$.
+    \item $x_{k_{n+1}}\in B\left(x_0,\frac1n\right)\cap\set{x_m:\ m\geq k_{n}+1}$.
   \end{itemize}
-  As\'i $x_{k_n}\to x_0$ y $(x_{n_k})$ es una subsucesi\'on de $(x_n)$
+  As\'i $$x_{k_n}\to x_0,$$ 
+  y 
+  \[\{x_{n_k}\}_{k=1}^{\infty} \text{ es una subsucesi\'on de } \{x_n\}_{n=1}^\infty.\]
 \end{frame}
 
 \begin{frame}{Condensamos lo anterior}
@@ -215,62 +229,365 @@
     Si $(X,d)$ es un espacio m\'etrico y $C\subseteq X$, son equivalentes
     \begin{enumerate}
       \item $C$ es secuencialmente compacto.
-      \item $C\cap \bigcap_{k=1}^\infty\ov{\set{x_m:\ m\geq k}}\neq \emptyset$ para toda $(x_n)_{n=1}^\infty\subseteq C$.
+      \item $C\cap \bigcap_{k=1}^\infty\ov{\set{x_m:\ m\geq k}}\neq \emptyset$ para toda $\{x_n\}_{n=1}^\infty\subseteq C$.
     \end{enumerate}
   \end{Lem}
 \end{frame}
 
-\begin{frame}{Una conexi\'on con lo anterior}
-  Si $z\in\ov C$, existe $(x_n)\subseteq C$ tal que $x_n\to z$. Si $C$ es \emph{secuencialmente compacto}, existe una subsucesi\'on $(x_{n_k})_{k=1}^\infty$ que converge a un punto de $C$. Es decir, $z\in C$. 
+\begin{frame}{Propiedades}
+  Sea $x\in\ov C$, entonces existe $\{x_n\}_{n=1}^{\infty}\subseteq C$ tal que $x_n\to x$. Si $C$ es \emph{secuencialmente 
+  compacto}, existe una subsucesi\'on $\{x_{n_k}\}_{k=1}^\infty$ que converge a un punto de $C$. 
+  Como el l\'{i}mite es \'{u}nico, tenemos que 
+  $$z\in C.$$
+   
   \begin{Lem}\label{lem:equiv1Compacidad}
 Sea $C$ secuencialmente compacto, entonces $C$ es cerrado y acotado.
   \end{Lem}
 
   \begin{Ej}
-    Muestre que $C$ es acotado cuando es secuencialmente compacto.
+    Complete la prueba del lema anterior.
   \end{Ej}
 \end{frame}
 
-\section{Cubrimientos}
+\section{Compacidad}
 
 \begin{frame}{Cubrimientos por abiertos}
   \begin{Def}\label{def:recubrimiento}
-  A una colecci\'on $\cU=\set{U_\al:\ \al\in\La}$ de abiertos le llamamos un \alert{recubrimiento} de un conjunto $A$ si 
+  Una colecci\'on $\cU=\set{U_\al:\ \al\in\La}$ de abiertos es llamado un \alert{recubrimiento} de un conjunto $A$ si 
   $$A\subseteq \bigcup_{\al\in\La}U_\al.$$
   \end{Def}
   \begin{Lem}\label{lem:lemaTecnico}
-    Si $C$ es secuencialmente compacto y $\cU$ es un recubrimiento de $C$, existe $\eps>0$ tal que para $x\in C$, existe $U\in\cU$ tal que
-    $$B(x,\eps)\cap C\subseteq\cU.$$
+    Sea $C$  secuencialmente compacto y $\cU$  un recubrimiento de $C$. Entonces existe $\eps>0$ tal que para todo  $x\in C$, existe $U\in\cU$ 
+    que satisface
+    $$B(x,\eps) \subseteq U.$$
   \end{Lem}
 \end{frame}
 
-\begin{frame}{Probemos lo anterior}
-  Supongamos que para $\eps>0$ existe $x_\eps\in C$ tal que 
-  $$B(x_\eps,\eps)\subsetneq U_\al,\ \al\in \La.$$
-  \begin{itemize}
-    \item En particular existe $(x_n)_{n=1}^\infty\subseteq C$ tal que $B\left(x_n,\frac1n\right)\subsetneq U_\al$, para $\al\in \La$.
-    \item Al ser $C$ secuencialmente compacto, existe $(x_{n_k})_{k=1}^\infty\subseteq C$ y $x_0\in C$ tal que $x_{n_k}\to x_0$.
-    \item Como $\cU$ es recubrimiento, existe $U_{\al_0}$ tal que $x_0\in U_{\al_0}$.
-  \end{itemize}
+\begin{frame}{Prueba del lema}
+  Supongamos que para todo $\eps>0$ existe $x_\eps\in C$ tal que 
+  $$B(x_\eps,\eps)\subsetneq U_\al,$$
+  para todo $\ \al\in \La.$ En particular, para todo $n \in\bN$  existe 
+  $$\{x_n\}_{n=1}^\infty\subseteq C$$
+  tal que 
+  $$B\left(x_n,\frac1n\right)\subsetneq U_\al,$$
+  para $\al\in \La$.
+  
+    
+  
   
 
 \end{frame}
 
-\begin{frame}{Terminemos}
-  \begin{columns}
-    \begin{column}{0.5\textwidth}
-      Sea $\eps>0$ tal que $B(x_0,\eps)\subseteq U_{\al_0}$ y tomemos $k_0$ tal que 
+\begin{frame}{Prueba del lema}
+  Al ser $C$ secuencialmente compacto, existe $\{x_{n_k}\}_{k=1}^\infty\subseteq C$ y $x_0\in C$ tal que $x_{n_k}\to x_0$.
+  Como $\cU$ es recubrimiento, existe $U_{\al_0} \in \cU$ tal que 
+  $$x_0\in U_{\al_0}.$$ 
+  Sea $\eps>0$ tal que 
+  $$B(x_0,\eps)\subseteq U_{\al_0}$$ 
+  y tomemos $k_0$ tal que 
   $$k\geq k_0\To d(x_{n_k},x_0)<\frac{\eps}{2}.$$
-  Con argumentos usuales podemos probar que $B\left(x_{n_k},\frac{1}{n_k}\right)\subseteq B(x_0,\eps)$ cuando $\frac{1}{n_k}<\frac{\eps}{2}$. Es decir
+  
+  
+  \end{frame}
+
+\begin{frame}{Prueba del lema}
+  
+  Con argumentos usuales podemos probar que 
+  $$B\left(x_{n_k},\frac{1}{n_k}\right)\subseteq B(x_0,\eps)$$
+  cuando 
+  $\frac{1}{n_k}<\frac{\eps}{2}$. 
+  Es decir
+  
   \begin{align*}
     B\left(x_{n_k},\frac{1}{n_k}\right)&\subseteq B(x_0,\eps)\\
     &\subseteq U_{\al_0}.
   \end{align*}
-    \end{column}
-    \begin{column}{0.5\textwidth}%dibujo
+    
       
-    \end{column}
-  \end{columns}
+   
+\end{frame}
+
+\begin{frame}{Compacidad}
+  
+  \begin{Def}\label{def:compacidad}
+  Un conjunto $C \subseteq X$ es compacto si dado un recubrimeinto $\cU=\set{U_\al:\ \al\in\La}$ de $C$, existen 
+  $U_{\alpha_1}, \ldots, U_{\alpha_m}$ tales que   
+  $$C\subseteq \bigcup_{k=1}^{m} U_{\al_k}.$$
+  \end{Def}
+  
+Es decir, dado un recubrimeinto  $\cU$ por abiertos de $C$, existe una colecci\'on finita de  $\cU$ que  recubre a $C$.   
+  
+\end{frame}
+
+\begin{frame}{Equivalencia entre ambas definiciones.}
+ 
+  \begin{Lem}\label{lem:equivalencia}
+    Dado  $C \subseteq X$ son equivalentes:
+    \begin{enumerate}       
+    \item $C$ es secuencialmente compacto.
+    \item $C$ es compacto.
+    \end{enumerate}
+  \end{Lem}
+\end{frame}
+
+\begin{frame}{Secuencial implica compacidad}
+Asuma que $C$ es secuencialmente compacto. Sea $x_1 \in C$,  sabemos que existe $\epsilon > 0$  y $\al_1$ tal que 
+\[ B(x_1,\eps) \subseteq U_{\al_1}. \]
+Ahora, si 
+$$ C   \subseteq B(x_1,\eps) \subseteq U_{\al_1}$$
+entonces tenemos un recubrimiento finito. De lo contrario, existe 
+\[ x_2 \in C \setminus  B(x_1,\eps).\]
+ 
+\end{frame}
+
+\begin{frame}{Secuencial implica compacidad}
+Entonces existe  $\al_2$ tal que 
+\[ B(x_2,\eps) \subseteq U_{\al_2}. \]
+En general si 
+$$ C   \subsetneq \bigcup_{i=1}^{m} B(x_i,\eps),$$
+entonces existe 
+\[ x_{m+1} \in C \setminus   \bigcup_{i=1}^{m} B(x_i,\eps).\]
+Note que por construcci\'on, si $ i \not= j$ 
+$$ d( x_i, x_j) \geq \eps.$$
+ 
+\end{frame}
+
+\begin{frame}{Secuencial implica compacidad}
+Entonces existe  $\al_2$ tal que 
+\[ B(x_2,\eps) \subseteq U_{\al_2}. \]
+En general si 
+$$ C   \subsetneq \bigcup_{i=1}^{m} B(x_i,\eps),$$
+entonces existe 
+\[ x_{m+1} \in C \setminus   \bigcup_{i=1}^{m} B(x_i,\eps).\]
+Note que por construcci\'on, si $ i \not= j$ 
+$$ d( x_i, x_j) \geq \eps.$$
+ 
+\end{frame}
+\begin{frame}{Secuencial implica compacidad}
+Concluimos que existe $m$ tal que 
+$$ C   \subseteq \bigcup_{i=1}^{m} B(x_i,\eps) \subseteq \bigcup_{i=1}^{m} U_{\al_i},$$
+o existe una sucesi\'on $\{x_k\}_{k=1}^{\infty}$ tal que, si $ i \not= j$, 
+$$ d( x_i, x_j) \geq \eps.$$
+Esta sucesi\'on no tiene subsucesiones de Cauchy, i.e. no tiene subseciones convergentes. 
+ 
+
+\end{frame}
+\begin{frame}{Compacidad implica secuencial}
+Sea  $\{x_m\}_{m=1}^{\infty}$ una sucesi\'on en $C$ y considere 
+$$U_n=\left( \ov{\set{x_m:\ m\geq n}} \right)^{c}.$$
+Entonces 
+$$ U_n \subset U_{n+1},$$
+$$ X \setminus \bigcup_{n=1}^{\infty} U_n= \bigcap_{n=1}^{\infty} \ov{\set{x_m:\ m\geq n}}.$$
+Ahora, si $\{x_m\}_{m=1}^{\infty}$ no tiene una subsucesi\'on convergente en $C$ tenemos que 
+$$C\cap \bigcap_{k=1}^\infty\ov{\set{x_m:\ m\geq k}} = \emptyset.$$  
+\end{frame}
+
+\begin{frame}{Compacidad implica secuencial}
+Luego 
+$$C \subset  \bigcup_{n=1}^\infty \left( \ov{\set{x_m:\ m\geq n}} \right)^{c} =\bigcup_{n=1}^\infty U_n.$$
+Por compacidad, existe $\al_1, \ldots, \al_m$ tal que 
+$$ C \subset  \bigcup_{n=1}^m U_{\al_m}.$$
+
+\end{frame}
+
+\begin{frame}{Compacidad implica secuencial}
+En particular 
+$$ C \subset  \bigcup_{n=1}^{m_0} U_{n}=U_{m_0},$$
+donde $m_0=\max\{\al_1,\ldots,\al_m\}.$\\
+Pero
+$$ \set{x_k:\ k\geq m_0} \subset C \subset \left( \ov{\set{x_k:\ k\geq m_0}} \right)^{c}.$$
+
+\end{frame}
+
+\begin{frame}{Compacidad y funciones continuas}
+Sea $f:[a,b] \to \bR$ una funci\'on continua, entonces existen $x_1, x_2 \in [a,b]$ tal que 
+\[f(x_1) \leq f(x) \leq f(x_2),\]
+para todo $ x \in [a,b]$. Por el Teorema del valor intermedio
+\[f\left( [a,b]\right) \leq [f(x_1),f(x_2)].\]
+Luego el compacto $ [a,b]$ es mapeado en el compacto $ [f(x_1),f(x_2)]$.\\
+
+\end{frame}
+
+
+\begin{frame}{Compacidad y funciones continuas}
+Sean $f:X \to Y$ una funci\'on continua y $ K \subset X$ compacto. Tome $K_1=f(K)$ y  
+considere 
+$$\cU=\set{U_\al:\ \al\in\La_1}$$
+un cubrimiento de $K_1$. Entonces 
+$$ f(K) \subset \bigcup_{\al \in \La_1}U_{\al}.$$
+Luego 
+$$ K_1 \subset f^{-1}\left\{ \bigcup_{\al \in \La_1}U_{\al}\right\}.$$
+\end{frame}
+
+\begin{frame}{Compacidad y funciones continuas}
+Como $K$ es compacto, existen $\al_1,\ldots,\al_m$ tal que 
+$$ K \subset f^{-1}\left\{ \bigcup_{i=1}^{m}U_{\al_i}\right\}.$$
+Es decir, si $x \in K$, entonces 
+$$ f(x) \in  \bigcup_{i=1}^{m}U_{\al_i},$$
+i.e. 
+$$ f(K) \subset \bigcup_{i=1}^{m}U_{\al_i}.$$
+\end{frame}
+
+\subsection{Algunas Propiedades}
+
+\begin{frame}{Compacidad y funciones continuas}
+  \begin{Lem}\label{lem:CompactosEnCompactos}
+    Sean $f:X \to Y$ una funci\'on continua y $ K \subset X$ compacto. Entonces $f(K)$ es compacto.
+  \end{Lem}
+\end{frame}
+
+\begin{frame}{Compacidad }
+Sea 
+$$\cF=\set{F_\al:\ \al\in\La}$$
+una colecci\'on de conjuntos cerrados tales que 
+$$ \bigcap_{\al\in A} F_\al\not= \emptyset.$$
+si $A \subset \La$ es finito. Asuma que 
+$$ \bigcap_{\al\in \La} F_\al = \emptyset.$$
+Entonces 
+$$ X = \bigcup_{\al\in \La} X \setminus F_{\al}.$$
+\end{frame}
+
+\begin{frame}{Compacidad }
+Ahora si $X$ es compacto, entonces existen $\al_1,\ldots,\al_m$ tal que 
+$$ X = \bigcup_{i=1}^{m} X \setminus F_{\al_i},$$
+i.e. 
+$$ \emptyset = \bigcap_{i=1}^{m}  F_{\al_i}.$$
+\end{frame}
+
+\begin{frame}{Compacidad }
+Ahora si $X$ es compacto, entonces existen $\al_1,\ldots,\al_m$ tal que 
+$$ X = \bigcup_{i=1}^{m} X \setminus F_{\al_i},$$
+i.e. 
+$$ \emptyset = \bigcap_{i=1}^{m}  F_{\al_i}.$$
+\end{frame}
+
+\begin{frame}{Compacidad }
+\begin{Th}\label{thm:equivCompacidadConIntersecc}
+Sea $(X,d)$ un espacio m\'etrico, son equivalentes 
+\begin{enumerate}
+\item $X$ es compacto.
+\item Si $\cF=\set{F_\al:\ \al\in\La}$ es 
+una colecci\'on de conjuntos cerrados tales que 
+$$ \bigcap_{\al\in A} F_\al\not= \emptyset.$$
+si $A \subset \La$ es finito. Entonces 
+$$ \bigcap_{\al\in \La} F_\al \not= \emptyset.$$
+\end{enumerate}
+\end{Th}
+
+\end{frame}
+
+\begin{frame}{La Prueba es Ejercicio}
+  \begin{itemize}
+  \item La prueba del teorema se deja como \alert{ejercicio}.
+  \item A la segunda propiedad del teorema \ref{thm:equivCompacidadConIntersecc} le llamamos la \alert{propiedad de intersecciones finitas}.
+  \end{itemize}
+\end{frame}
+
+\subsection{El caso de $\bR^d$}
+
+\begin{frame}{Compacidad en $\bR^d$}
+  Asuma que 
+  $$C=[a_1,b_1]\x\dots\x[a_d,b_d]$$
+  es compacto si $a_i\leq b_i$ para $1\leq i\leq d$. Sabemos que en este caso todo compacto es cerrado y acotado.
+\end{frame}
+
+\begin{frame}{¿Cerrado + Acotado = Compacto?}
+  La respuesta general es no, ¡pero en $\bR^d$ sí!
+  \begin{itemize}
+    \item Sea $F$ cerrado y acotado en $\bR^d$. Existe $C_n=[-n,n]\x\dots\x[-n,n]$ tal que $F\subseteq C_n$.
+    \item Sea $\{x_n\}\sucn\subseteq F$. Como $C_n$ es compacto, existe $\{x_{n_k}\}\suck$ subsucesión de $\{x_n\}\sucn$ tal que 
+    $$x_{n_k}\xrightarrow[n_k\to\infty]{}x_0\in C_n$$
+  \end{itemize}
+  Como $\{x_{n_k}\}\suck\subseteq F$ y $F$ es cerrado, entonces $x_0\in F$. Es decir, $F$ es \un{secuencialmente compacto}.
+\end{frame}
+
+\begin{frame}{El Teorema de Heine y Borel}
+  \begin{Th}{Heine-Borel}\label{thm:HeineBorel}
+    Sea $C\subseteq\bR^d$. Entonces $C$ es compacto respecto a la norma euclídea si y sólo si es cerrado y acotado.
+  \end{Th}
+\end{frame}
+
+\begin{frame}{Cajas}
+\begin{Lem}\label{lem:cajasCompactas}
+  Dados $a_i\leq b_i$, $1\leq i\leq d$, el conjunto
+  $$C=[a_1,b_1]\x\dots\x[a_d,b_d]$$
+  es compacto en $(\bR^d,\nm{\cdot})$.
+\end{Lem}  
+Dividimos $C$ en $2^d$ rectángulos de la forma 
+$$[c_1^i,e_1^i]\xyx[c_d^i,e_d^i]=C_i$$
+donde $c_j^i=a_j$ ó $\frac{a_j+b_j}{2}$ y $e_j^i=b_j$ ó $\frac{a_j+b_j}{2}$.
+\end{frame}
+
+\begin{frame}{Prueba del Lema}
+  \begin{itemize}
+    \item Tomemos $\cU=\set{U_\al:\ \al\in\Om}$ es un recubrimiento de $C$ tal que $C\subsetneq\bigcup\sucm U_{\al_i}$ para ${\al_1,\dots,\al_m}\subseteq \La$.
+    \item Si dado $1\leq i\leq 2^d$ existen $\al^i_1,\dots,\al_{m_i}^i$ tal que $C_i\subseteq \bigcup_{j=1}^{m_i}U_{\al_j^i}$, entonces 
+    $$C\subseteq \bigcup_{i=1}^{2^d}\bigcup_{j=1}^{m_i}U_{\al_j^i}.$$
+  \end{itemize}
+  
+\end{frame}{Prueba del Lema}
+\begin{itemize}
+  \item Es decir, existe $i_0$ tal que 
+  $$C_{i_0}\subsetneq\bigcup\sucm U_{\al_i}$$
+  para $\set{\al_1,\dots,\al_m}\subseteq\La$
+  \item Dividiendo $C_{i_0}$ en $2^d$ rectángulos obtenemos 
+  $$C_{i_1}\subseteq C_{i_0},\ \text{ y }\ C_{i_1}\subsetneq \bigcup\sucm U_{\al_i}$$
+  para cualquier $\set{\al_1,\dots,\al_m}\subseteq\La$
+  
+\end{itemize}
+
+\begin{frame}{Prueba del Lema - Iterando}
+  \begin{itemize}
+    \item Además 
+    \begin{align*}
+      &[c_1^{i_0},e_1^{i_0}]\xyx[c_d^{i_0},e_d^{i_0}]=C_{i_0}\\
+      &[c_1^{i_1},e_1^{i_1}]\xyx[c_d^{i_1},e_d^{i_1}]=C_{i_1},
+    \end{align*}
+    con $[c_j^{i_1},e_j^{i_1}]\subseteq[c_j^{i_0},e_j^{i_0}]$ y 
+    \begin{align*}
+      |e_j^{i_1}-c_j^{i_1}|&=\half|e_j^{i_0}-c_j^{i_0}|\\
+      &=\frac14|b_j-a_j|.
+    \end{align*}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Prueba del Lema - El caso general}
+  Iterando el proceso obtenemos 
+  $$[c_1^{i_j},e_1^{i_j}]\xyx[c_d^{i_j},e_d^{i_j}]=C_{i_j}$$
+  tal que 
+  $$[c_\l^{i_j},e_\l^{i_j}]\subseteq[c_\l^{i_j-1},e_\l^{i_j-1}]$$
+  y 
+  $$|c_\l^{i_j}-e_\l^{i_j}|=\frac{1}{2^j}|b_\l-a_\l|.$$
+\end{frame}
+
+\begin{frame}{Prueba del Lema - Intervalos Encajados}
+  Por el teorema de los Intervalos Encajados, existe $z_\l$ tal que $\bigcap_{j=1}^\infty[c_\l^{i_j},e_\l^{i_j}]=\set{z_\l}$. Es decir,
+  $$\bigcap_{j=1}^\infty C_{i_j}=\set{z},\ z=(z_1,\dots,z_d).$$
+  Como $z\in C$, existe $\al_0$ tal que $U_{\al_0}\in U$ y $z\in U_{\al_0}$. Sea $\eps> 0$ tal que $B(z,\eps)\subseteq U_{\al_0}$.
+\begin{Ej}\label{ej:ultimoDetallePrueba}
+  Pruebe que existe $j_0$ tal que $C_{i_j}\subseteq B(z,\eps)$ para $j\geq j_0$.
+\end{Ej}
+\end{frame}
+
+\begin{frame}{Valores Extremos}
+  Si $K\subseteq X$ y $f:\ X\to\bR$ es continua, entonces $f(K)$ es compacto y en particular, acotado.\par 
+  Sean $a=\inf_{x\in K}f(x)$ y $b=\sup_{x\in K}$, nos preguntamos:\par 
+  \begin{center}
+    \emph{¿Se alcanzan ``$a$'' y ``$b$''?}
+  \end{center}
+\end{frame}
+\begin{frame}{Damos Respuesta}
+  \begin{itemize}
+    \item Dado $n\in\bN$, existe $x_n\in K$ tal que 
+    \begin{equation}\label{eqn:TmaValExt}
+      a\leq f(x_n)\leq a+\frac1n  
+    \end{equation}
+    \item Como $\set{x_n}\sucn\subseteq K$, existe $\set{x_{n_k}}\suck$ que satisface
+    \item $$x_{n_k}\xrightarrow[n_k\to\infty]{}y_0\in K.$$
+    \item Entonces $f(x_{n_k})\to f(y_0)$ cuando $n_k\to\infty$.
+    \item De \ref{eqn:TmaValExt} se tiene que $f(x_{n_k})\to a$ cuando $n_k\to\infty$. Por lo tanto $a=f(y_0)$.
+  \end{itemize}
+  
 \end{frame}
 \section*{Resumen}
 
@@ -282,7 +599,12 @@ Sea $C$ secuencialmente compacto, entonces $C$ es cerrado y acotado.
   \item Definición de compacidad secuencial. \ref{def:compacidadSecuencial}
   \item Equivalencia entre compacidad secuencial y la propiedad de intersección. \ref{lem:equivSecCompYEncajados}.
   \item Compacidad secuencial implica compacidad usual. \ref{lem:equiv1Compacidad}
-  \item Definición de recubrimiento por abiertos. \ref{def:recubrimiento} y el \'ultimo lema.
+  \item Definición de recubrimiento por abiertos. \ref{def:recubrimiento}.
+  \item Equivalencia entre compacidad y compacidad secuencial. \ref{lem:equivalencia}
+  \item Que las funciones continuas mandan compactos en compactos. \ref{lem:CompactosEnCompactos}
+  \item El Teorema de las Intersecciones Finitas. \ref{thm:equivCompacidadConIntersecc}
+  \item El Teorema Heine-Borel sobre compactos en $\bR^d$. \ref{thm:HeineBorel}
+  \item Las cajas son compactos de $\bR^d$. \ref{lem:cajasCompactas}
   \end{itemize}
   
 \end{frame}
@@ -295,6 +617,7 @@ Sea $C$ secuencialmente compacto, entonces $C$ es cerrado y acotado.
       Lista 5
       \begin{itemize}
       \item Terminar el detalle en la prueba del lema de compacidad secuencial a la usual. \ref{lem:equiv1Compacidad}.
+      \item El último detalle de la prueba sobre las cajas compactas. \ref{ej:ultimoDetallePrueba}
       \end{itemize}
     \end{itemize}
   
@@ -328,6 +651,7 @@ Sea $C$ secuencialmente compacto, entonces $C$ es cerrado y acotado.
   
 \end{frame}
 %% 1:01:10
+%% 5 - 49:48 54
 \end{document}
 
 
