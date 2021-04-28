@@ -1,0 +1,410 @@
+\documentclass[utf8]{beamer}
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  \setbeamercovered{transparent}
+}
+
+
+\usepackage{amsfonts,mathtools,amssymb}
+\usepackage[spanish]{babel}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+
+\title[MA0505]{MA0505 - An\'alisis I}
+\subtitle{Lecci\'on VII: Arzelà-Ascoli}
+
+\author{Pedro M\'endez\inst{1}}
+
+\institute[Universidad de Costa Rica] % (optional, but mostly needed)
+{
+  \inst{1}%
+  Departmento de Matem\'atica Pura y Ciencias Actuariales\\
+  Universidad de Costa Rica
+  }
+
+\date[I-2021] {Semestre I, 2021}
+
+%%%%%%%%% === Theorems and suchlike === %%%%%%%%%%%%%%
+
+\theoremstyle{plain}
+\newtheorem{Th}{Teorema}               %%% Theorem 1.1.1
+\newtheorem{Tmon}{Teoremón}
+\newtheorem{Prop}{Proposición}         %%% Proposition 1.1.2
+\newtheorem{Lem}{Lema}                 %%% Lemma 3
+\newtheorem{Cor}{Corolario}            %%% Corollary 4
+
+\theoremstyle{definition}
+\newtheorem{Def}{Definición}           %%% Definition 5
+\newtheorem{Ex}{Ejemplo}               %%% Example 6
+\newtheorem{Ej}{Ejercicio}             %%% Ejercicio 7
+\newtheorem{Hec}[Th]{Hecho}            %%% Hecho 1.1.8
+
+\theoremstyle{remark}
+\newtheorem{Rmk}[Th]{Observación}      %%%Remark 1.1.9
+\newtheorem*{nonum-Rmk}{Observación}         %%% No number Fact
+\newtheorem*{Notn}{Notaci\'on}        %% Notaciones
+\newtheorem*{Warn}{Advertencia}       %% Advertencias
+
+\numberwithin{equation}{section}
+
+% Greek letters:
+
+\newcommand{\al}{\alpha}                %% short for  \alpha
+\newcommand{\bt}{\beta}                 %% short for  \beta
+\newcommand{\Dl}{\Delta}                %% short for  \Delta
+\newcommand{\dl}{\delta}                %% short for  \delta
+\newcommand{\eps}{\varepsilon}          %% short for  \varepsilon
+\newcommand{\Ga}{\Gamma}                %% short for  \Gamma
+\newcommand{\ga}{\gamma}                %% short for  \gamma
+\newcommand{\kp}{\kappa}                %% short for  \kappa
+\newcommand{\La}{\Lambda}               %% short for  \Lambda
+\newcommand{\la}{\lambda}               %% short for  \lambda
+\newcommand{\Om}{\Omega}                %% short for  \Omega
+\newcommand{\om}{\omega}                %% short for  \omega
+\newcommand{\Sg}{\Sigma}                %% short for  \Sigma
+\newcommand{\sg}{\sigma}                %% short for  \sigma
+\newcommand{\Te}{\Theta}                %% short for  \Theta
+\newcommand{\te}{\theta}                %% short for  \theta
+\newcommand{\ups}{\upsilon}             %% short for  \upsilon
+\newcommand{\vf}{\varphi}               %% short for  \varphi
+\newcommand{\ze}{\zeta}                 %% short for  \zeta
+
+%Boldface letters
+
+\newcommand{\bC}{\mathbb{C}}    %%% números complejos
+\newcommand{\bN}{\mathbb{N}}    %%% números naturales
+\newcommand{\bP}{\mathbb{P}}        %% números enteros positivos
+\newcommand{\bQ}{\mathbb{Q}}    %%% números racionales
+\newcommand{\bR}{\mathbb{R}}    %%% números reales
+\newcommand{\bS}{\mathbb{S}}    %%% esfera
+\newcommand{\bZ}{\mathbb{Z}}    %%% números enteros
+
+%Script letters:
+
+\newcommand{\cA}{\mathcal{A}}           %% formas diferenciales
+\newcommand{\cB}{\mathcal{B}}           %% una base vectorial
+\newcommand{\cC}{\mathcal{C}}           %% otra base vectorial
+\newcommand{\cD}{\mathcal{D}}           %% funciones de prueba
+\newcommand{\cE}{\mathcal{E}}           %% un modulo proyectivo
+\newcommand{\cF}{\mathcal{F}}           %% espacio de Fock
+\newcommand{\cG}{\mathcal{G}}           %% funtor de Gelfand
+\newcommand{\cH}{\mathcal{H}}           %% espacio de Hilbert
+\newcommand{\cI}{\mathcal{I}}           %% un funtor de inclusion
+\newcommand{\cJ}{\mathcal{J}}           %% otro funtor
+\newcommand{\cK}{\mathcal{K}}           %% otro espacio de Hilbert
+\newcommand{\cL}{\mathcal{L}}           %% operadores lineales
+\newcommand{\cM}{\mathcal{M}}           %% multiplicadores
+\newcommand{\cN}{\mathcal{N}}           %% funciones nulas
+\newcommand{\cO}{\mathcal{O}}           %% funciones de crec-to lento
+\newcommand{\cP}{\mathcal{P}}           %% una particion
+\newcommand{\cR}{\mathcal{R}}           %% funciones representativas
+\newcommand{\cQ}{\mathcal{Q}}           %% otra particion
+\newcommand{\cS}{\mathcal{S}}           %% funciones de Schwartz
+\newcommand{\cT}{\mathcal{T}}           %% una topologia
+\newcommand{\cU}{\mathcal{U}}           %% cubrimiento abierto
+\newcommand{\cV}{\mathcal{V}}           %% vecindarios
+\newcommand{\cW}{\mathcal{W}}           %% grupo de Weyl
+
+
+%Brackets
+
+\newcommand{\bonj}[1]{\left\lbrack#1\right\rbrack}
+\newcommand{\obonj}[1]{\left\rbrack#1\right\lbrack}
+\newcommand{\rbonj}[1]{\left\rbrack#1\right\rbrack}
+\newcommand{\lbonj}[1]{\left\lbrack#1\right\lbrack}
+\newcommand{\snm}[1]{\|#1\|}           %small norma
+\newcommand{\nm}[1]{\left\|#1\right\|} %norma pegadita
+\newcommand{\pnm}[1]{\biggl|\biggl|#1\biggr|\biggr|}
+\newcommand{\set}[1]{\{\,#1\,\}}    %% set notation
+\newcommand{\floor}[1]{\lfloor#1\rfloor} %% mayor entero <= x
+\newcommand{\Set}[1]{\biggl\{\,#1\,\biggr\}} %% set notation (large)
+\newcommand\quot[2]{
+        \mathchoice
+            {% \displaystyle
+                \text{\raise1ex\hbox{$#1$}\Big/\lower1ex\hbox{$#2$}}%
+            }
+            {% \textstyle
+                {^{ #1}/_{ #2}}
+            }
+            {% \scriptstyle
+                {^{ #1}/_{ #2}}
+            }
+            {% \scriptscriptstyle
+                {^{ #1}/_{ #2}}
+            }
+    }
+\newcommand*\squot[2]{{^{ #1}/_{ #2}}}%%%small quotient
+
+%Symbols 
+
+\renewcommand{\geq}{\geqslant}          %% mayor o igual (variante)
+\newcommand{\hookto}{\hookrightarrow}     %% inclusion arrow
+\newcommand{\isom}{\simeq}              %% isomorfismo
+\renewcommand{\l}{\ell}                   %% ele cursiva
+\renewcommand{\leq}{\leqslant}          %% menor o igual (variante)
+\newcommand{\less}{\setminus}           %% set difference
+\newcommand{\To}{\Rightarrow}
+\newcommand{\ov}{\overline}
+\newcommand{\un}{\underline}
+\newcommand{\del}{\partial}
+
+%%% Small fractions in displays:
+
+\newcommand{\half}{{\mathchoice{\nhalf}{\thalf}{\shalf}{\shalf}}} %%display text script script^2
+\newcommand{\happi}{{\tfrac{\pi}{2}}} %% small fraction  \pi/2
+\newcommand{\quarter}{\tfrac{1}{4}} %% small fraction  1/4
+\newcommand{\nhalf}{\frac{1}{2}}
+\newcommand{\shalf}{{\scriptstyle\frac{1}{2}}} %% tiny fraction 1/2
+\newcommand{\thalf}{{\tfrac{1}{2}}} %% small fraction  1/2
+\newcommand{\third}{\tfrac{1}{3}}   %% small fraction  1/3 %Hay que renew porque mathabx toma second y third como x'' y x''' por ejemplo
+
+\newcommand{\ihalf}{{\tfrac{i}{2}}} %% small fraction  i/2
+
+\newcommand{\sucm}{_{m=1}^\infty} %% diminutivo
+\newcommand{\suck}{_{k=1}^\infty} %% diminutivo
+\newcommand{\sucn}{_{n=1}^\infty} %% diminutivo
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Agenda}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{El Teorema de Arzelà-Ascoli}
+
+\begin{frame}{El Espacio de Funciones Continuas}
+  \begin{itemize}
+    \item Sea $(X,d)$ un espacio métrico y $K\subseteq X$ un compacto. Definimos 
+    $$\cC(K,\bR)=\set{f:\ K\to\bR,\ f\ \text{continua}}$$
+    y $d_\infty(f,g)=\sup_{x\in K} \set{|f(x)-g(x)|}$ para $f,g\in\cC(K,\bR)$.\par 
+  \item  Sabemos que $(\cC(K,\bR),d_\infty)$ es un espacio métrico. La convergencia en este espacio, es la convergencia uniforme de funciones continuas.   
+  \end{itemize}
+ 
+\end{frame}
+
+\begin{frame}{Compacidad en este Espacio}
+  \begin{itemize}
+    \item Vamos a analizar la compacidad en estos espacios. Tomemos $C\subseteq\cC(K,\bR)$ un compacto.
+    \item Si $\set{f_n}\sucn\subseteq C$ vamos a probar que dados $\eps>0$ y $x_0\in K$, existe un $\dl>0$ tal que 
+    $$d(x_0,y)<\dl\To|f_n(y)-f_n(x_0)|<\eps$$
+    para $n\geq 1$.
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Probamos esto\dots}
+  \begin{itemize}
+    \item Asumamos por el contrario que no, entonces existe un $\eps>0$ y $x_0\in K$ tales que para $n\in\bN$ existen $y_n,k_n$ que satisfacen
+    $$d(x_0,y_n)<\frac1n\ \land\ |f_{k_n}(x_0)-f_{k_n}(y_n)|\geq\eps.$$
+    \item Como $C$ es compacto, existe $\set{f_{m_n}}\sucn$ subsucesión de $\set{f_{k_n}}\sucn$ que converge uniformemente a $f: K\to\bR$ continua.
+    \item Al ser $f$ continua y $y_n\xrightarrow[n\to\infty]{}x_0$ existe un $n_0$ tal que 
+    $$n\geq n_0\To |f(x_n)-f(x_0)|<\frac{\eps}{3}.$$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Terminamos la Prueba\dots}
+  De esta manera
+  \begin{align*}
+    &|f_{m_n}(x_n)-f_{m_n}(x_0)|\\
+    \leq&|f_{m_n}(x_n)-f(x_n)|+|f(x_n)-f(x_0)|+|f_{m_n}(x_0)-f(x_0)|\\
+    \leq&\frac{\eps}{3}+2d_\infty(f_{m_n},f)
+  \end{align*}
+  y esto resulta ser una contradicción.%Donde? No la veo :s un toque no afilado aquí
+\end{frame}
+
+\begin{frame}{Equicontinuidad}
+  \begin{Def}\label{def:equicontinuidad}
+    Sea $\set{f_\al}_{\al\in\Om}$ una familia de funciones $f_\al:X\to Y$ con $(X,d),(Y,\rho)$ espacios métricos.\par 
+Diremos que $\set{f_\al}_{\al\in\Om}$ es \alert{equicontinua} en $x_0$ si para $\eps>0$, existe $\dl>0$ que satisface
+$$d(x_0,y)<\dl\To\rho(f_\al(y),f_\al(x_0))<\eps$$
+si $\al\in\Om$.\par
+La familia entera es equicontinua si lo es en todos los puntos.
+  \end{Def}
+\end{frame}
+
+\begin{frame}{Un Lema Útil}
+  \begin{Lem}\label{lem:equicontToUnifConv}
+    Sea $\set{f_n}\sucn$, $f_n: X\to Y$ una familia equicontinua. Sea $K\subseteq X$ un compacto tal que $f_n(x)\xrightarrow[n\to\infty]{}f_0(x)$ con $f_0$ continua en $K$. Entonces $\set{f_n}\sucn$ converge uniformemente a $f_0$ en $K$.
+  \end{Lem}
+\end{frame}
+
+\begin{frame}{Probamos el Lema}
+\begin{itemize}
+  \item Dado $x\in K$ y $\eps>0$, existe $\dl_x>0$ tal que 
+  $$y\in B(x,\dl_x)\To \rho(f_n(x),f_n(y))<\frac{\eps}{3}$$
+  para $n\geq 0$.
+  \item Al ser $K$ compacto, existen $x_1,\dots,x_m$ tales que 
+  $$K\subseteq\bigcup\sucm B(x_i,\dl_{x_i}).$$
+  \item Tome $n_0\in\bN$ tal que para $1\leq i\leq m$ valga
+  $$\rho(f_n(x_i),f_0(x_i))<\frac{\eps}{3}.$$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Terminamos la Prueba}
+  Sea $y\in K$, entonces existe $1\leq i\leq m$ tal que $y\in B(x_i,\dl_{x_i})$ y así
+  \begin{align*}
+    &\rho(f_n(y),f_0(y))\\
+    \leq &\rho(f_n(y),f_n(x_i))+\rho(f_n(x_i),f_0(x_i))+\rho(f_0(x_i),f_0(y))\\
+    <&\frac{\eps}{3}+\frac{\eps}{3}+\frac{\eps}{3}.
+  \end{align*}
+En esencia, este lema nos dice que la equicontinuidad nos permite pasar de convergencia puntual a uniforme.\par 
+\emph{¿Qué hacemos si no tenemos de antemano que $f$ es continua?}
+\end{frame}
+
+\begin{frame}{Solventando el Problema}
+  \begin{Lem}\label{lem:casoNoContEquicont}
+    Sea $f_n:X\to Y$ una sucesión equicontinua con $Y$ completo. Suponga que además $\set{f_n}\sucn$ converge para $x\in D\subseteq X$ con $D$ denso en $X$.\par 
+    Entonces $f_n$ converge en $X$ y su límite es continuo.
+  \end{Lem}
+\end{frame}
+
+\begin{frame}{Probamos el Lema}
+Sea $x\in X$ vamos a probar que $\set{f_n(x)}\sucn$ es de Cauchy.
+\begin{itemize}
+  \item Por equicontinuidad existe $\dl>0$ tal que para $n\geq 1$ vale
+  $$d(x,y)<\dl\To\rho(f_n(x),f_n(y))<\frac{\eps}{3}.$$
+  \item Sea $y\in B(x,\dl)\cap D$, así existe $n_0$ tal que 
+  $$n,m\geq n_0\To \rho(f_n(y),f_m(y))<\frac{\eps}{3}.$$
+  
+\end{itemize}  
+\end{frame}
+
+\begin{frame}{Terminamos la Prueba}
+  Así, cuando $n,m\geq 0$ vale que
+  \begin{align*}
+    &\rho(f_n(x),f_m(x))\\
+    \leq&\rho(f_n(x),f_n(y))+\rho(f_n(y),f_m(y))+\rho(f_m(y),f_m(x))<\eps.
+  \end{align*}
+  Sea $f(x)=\lim_{n\to\infty}f_n(x)$, note que 
+  $$\rho(f(x),f(y))\leq\lim_{n\to\infty}\rho(f_n(x),f_n(y))\leq\frac{\eps}{3}$$
+  cuando $d(x,y)<\dl$.
+  \begin{Rmk}
+    El resultado es válido siempre que $\ov{\set{f_n(x)}\sucn}$ sea completo. Por ejemplo, cuando el conjunto es compacto.
+  \end{Rmk}
+\end{frame}
+
+\begin{frame}{Otro Lema, pero de Ejercicio}
+\begin{Lem}\label{lem:equicontConvToUnif}
+  Sea $f_n: X\to Y$ una familia equicontinua y $K\subseteq X$ compacto. Asuma que $\set{f_n(x)}\sucn$ converge para $x\in K$ a $f_0: X\to Y$. Entonces $f_n$ converge uniformemente en $K$.
+\end{Lem}
+\begin{Ej}
+  ¡Pruebe el lema!
+\end{Ej}
+\end{frame}
+
+\begin{frame}{El Teorema de Arzelà-Ascoli}
+  \begin{Th}\label{thm:ArzelaAscoli}
+    Sea $\set{f_n}\sucn$ una familia equicontinua con $f_n: X\to Y$ y $X$ separable. Supongamos que $\ov{\set{f_n(x)}\sucn}$ es compacto. Entonces existe una subsucesión de $\set{f_n}\sucn$ que converge puntualmente a una función continua $f: X\to Y$ y la convergencia es uniforme para cada compacto $K\subseteq X$. 
+  \end{Th}
+\end{frame}
+
+\begin{frame}{La Prueba del Teorema}
+  \begin{itemize}
+    \item Sea $\set{x_n}\sucn=D\subseteq X$ denso, que existe por separabilidad. 
+    \item Sabemos que $\ov{\set{f_n(x_1):n\geq 1}}$ es compacto. 
+    \item Entonces existe una subsucesión $f_{n_k}^1$ tal que $\set{f_{n_k}^1(x_1)}\suck$ converge. 
+    \item De igual forma $\ov{\set{f_{n_k}^1(x_2):n\geq 1}}$ es compacto. \alert{¿Por qué?}
+    \item Entonces existe una subsucesión $f_{n_k}^2$ de $f_{n_k}^1$ que satisface que $\set{f_{n_k}^2(x_2)}\suck$ converge.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Continuamos la Prueba}
+  \begin{itemize}
+    \item Iterando, dado $f_{n_k}^m$ tal que $\set{f_{n_k}^m(x_m)}\suck$ converge, existe una subsucesión $f_{n_k}^{m+1}$ que satisface que $\set{f_{n_k}^{m+1}(x_{m+1})}\suck$ converge.
+    \item Por construcción $\set{f_{n_k}^m(x_\l)}\suck$ convergencia para $1\leq \l\leq m$.
+    \item Dado que para $\l\leq m$, $\set{f_{n_m}^m}_{m=\l}^\infty$ es una subsucesión de $f_{n_k}^\l$, tenemos que $\set{f_{n_m}^m(x_i)}_{m=1}^\infty$ converge para $1\leq i\leq \l$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Terminamos la Prueba}
+  Por lo tanto $\set{f_{n_m}^m}\sucm$ converge para todos los puntos de $D$.\par 
+  Por los resultados anteriores, $\set{f_{n_m}^m}\sucm$ converge en $X$ a una función continua y la convergencia es uniforme en compactos.
+\end{frame}
+
+%Vamos por pg 8.2, llevamos 1:03:13 85.
+
+\section*{Resumen}
+
+\subsection*{Qu\'e vimos hoy}
+\begin{frame}{Resumen}
+
+  % Keep the summary *very short*.
+  \begin{itemize}
+  \item La definición \ref{def:equicontinuidad} de equicontinuidad.
+  \item El primer lema \ref{lem:equicontToUnifConv} sobre convergencia uniforme.
+  \item Qué pasaba en el caso no continuo. \ref{lem:casoNoContEquicont}
+  \item El teorema \ref{thm:ArzelaAscoli} de Arzelà-Ascoli.
+  \end{itemize}
+  
+\end{frame}
+
+\subsection*{Ejercicios a trabajar}
+\begin{frame}{Ejercicios}
+    
+  \begin{itemize}
+    \item
+      Lista 7
+      \begin{itemize}
+      \item A probar el lema \ref{lem:equicontConvToUnif}
+      \end{itemize}
+    \end{itemize}
+  
+\end{frame}
+
+
+% All of the following is optional and typically not needed. 
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{Lectura adicional}
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{Lecturas adicionales}
+    
+  \begin{thebibliography}{10}
+    
+  \beamertemplatebookbibitems
+  % Start with overview books.
+
+  \bibitem{CambroNotas}
+    S.Cambronero.
+    \newblock {\em Notas MA0505}.
+    \newblock 20XX.
+
+    \bibitem{NachoNotas}
+    I.Rojas
+    \newblock {\em Notas MA0505}.
+    \newblock 2018.
+ 
+  \end{thebibliography}
+  
+\end{frame}
+%% 6 - 2:10:52 48
+%% 7 - 
+\end{document}
+
+
