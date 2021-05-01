@@ -12,6 +12,7 @@
 \usepackage{times}
 \usepackage[T1]{fontenc}
 
+
 \title[MA0505]{MA0505 - An\'alisis I}
 \subtitle{Lecci\'on VII: Arzelà-Ascoli}
 
@@ -348,6 +349,58 @@ Sea $x\in X$ vamos a probar que $\set{f_n(x)}\sucn$ es de Cauchy.
 
 %Vamos por pg 8.2, llevamos 1:03:13 85.
 
+\begin{frame}{Un Corolario}
+  \begin{Cor}\label{cor:ArzelaAscoliCor}
+  Sea $\set{f_n}\sucn$ una familia equicontinua de funciones $f_n: X\to\bR$ con $X$ separable. Si $D$ es denso y numerable y $\set{f_n(x)}\sucn$ es acotado, entonces existe una subsucesión $\set{f_{n_k}}\suck$ que converge a una función continua $f:X\to\bR$ y la convergencia es uniforme en compactos.
+  \end{Cor}
+  Note que $\ov{\set{f_n(x)}\sucn}$ es compacto. 
+\end{frame}
+
+\begin{frame}{Compactos de $\cC(K,\bR)$}
+  \begin{Lem}\label{lem:caractCompactosCKR}
+    Sea $X=\cC(K,\bR)$. Entonces $C\subseteq X$ es compacto en $(X,d_\infty)$ si y sólo si $C$ es cerrado, acotado y equicontinuo.
+  \end{Lem}  
+  Ya vimos que los compactos de $\cC(K,\bR)$ cumplen lo pedido. Vamos a probar la otra dirección a continuación.
+\end{frame}
+
+\begin{frame}{Prueba del Lema}
+  Sea $\set{f_n}\sucn\subseteq C$. 
+  \begin{itemize}
+    \item Como $C$ es acotado, existe $M\geq 0$ que satisface
+    $$d_\infty(f_n,0)\leq M$$
+    con $0$ la función idénticamente cero. Es decir $\|f_n\|_\infty\leq M$ para $n\geq 1$.
+    \item Por el corolario \ref{cor:ArzelaAscoliCor} anterior, existe $\set{f_{n_k}}\suck$ que converge a $f: K\to\bR$ continua con $f\in C$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Un Ejemplo}
+  Si 
+$$f_n(x)=\begin{cases}
+  0,\ 0\leq x\leq 1-\frac1n.\\
+  nx-n+1,\ 1-\frac1n\leq x\leq 1.
+\end{cases}$$
+Podemos probar que
+
+\begin{itemize}
+  \item $\|f_n\|_\infty\leq 1$.
+  \item $f_n$ es continua.
+\end{itemize}
+
+Es decir, $f_n\in \cC([0,1],\bR)$ y $f_n\in\ov{B(0,1)}$. Y ahora,
+$$|f_n(x)-f_n(1)|=|nx-n+1-1|=n|x-1|.$$
+\end{frame}
+
+\begin{frame}
+  Finalmente
+  \begin{gather*}
+    |f_n(x)-f_n(1)|<\eps\\
+    \iff n|x-1|<\eps\\
+    \iff |x-1|<\frac\eps n
+  \end{gather*}
+  Así esta sucesión no es equicontinua y por tanto $\ov{B(0,1)}$ no es compacta en $\cC([0,1],\bR)$.
+
+  %Leer tma Banach Alaoglu
+\end{frame}
 \section*{Resumen}
 
 \subsection*{Qu\'e vimos hoy}
@@ -359,6 +412,7 @@ Sea $x\in X$ vamos a probar que $\set{f_n(x)}\sucn$ es de Cauchy.
   \item El primer lema \ref{lem:equicontToUnifConv} sobre convergencia uniforme.
   \item Qué pasaba en el caso no continuo. \ref{lem:casoNoContEquicont}
   \item El teorema \ref{thm:ArzelaAscoli} de Arzelà-Ascoli.
+  \item Un corolario \ref{cor:ArzelaAscoliCor} al teorema de Arzelà-Ascoli.
   \end{itemize}
   
 \end{frame}
@@ -404,7 +458,7 @@ Sea $x\in X$ vamos a probar que $\set{f_n(x)}\sucn$ es de Cauchy.
   
 \end{frame}
 %% 6 - 2:10:52 48
-%% 7 - 
+%% 7 - 1:17:44 44
 \end{document}
 
 
