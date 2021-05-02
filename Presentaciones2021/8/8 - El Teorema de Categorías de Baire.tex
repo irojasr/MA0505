@@ -1,0 +1,347 @@
+\documentclass[utf8]{beamer}
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  \setbeamercovered{transparent}
+}
+
+
+\usepackage{amsfonts,mathtools,amssymb}
+\usepackage[spanish]{babel}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+
+
+\title[MA0505]{MA0505 - An\'alisis I}
+\subtitle{Lecci\'on VIII: Categorías de Baire}
+
+\author{Pedro M\'endez\inst{1}}
+
+\institute[Universidad de Costa Rica] % (optional, but mostly needed)
+{
+  \inst{1}%
+  Departmento de Matem\'atica Pura y Ciencias Actuariales\\
+  Universidad de Costa Rica
+  }
+
+\date[I-2021] {Semestre I, 2021}
+
+%%%%%%%%% === Theorems and suchlike === %%%%%%%%%%%%%%
+
+\theoremstyle{plain}
+\newtheorem{Th}{Teorema}               %%% Theorem 1.1.1
+\newtheorem{Tmon}{Teoremón}
+\newtheorem{Prop}{Proposición}         %%% Proposition 1.1.2
+\newtheorem{Lem}{Lema}                 %%% Lemma 3
+\newtheorem{Cor}{Corolario}            %%% Corollary 4
+
+\theoremstyle{definition}
+\newtheorem{Def}{Definición}           %%% Definition 5
+\newtheorem{Ex}{Ejemplo}               %%% Example 6
+\newtheorem{Ej}{Ejercicio}             %%% Ejercicio 7
+\newtheorem{Hec}[Th]{Hecho}            %%% Hecho 1.1.8
+
+\theoremstyle{remark}
+\newtheorem{Rmk}[Th]{Observación}      %%%Remark 1.1.9
+\newtheorem*{nonum-Rmk}{Observación}         %%% No number Fact
+\newtheorem*{Notn}{Notaci\'on}        %% Notaciones
+\newtheorem*{Warn}{Advertencia}       %% Advertencias
+
+\numberwithin{equation}{section}
+
+% Greek letters:
+
+\newcommand{\al}{\alpha}                %% short for  \alpha
+\newcommand{\bt}{\beta}                 %% short for  \beta
+\newcommand{\Dl}{\Delta}                %% short for  \Delta
+\newcommand{\dl}{\delta}                %% short for  \delta
+\newcommand{\eps}{\varepsilon}          %% short for  \varepsilon
+\newcommand{\Ga}{\Gamma}                %% short for  \Gamma
+\newcommand{\ga}{\gamma}                %% short for  \gamma
+\newcommand{\kp}{\kappa}                %% short for  \kappa
+\newcommand{\La}{\Lambda}               %% short for  \Lambda
+\newcommand{\la}{\lambda}               %% short for  \lambda
+\newcommand{\Om}{\Omega}                %% short for  \Omega
+\newcommand{\om}{\omega}                %% short for  \omega
+\newcommand{\Sg}{\Sigma}                %% short for  \Sigma
+\newcommand{\sg}{\sigma}                %% short for  \sigma
+\newcommand{\Te}{\Theta}                %% short for  \Theta
+\newcommand{\te}{\theta}                %% short for  \theta
+\newcommand{\ups}{\upsilon}             %% short for  \upsilon
+\newcommand{\vf}{\varphi}               %% short for  \varphi
+\newcommand{\ze}{\zeta}                 %% short for  \zeta
+
+%Boldface letters
+
+\newcommand{\bC}{\mathbb{C}}    %%% números complejos
+\newcommand{\bN}{\mathbb{N}}    %%% números naturales
+\newcommand{\bP}{\mathbb{P}}        %% números enteros positivos
+\newcommand{\bQ}{\mathbb{Q}}    %%% números racionales
+\newcommand{\bR}{\mathbb{R}}    %%% números reales
+\newcommand{\bS}{\mathbb{S}}    %%% esfera
+\newcommand{\bZ}{\mathbb{Z}}    %%% números enteros
+
+%Script letters:
+
+\newcommand{\cA}{\mathcal{A}}           %% formas diferenciales
+\newcommand{\cB}{\mathcal{B}}           %% una base vectorial
+\newcommand{\cC}{\mathcal{C}}           %% otra base vectorial
+\newcommand{\cD}{\mathcal{D}}           %% funciones de prueba
+\newcommand{\cE}{\mathcal{E}}           %% un modulo proyectivo
+\newcommand{\cF}{\mathcal{F}}           %% espacio de Fock
+\newcommand{\cG}{\mathcal{G}}           %% funtor de Gelfand
+\newcommand{\cH}{\mathcal{H}}           %% espacio de Hilbert
+\newcommand{\cI}{\mathcal{I}}           %% un funtor de inclusion
+\newcommand{\cJ}{\mathcal{J}}           %% otro funtor
+\newcommand{\cK}{\mathcal{K}}           %% otro espacio de Hilbert
+\newcommand{\cL}{\mathcal{L}}           %% operadores lineales
+\newcommand{\cM}{\mathcal{M}}           %% multiplicadores
+\newcommand{\cN}{\mathcal{N}}           %% funciones nulas
+\newcommand{\cO}{\mathcal{O}}           %% funciones de crec-to lento
+\newcommand{\cP}{\mathcal{P}}           %% una particion
+\newcommand{\cR}{\mathcal{R}}           %% funciones representativas
+\newcommand{\cQ}{\mathcal{Q}}           %% otra particion
+\newcommand{\cS}{\mathcal{S}}           %% funciones de Schwartz
+\newcommand{\cT}{\mathcal{T}}           %% una topologia
+\newcommand{\cU}{\mathcal{U}}           %% cubrimiento abierto
+\newcommand{\cV}{\mathcal{V}}           %% vecindarios
+\newcommand{\cW}{\mathcal{W}}           %% grupo de Weyl
+
+
+%Brackets
+
+\newcommand{\bonj}[1]{\left\lbrack#1\right\rbrack}
+\newcommand{\obonj}[1]{\left\rbrack#1\right\lbrack}
+\newcommand{\rbonj}[1]{\left\rbrack#1\right\rbrack}
+\newcommand{\lbonj}[1]{\left\lbrack#1\right\lbrack}
+\newcommand{\snm}[1]{\|#1\|}           %small norma
+\newcommand{\nm}[1]{\left\|#1\right\|} %norma pegadita
+\newcommand{\pnm}[1]{\biggl|\biggl|#1\biggr|\biggr|}
+\newcommand{\set}[1]{\{\,#1\,\}}    %% set notation
+\newcommand{\floor}[1]{\lfloor#1\rfloor} %% mayor entero <= x
+\newcommand{\Set}[1]{\biggl\{\,#1\,\biggr\}} %% set notation (large)
+\newcommand\quot[2]{
+        \mathchoice
+            {% \displaystyle
+                \text{\raise1ex\hbox{$#1$}\Big/\lower1ex\hbox{$#2$}}%
+            }
+            {% \textstyle
+                {^{ #1}/_{ #2}}
+            }
+            {% \scriptstyle
+                {^{ #1}/_{ #2}}
+            }
+            {% \scriptscriptstyle
+                {^{ #1}/_{ #2}}
+            }
+    }
+\newcommand*\squot[2]{{^{ #1}/_{ #2}}}%%%small quotient
+
+%Symbols 
+
+\renewcommand{\geq}{\geqslant}          %% mayor o igual (variante)
+\newcommand{\hookto}{\hookrightarrow}     %% inclusion arrow
+\newcommand{\isom}{\simeq}              %% isomorfismo
+\renewcommand{\l}{\ell}                   %% ele cursiva
+\renewcommand{\leq}{\leqslant}          %% menor o igual (variante)
+\newcommand{\less}{\setminus}           %% set difference
+\newcommand{\To}{\Rightarrow}
+\newcommand{\ov}{\overline}
+\newcommand{\un}{\underline}
+\newcommand{\del}{\partial}
+
+%%% Small fractions in displays:
+
+\newcommand{\half}{{\mathchoice{\nhalf}{\thalf}{\shalf}{\shalf}}} %%display text script script^2
+\newcommand{\happi}{{\tfrac{\pi}{2}}} %% small fraction  \pi/2
+\newcommand{\quarter}{\tfrac{1}{4}} %% small fraction  1/4
+\newcommand{\nhalf}{\frac{1}{2}}
+\newcommand{\shalf}{{\scriptstyle\frac{1}{2}}} %% tiny fraction 1/2
+\newcommand{\thalf}{{\tfrac{1}{2}}} %% small fraction  1/2
+\newcommand{\third}{\tfrac{1}{3}}   %% small fraction  1/3 %Hay que renew porque mathabx toma second y third como x'' y x''' por ejemplo
+
+\newcommand{\ihalf}{{\tfrac{i}{2}}} %% small fraction  i/2
+
+\newcommand{\sucm}{_{m=1}^\infty} %% diminutivo
+\newcommand{\suck}{_{k=1}^\infty} %% diminutivo
+\newcommand{\sucn}{_{n=1}^\infty} %% diminutivo
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Agenda}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{La Definición de Categorías}
+
+\begin{frame}{Conjuntos Densos en Ninguna Parte}
+  \begin{Def}\label{def:nowhereDense}
+    Dado un espacio métrico $(X,d)$, diremos que $A\subseteq X$ es \alert{denso en ninguna parte} si $(\ov A)^c$ es denso.
+  \end{Def}
+ Note que $(\ov A)^c$ es denso si y sólo si $(\ov A)^c\cap B(x,r)\neq \emptyset$ para $x\in X$ y $r>0$. Esto es equivalente a que $(\ov A)^\circ=\emptyset$.
+\end{frame}
+
+\begin{frame}{Primera y Segunda Categoría}
+  \begin{Def}\label{def:cat1}
+    \begin{itemize}
+      \item Un conjunto $A$ es de \alert{primera categoría} ó \alert{magro} si $A$ es una unión contable de conjuntos densos en ninguna parte.
+      \item Un conjunto es de \alert{segunda categoría} si no es de primera categoría.
+    \end{itemize}
+    
+  \end{Def}
+\end{frame}
+
+\section{El Teorema}
+\begin{frame}{El Teorema de Categorías}
+  \begin{Th}[Categorías de Baire]\label{thm:cats}
+    Sea $(X,d)$ un espacio completo. Si $G\subseteq X$ es un abierto no vacío, entonces $G$ es de segunda categoría.
+  \end{Th}
+  Antes de probar el teorema, probaremos el siguiente resultado.
+  \begin{Th}[Baire]\label{thm:Baire}
+    Sea $(X,d)$ completo. Si $\set{G_n}\sucn$ es una sucesión de conjuntos abiertos y densos en $X$, entonces $\bigcap\sucn G_n$ es denso en $X$.
+  \end{Th} 
+\end{frame}
+
+\begin{frame}{Prueba del Teorema de Baire}
+  Sea $A\subseteq X$ un abierto. 
+  \begin{itemize}
+    \item Como $G_1$ es denso, existe $x_1\in G_1$ tal que $x_1\in A\cap G_1$.
+    \item Como $A\cap G_1$ es abierto, existe $r>0$ tal que 
+    $$B(x_1,r_1)\subseteq A\cap G_1.$$
+    \item Sea $B_1=B\left(x_1,\frac{r_1}{2}\right)$, entonces $\ov B_1\subseteq A\cap G_1$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Continuamos la Prueba}
+  \begin{itemize}
+    \item De igual forma, al ser $G_2$ denso y abierto, existen $x_2\in G_2$ y un $r_2>0$ tales que 
+     $$B(x_2,r_2)\subseteq B_1\cap G_2\subseteq A\cap G_1\cap G_2.$$
+     \item Sea $B_2=B\left(x_2,\frac{r_2}{2}\right)$, entonces 
+     $$\ov B_2\subseteq B_1\cap G_1\subseteq A\cap G_1\cap G_2.$$
+     \item Iterando, existe $x_n\in G_n$ y $r_n<\frac{r_{n-1}}{2}\leq \frac{r_1}{2^n}$ tal que 
+     $$B(x_n,r_n)\subseteq B_{n-1}\cap G_n\subseteq A\cap \bigcap\sucn G_i.$$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Continuamos la Prueba}
+  \begin{itemize}
+    \item Sea así $B_n=B\left(x_n,\frac{r_n}{2}\right)$, entonces
+    $$\ov B_n\subseteq B_{n-1}\cap G_n.$$
+    \item Si $n\geq m$ entonces $B_n\subseteq B_m$
+    $$\To x_n,x_m\in B_m\To d(x_n,x_m)<\frac{r_1}{2^m}.$$
+    \item Así $\set{x_n}\sucn$ es de Cauchy, sea $x=\lim x_n$.
+    \item Como $\set{x_n}\sucn\subseteq B_m$, tenemos que $x\in\ov B_m$.
+  \end{itemize} 
+\end{frame}
+
+\begin{frame}{Terminamos la Prueba}
+  
+  Por tanto $x\in A\cap\bigcap_{i=1}^m G_i$ para $m\geq 1$, lo que nos dice que 
+  $$x\in A\cap\bigcap_{i=1}^\infty G_i.$$
+  Concluimos que $\bigcap_{i=1}^\infty G_i$ es denso.\par 
+  Con este resultado ya podemos probar el Teorema de Categorías.
+\end{frame}
+
+\begin{frame}{Prueba del Teorema de Categorías}
+  \begin{itemize}
+    \item Sea $G$ un abierto y asumamos que es de primera categoría.
+    \item Así existen $A_n$ densos en ninguna parte tal que 
+     $$G=\bigcup\sucn A_n.$$
+    \item Llamemos $G_n=(\ov A_n)^c$, entonces $G_n$ es abierto y denso.
+    \item Luego $\bigcap\sucn (\ov{A}_n)^c$ es denso.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Terminamos la Prueba}
+  Como
+  $$\left(\ov{\bigcup\sucn A_n}\right)^c=\left({\bigcup\sucn \ov A_n}\right)^c=\bigcap\sucn (\ov A_n)^c$$
+  es un conjunto denso, entonces 
+  $$G\cap \left(\ov{\bigcup\sucn A_n}\right)^c\neq\emptyset$$
+  lo que nos lleva a una contradicción.
+\end{frame}
+
+\section*{Resumen}
+
+\subsection*{Qu\'e vimos hoy}
+\begin{frame}{Resumen}
+
+  % Keep the summary *very short*.
+  \begin{itemize}
+  \item La definición \ref{def:nowhereDense} de denso por ninguna parte.
+  \item La definición \ref{def:cat1} de conjuntos magros.
+  \item El teorema \ref{thm:cats} de las Categorías de Baire.
+  \item El teorema \ref{thm:Baire} de Baire para probar el teorema de cateogorías.
+  \end{itemize}
+  
+\end{frame}
+\iffalse
+\subsection*{Ejercicios a trabajar}
+\begin{frame}{Ejercicios}
+    
+  \begin{itemize}
+    \item
+      Lista 8
+      \begin{itemize}
+      \item 
+      \end{itemize}
+    \end{itemize}
+  
+\end{frame}
+
+\fi
+% All of the following is optional and typically not needed. 
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{Lectura adicional}
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{Lecturas adicionales}
+    
+  \begin{thebibliography}{10}
+    
+  \beamertemplatebookbibitems
+  % Start with overview books.
+
+  \bibitem{CambroNotas}
+    S.Cambronero.
+    \newblock {\em Notas MA0505}.
+    \newblock 20XX.
+
+    \bibitem{NachoNotas}
+    I.Rojas
+    \newblock {\em Notas MA0505}.
+    \newblock 2018.
+ 
+  \end{thebibliography}
+  
+\end{frame}
+%% 6 - 2:10:52 48
+%% 7 - 1:17:44 44
+%% 8 - 27:37 69
+\end{document}
+
+
