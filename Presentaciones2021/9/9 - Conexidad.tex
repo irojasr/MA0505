@@ -278,9 +278,89 @@
   $$[u,u+\dl_3]\subseteq[s,t]\cap A.$$
 \end{frame}
 
+\section{Propiedades de los Conexos}
 \subsection{Conexidad y Funciones Continuas}
 %% pag 3+eps 32:28
 \begin{frame}{Funciones Continuas Preservan Conexidad}
+  \begin{Lem}\label{lem:ContPreservaConexo}
+    Sea $f:X\to Y$ una función continua. Si $E\subseteq X$ es conexo, entonces $f(E)$ es conexo.
+  \end{Lem}
+  Asumamos que existen $B,C\subseteq Y$ abiertos tales que 
+  $$f(E)=(f(E)\cap C)\cupdot(f(E)\cap B),\ f(E)\cap C\neq\emptyset\neq f(E)\cap B).$$
+  
+\end{frame}
+
+\begin{frame}{Terminamos la Prueba}
+  Notemos que 
+  \begin{align*}
+    f^{-1}(f(E)\cap C)\supseteq E\cap f^{-1}(C)\neq\emptyset,\\
+    f^{-1}(f(E)\cap B)\supseteq E\cap f^{-1}(B)\neq\emptyset.
+  \end{align*}
+  Además
+  $$E\subseteq (E\cap f^{-1}(C))\cupdot (E\cap f^{-1}(B))$$
+  pues $f^{-1}(C)$ y $f^{-1}(B)$ son abiertos.
+\end{frame}
+
+\begin{frame}{Los Reales son un Conjunto Conexo}
+\begin{itemize}
+  \item Supongamos que $\bR^d=A\cupdot B$ con $A,B$ abiertos no vacíos.
+  \item Tomemos $x\in A, y\in B$ y consideremos 
+  $$f:[0,1]\to\bR^d,\ t\mapsto (1-t)x+ty.$$
+  \item Como $f$ es continua, $[x,y]=f([0,1])$. El \emph{segmento} entre $x$ y $y$ es conexo.
+  \item Pero $[x,y]=([x,y]\cap A)\cupdot([x,y]\cap B)$ con $[x,y]\cap A$ y $[x,y]\cap B$ no vacíos.
+\end{itemize}
+Esto es una contradicción.
+\end{frame}
+
+\subsection{Uniones de Conexos}
+\begin{frame}{Uniones}
+  \begin{Lem}\label{lem:unionConexos}
+    Sea $\set{E_\al:\ \al\in A}$ una familia de conexos tal que $\bigcap_{\al\in A}E_\al$ es no vacío. Entonces $E=\bigcup_{\al\in A} E_\al$ es conexo.
+  \end{Lem}
+  Tomemos $x$ en la intersección. Si fuese que $E$ es disconexo, existen $A,B$ tales que 
+  $$E=(A\cap E)\cupdot(B\cap E),\ A\cap E,\ B\cap E\neq\emptyset.$$
+\end{frame}
+
+\begin{frame}{Terminamos la Prueba}
+\begin{itemize}
+  \item Asumamos que $x\in B\cap E$.
+  \item Como $A\cap E\neq\emptyset$, existe $\al_0$ tal que $A\cap E_{\al_0}\neq \emptyset$.
+  \item Además, como $x\in B$ y $x\in \bigcap_{\al\in A}E_\al$ tenemos que $x\in B\cap E_{\al_0}$.
+  \item Como $E_{\al_0}\cap E=E_{\al_0}$, entonces 
+   $$E_{\al_0}=(E_{\al_0}\cap A)\cupdot(E_{\al_0}\cap B).$$
+\end{itemize}
+Esto es imposible pues $E_{\al_0}$ es conexo.
+\end{frame}
+
+\section{Componentes Conexos}
+
+\begin{frame}{Definición de Componente}
+  \begin{Def}\label{def:compConexa}
+    Sea $(X,d)$ un espacio métrico. Dado $x\in X$, definimos la \alert{componente conexa} de $x$ como la unión de todos lo conexos que lo contienen. Es decir, si
+    $$\La =\set{E\subseteq X:\ E\ \text{conexo},\ x\in E},$$ 
+    entonces la componente conexa de $x$ es 
+    $$C(x)=\bigcup_{E\in\La}E.$$
+  \end{Def}
+  Por el lema \ref{lem:unionConexos} anterior, $C(x)$ es conexo para todo $x\in X$.
+\end{frame}
+
+\begin{frame}{Una Relación Útil}
+  Podemos definir la relación de equivalencia $\cR$ en $X$ por medio de 
+  $$x\cR y\iff \exists C,\ \text{conexo}(x,y\in C).$$
+  \begin{Ej}\label{ej:componentesSonClases}
+    Si $[x]$ es la clase de equivalencia de $x$, entonces $[x]=C(x)$.
+  \end{Ej}
+\end{frame}
+
+\begin{frame}{Segmentos en Conexos}
+  \begin{Ex}
+    Sea $E\subseteq\bR$ conexo con $a,b\in E$. Vamos a mostrar que $[a,b]\subseteq E$.
+  \end{Ex}
+  \begin{itemize}
+    \item Asuma que $x\in[a,b]\less E$.
+    \item Entonces $E=(E\cap]-\infty,x[)\cupdot(]x,\infty[\cap E)$. Tome $a=\inf E$ y $b=$
+    %% estamos pegados aquí 59:38 40
+  \end{itemize}
   
 \end{frame}
 \section*{Resumen}
@@ -293,6 +373,9 @@
   \begin{itemize}
   \item La definción \ref{def:disconexo} de espacios conexos.
   \item La definción \ref{def:subconjsDisconexos} de subconjuntos disconexos.
+  \item Las funciones continuas preservan conexidad: \ref{lem:ContPreservaConexo}.
+  \item Las uniones de conexos a veces son conexas: \ref{lem:unionConexos}.
+  \item La definción \ref{def:compConexa} de componente conexo.
   \end{itemize}
   
 \end{frame}
@@ -305,6 +388,7 @@
       Lista 9
       \begin{itemize}
       \item El ejercicio \ref{ej:abiertosEnSubespacios} sobre abiertos dentro de subespacios.
+      \item El ejercicio \ref{ej:componentesSonClases} que nos dice cuales son las clases de equivalencia en conexidad.
       \end{itemize}
     \end{itemize}
   
