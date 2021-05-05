@@ -11,6 +11,7 @@
 \usepackage[spanish]{babel}
 \usepackage{times}
 \usepackage[T1]{fontenc}
+\usepackage[shortlabels]{enumitem}
 
 
 \title[MA0505]{MA0505 - An\'alisis I}
@@ -178,13 +179,15 @@
 
 \newcommand{\ihalf}{{\tfrac{i}{2}}} %% small fraction  i/2
 
-\newcommand{\sucm}{_{m=1}^\infty} %% diminutivo
+\newcommand{\suci}{_{i=1}^\infty} %% diminutivo
 \newcommand{\suck}{_{k=1}^\infty} %% diminutivo
+\newcommand{\sucm}{_{m=1}^\infty} %% diminutivo
 \newcommand{\sucn}{_{n=1}^\infty} %% diminutivo
 
 \newcommand*{\Cdot}{{\raisebox{-0.25ex}{\scalebox{1.5}{$\cdot$}}}}      %% cdot más grande
 \renewcommand{\.}{\Cdot}                %% producto escalar
 \newcommand{\cupdot}{\charfusion[\mathbin]{\cup}{\.}}
+\newcommand{\bigcupdot}{\charfusion[\mathbin]{\bigcup}{\.}}
 
 \begin{document}
 
@@ -360,8 +363,118 @@ Esto es imposible pues $E_{\al_0}$ es conexo.
     \item Asuma que $x\in[a,b]\less E$.
     \item Entonces $E=(E\cap]-\infty,x[)\cupdot(]x,\infty[\cap E)$. Tome $a=\inf E$ y $b=$
     %% estamos pegados aquí 59:38 40
+    %%Finish
   \end{itemize}
   
+\end{frame}
+
+\begin{frame}
+  \begin{Ej}\label{ej:caracAbiertosEnR}
+    Sea $G\subseteq\bR$ un abierto, entonces existen $\set{]a_i,b_i[}\suci$ tales que $G=\bigcupdot\suci]a_i,b_i[$.
+  \end{Ej}
+\end{frame}
+
+\section{Arcoconexidad}
+
+\begin{frame}{Recordamos la Definición}
+  
+
+\begin{Def}
+  Dado $E\subseteq \bR^d$, diremos que $E$ es \alert{arcoconexo} si dados $x_0,x_1\in E$, existe una curva $\ga:[0,1]\to\bR^d$ tal que 
+  \begin{enumerate}
+    \item $\ga(0)=x_0$ y $\ga(1)=x_1$.
+    \item $\ga(t)\in E$ para $t\in [0,1]$.
+  \end{enumerate}
+\end{Def}
+
+\begin{center}
+  ¿Es la arcoconexidad equivalente a la conexidad?
+\end{center}
+\end{frame}
+
+\begin{frame}{Respondamos la Pregunta}
+  Considere 
+  $$E=\set{0}\x[-1,1]\cup\set{(x,y):0<x\leq 1,\ y=\sin\left(\frac1x\right)}.$$
+  \begin{itemize}
+    \item Sean $A,B$ abiertos tales que $A\cap E, B\cap E$ y $A\cap B$ son todos no vacíos y 
+    $$E\subseteq (A\cap E)\cupdot(B\cap E).$$
+    \item Supongamos además que $(0,0)\in A$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Primeros Pasos}
+  \newcounter{saveenumi}
+  \begin{enumerate}
+    \item Usando el hecho de que $\set{0}\x[-1,1]$ es conexo, muestre que está contenido en $A$.
+    \item La sucesión $\set{x_n}\sucn$ definida por 
+    $$x_n=\left(\frac{1}{\pi n},\sin(\pi n)\right)=\left(\frac{1}{\pi n},0\right)$$
+    converge a $(0,0)$. 
+    \item Luego existe un $n_0$ tal que $\left(\frac{1}{\pi n},\sin(\pi n)\right)\in A$ para todo $n\geq n_0$. ¿Por qué?
+    \setcounter{saveenumi}{\value{enumi}}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Los Pasos que Siguen}
+  \begin{enumerate}
+    \setcounter{enumi}{\value{saveenumi}}
+    \item Considere el conjunto 
+     $$E_n=\Set{(x,y):\frac{1}{n\pi}\leq x\leq 1,\ y=\sin\left(\frac{1}{x}\right)}.$$
+    \item Como 
+    $$\ga:\bonj{\frac{1}{\pi n},1}\to E_n,\ x\mapsto \left(x,\sin\left(\frac{1}{x}\right)\right),$$
+    tenemos que $E_n$ es conexo. Luego $E_n\cap A$ ó $E_n\cap B$ es no vacío.
+    \setcounter{saveenumi}{\value{enumi}}
+    
+  \end{enumerate}
+  
+\end{frame}
+
+\begin{frame}{Continuamos}
+  \begin{enumerate}
+    \setcounter{enumi}{\value{saveenumi}}
+    \item Sin perdida de generalidad $E_n\cap B =\emptyset$, entonces $E_n\subseteq A$. Entonces $\left(x,\sin\left(\frac{1}{x}\right)\right)\in A$ para $0<x\leq 1$.
+    \item De aquí se concluye que $E\subseteq A$ y eso es imposible.
+    \item Asumimos pues que existe 
+     $$\tilde{\ga}:[0,1]\to E$$
+     continua tal que 
+     $$\tilde{\ga}(0)=(0,0),\ \tilde{\ga}(1)=\left(\frac{1}{n_0\pi},\sin(n_0\pi)\right).$$
+     \setcounter{saveenumi}{\value{enumi}}
+  \end{enumerate}
+  
+\end{frame}
+
+\begin{frame}{Continuamos con la Respuesta}
+  
+  \begin{enumerate}
+    \setcounter{enumi}{\value{saveenumi}}
+    \item Si $t_n\downarrow 0$ cuando $n\to\infty$, entonces
+     $$\tilde{\ga}(t_n)=(\tilde{\ga}_1(t_n),\tilde{\ga}_2(t_n))\xrightarrow[n\to\infty]{}(0,0).$$
+     \item En particular $\tilde{\ga}_1(t_n)\xrightarrow[n\to\infty]{}0$ y 
+     $$\tilde{\ga}_2(t_n)=\sin\left(\frac{1}{\tilde{\ga}_1(t_n)}\right).$$
+     Es decir, existe $x_n\xrightarrow[n\to\infty]{}0$ tal que 
+     $$\left(x_n,\sin\left(\frac{1}{x_n}\right)\right)\in\tilde{\ga}([0,1])$$
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Un Ejercicio}
+  \begin{Ej}\label{ej:detalleArcoconexidad}
+    Basado en lo anterior, pruebe que si $x_n<x_{n+1}$ entonces para $x_n\leq x\leq x_{n+1}$ vale $\left(x,\sin\left(\frac{1}{x}\right)\right)\in\tilde{\ga}([0,1])$.\par 
+    Concluya que 
+    \begin{enumerate}[a)]
+      \item $B=\Set{\left(x,\sin\left(\frac{1}{x}\right)\right):\ 0<x<\frac{1}{n_0\pi}}\subseteq \tilde{\ga}([0,1])$.
+      \item Sea $t_0=\sup_{t>0}\set{\tilde{\ga}(t)=(0,0)}$. Entonces 
+      $$\tilde{\ga}([t_0,1])\less B=\set{(0,0)}.$$
+      \item $\tilde{\ga}$ no es continua en $t_0$.
+    \end{enumerate}
+  \end{Ej}
+\end{frame}
+
+\begin{frame}{Nociones Equivalentes}
+  Si asumimos que nuestro conjunto es abierto en $\bR^d$ entonces las nociones son equivalentes.
+  \begin{Lem}\label{lem:EnRdConexoIffArcoconexo}
+    Sea $E\subseteq\bR^d$ abierto. Entonces $E$ es conexo si y sólo si $E$ es arcoconexo.
+  \end{Lem}
+
+  La prueba de este hecho es un \alert{ejercicio}.
 \end{frame}
 \section*{Resumen}
 
@@ -376,6 +489,7 @@ Esto es imposible pues $E_{\al_0}$ es conexo.
   \item Las funciones continuas preservan conexidad: \ref{lem:ContPreservaConexo}.
   \item Las uniones de conexos a veces son conexas: \ref{lem:unionConexos}.
   \item La definción \ref{def:compConexa} de componente conexo.
+  \item El lema \ref{lem:EnRdConexoIffArcoconexo} que garantiza equivalencia entre conexidad y arcoconexidad.
   \end{itemize}
   
 \end{frame}
@@ -389,6 +503,8 @@ Esto es imposible pues $E_{\al_0}$ es conexo.
       \begin{itemize}
       \item El ejercicio \ref{ej:abiertosEnSubespacios} sobre abiertos dentro de subespacios.
       \item El ejercicio \ref{ej:componentesSonClases} que nos dice cuales son las clases de equivalencia en conexidad.
+      \item El ejercicio \ref{ej:caracAbiertosEnR} que da una caracterización de los abiertos en $\bR$.
+      \item El ejercicio \ref{ej:detalleArcoconexidad} para terminar los detalles de la curva.
       \end{itemize}
     \end{itemize}
   
@@ -424,6 +540,7 @@ Esto es imposible pues $E_{\al_0}$ es conexo.
 %% 6 - 2:10:52 48
 %% 7 - 1:17:44 44
 %% 8 - 27:37 69
+%% 9 - 1:07:47 86 + 59:38 40 approx 2 h c 7 min
 \end{document}
 
 
