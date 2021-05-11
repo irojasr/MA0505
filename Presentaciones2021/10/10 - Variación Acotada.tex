@@ -1,0 +1,679 @@
+\documentclass[utf8]{beamer}
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  \setbeamercovered{transparent}
+}
+
+
+\usepackage{amsfonts,mathtools,amssymb}
+\usepackage[spanish]{babel}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tikz}
+\usepackage{physics}
+
+\title[MA0505]{MA0505 - An\'alisis I}
+\subtitle{Lecci\'on X: Variación Acotada}
+
+\author{Pedro M\'endez\inst{1}}
+
+\institute[Universidad de Costa Rica] % (optional, but mostly needed)
+{
+  \inst{1}%
+  Departmento de Matem\'atica Pura y Ciencias Actuariales\\
+  Universidad de Costa Rica
+  }
+
+\date[I-2021] {Semestre I, 2021}
+
+%%%%%%%%% === Theorems and suchlike === %%%%%%%%%%%%%%
+
+\theoremstyle{plain}
+\newtheorem{Th}{Teorema}               %%% Theorem 1.1.1
+\newtheorem{Tmon}{Teoremón}
+\newtheorem{Prop}{Proposición}         %%% Proposition 1.1.2
+\newtheorem{Lem}{Lema}                 %%% Lemma 3
+\newtheorem{Cor}{Corolario}            %%% Corollary 4
+
+\theoremstyle{definition}
+\newtheorem{Def}{Definición}           %%% Definition 5
+\newtheorem{Ex}{Ejemplo}               %%% Example 6
+\newtheorem{Ej}{Ejercicio}             %%% Ejercicio 7
+\newtheorem{Hec}[Th]{Hecho}            %%% Hecho 1.1.8
+
+\theoremstyle{remark}
+\newtheorem{Rmk}[Th]{Observación}      %%%Remark 1.1.9
+\newtheorem*{nonum-Rmk}{Observación}         %%% No number Fact
+\newtheorem*{Notn}{Notaci\'on}        %% Notaciones
+\newtheorem*{Warn}{Advertencia}       %% Advertencias
+
+\numberwithin{equation}{section}
+
+%% Accomodations 
+
+\makeatletter
+\def\moverlay{\mathpalette\mov@rlay}
+\def\mov@rlay#1#2{\leavevmode\vtop{%
+   \baselineskip\z@skip \lineskiplimit-\maxdimen
+   \ialign{\hfil$\m@th#1##$\hfil\cr#2\crcr}}}
+\newcommand{\charfusion}[3][\mathord]{
+    #1{\ifx#1\mathop\vphantom{#2}\fi
+        \mathpalette\mov@rlay{#2\cr#3}
+      }
+    \ifx#1\mathop\expandafter\displaylimits\fi}
+\makeatother
+
+% Greek letters:
+
+\newcommand{\al}{\alpha}                %% short for  \alpha
+\newcommand{\bt}{\beta}                 %% short for  \beta
+\newcommand{\Dl}{\Delta}                %% short for  \Delta
+\newcommand{\dl}{\delta}                %% short for  \delta
+\newcommand{\eps}{\varepsilon}          %% short for  \varepsilon
+\newcommand{\Ga}{\Gamma}                %% short for  \Gamma
+\newcommand{\ga}{\gamma}                %% short for  \gamma
+\newcommand{\La}{\Lambda}               %% short for  \Lambda
+\newcommand{\la}{\lambda}               %% short for  \lambda
+\newcommand{\Om}{\Omega}                %% short for  \Omega
+\newcommand{\om}{\omega}                %% short for  \omega
+\newcommand{\Sg}{\Sigma}                %% short for  \Sigma
+\newcommand{\sg}{\sigma}                %% short for  \sigma
+\newcommand{\te}{\theta}                %% short for  \theta
+\newcommand{\vf}{\varphi}               %% short for  \varphi
+\newcommand{\ze}{\zeta}                 %% short for  \zeta
+
+%Boldface letters
+
+\newcommand{\bC}{\mathbb{C}}    %%% números complejos
+\newcommand{\bN}{\mathbb{N}}    %%% números naturales
+\newcommand{\bP}{\mathbb{P}}        %% números enteros positivos
+\newcommand{\bQ}{\mathbb{Q}}    %%% números racionales
+\newcommand{\bR}{\mathbb{R}}    %%% números reales
+\newcommand{\bS}{\mathbb{S}}    %%% esfera
+\newcommand{\bZ}{\mathbb{Z}}    %%% números enteros
+
+%Script letters:
+
+\newcommand{\cA}{\mathcal{A}}           %% formas diferenciales
+\newcommand{\cB}{\mathcal{B}}           %% una base vectorial
+\newcommand{\cC}{\mathcal{C}}           %% otra base vectorial
+\newcommand{\cF}{\mathcal{F}}           %% espacio de Fock
+\newcommand{\cL}{\mathcal{L}}           %% operadores lineales
+\newcommand{\cM}{\mathcal{M}}           %% multiplicadores
+\newcommand{\cN}{\mathcal{N}}           %% funciones nulas
+\newcommand{\cP}{\mathcal{P}}           %% una particion
+\newcommand{\cR}{\mathcal{R}}           %% funciones representativas
+\newcommand{\cS}{\mathcal{S}}           %% funciones de Schwartz
+
+
+%Brackets
+
+\newcommand{\bonj}[1]{\left\lbrack#1\right\rbrack}
+\newcommand{\obonj}[1]{\left\rbrack#1\right\lbrack}
+\newcommand{\rbonj}[1]{\left\rbrack#1\right\rbrack}
+\newcommand{\lbonj}[1]{\left\lbrack#1\right\lbrack}
+\newcommand{\snm}[1]{\|#1\|}           %small norma
+\newcommand{\nm}[1]{\left\|#1\right\|} %norma pegadita
+\newcommand{\pnm}[1]{\biggl|\biggl|#1\biggr|\biggr|}
+\newcommand{\set}[1]{\{\,#1\,\}}    %% set notation
+\newcommand{\floor}[1]{\lfloor#1\rfloor} %% mayor entero <= x
+\newcommand{\Set}[1]{\biggl\{\,#1\,\biggr\}} %% set notation (large)
+\newcommand\quot[2]{
+        \mathchoice
+            {% \displaystyle
+                \text{\raise1ex\hbox{$#1$}\Big/\lower1ex\hbox{$#2$}}%
+            }
+            {% \textstyle
+                {^{ #1}/_{ #2}}
+            }
+            {% \scriptstyle
+                {^{ #1}/_{ #2}}
+            }
+            {% \scriptscriptstyle
+                {^{ #1}/_{ #2}}
+            }
+    }
+\newcommand*\squot[2]{{^{ #1}/_{ #2}}}%%%small quotient
+
+%Symbols 
+
+\newcommand{\x}{\times}
+\renewcommand{\geq}{\geqslant}          %% mayor o igual (variante)
+\newcommand{\hookto}{\hookrightarrow}     %% inclusion arrow
+\newcommand{\isom}{\simeq}              %% isomorfismo
+\renewcommand{\l}{\ell}                   %% ele cursiva
+\renewcommand{\leq}{\leqslant}          %% menor o igual (variante)
+\newcommand{\less}{\setminus}           %% set difference
+\newcommand{\To}{\Rightarrow}
+\newcommand{\ov}{\overline}
+\newcommand{\un}{\underline}
+\newcommand{\del}{\partial}
+
+%%% Small fractions in displays:
+
+\newcommand{\half}{{\mathchoice{\nhalf}{\thalf}{\shalf}{\shalf}}} %%display text script script^2
+\newcommand{\happi}{{\tfrac{\pi}{2}}} %% small fraction  \pi/2
+\newcommand{\quarter}{\tfrac{1}{4}} %% small fraction  1/4
+\newcommand{\nhalf}{\frac{1}{2}}
+\newcommand{\shalf}{{\scriptstyle\frac{1}{2}}} %% tiny fraction 1/2
+\newcommand{\thalf}{{\tfrac{1}{2}}} %% small fraction  1/2
+\newcommand{\third}{\tfrac{1}{3}}   %% small fraction  1/3 %Hay que renew porque mathabx toma second y third como x'' y x''' por ejemplo
+
+\newcommand{\ihalf}{{\tfrac{i}{2}}} %% small fraction  i/2
+
+\newcommand{\suci}{_{i=1}^\infty} %% diminutivo
+\newcommand{\suck}{_{k=1}^\infty} %% diminutivo
+\newcommand{\sucm}{_{m=1}^\infty} %% diminutivo
+\newcommand{\sucn}{_{n=1}^\infty} %% diminutivo
+
+\newcommand*{\Cdot}{{\raisebox{-0.25ex}{\scalebox{1.5}{$\cdot$}}}}      %% cdot más grande
+\renewcommand{\.}{\Cdot}                %% producto escalar
+\newcommand{\cupdot}{\charfusion[\mathbin]{\cup}{\.}}
+\newcommand{\bigcupdot}{\charfusion[\mathbin]{\bigcup}{\.}}
+\DeclareMathOperator{\Var}{Var}     %%%variance
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Agenda}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{Funciones de Variación Acotada}
+
+\subsection{Motivación}
+
+\begin{frame}{Dos Problemas}
+ Veremos dos problemas que muestran la necesidad de extendar las funciones que se pueden abordar por métodos usuales como el uso de la integral de Riemann.
+\end{frame}
+
+\begin{frame}{Longitud de una Curva}
+Considere $\ga:[a,b]\to\bR^2$ con $\ga(t)=(\ga_1(t),\ga_2(t))$. Inicialmente nuestra función no es continua ni acotada. \par 
+\begin{center}
+  ¿Cuál es la longitud de la curva?
+\end{center}
+\begin{figure}
+  \tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt    
+  \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+    %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+    
+    %Curve Lines [id:da8584735824612737] 
+    \draw    (62,170) .. controls (158,95) and (135,254) .. (199,191) ;
+    %Curve Lines [id:da9070985913366083] 
+    \draw    (199,191) .. controls (319,90) and (286,237) .. (326,207) ;
+    %Curve Lines [id:da55587343535453] 
+    \draw    (326,207) .. controls (414,149) and (457,130) .. (474,210) ;
+    %Straight Lines [id:da358668358532094] 
+    \draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ]   (62,170) -- (153,193) ;
+    %Straight Lines [id:da3836975443018966] 
+    \draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ]   (153,193) -- (203,187) ;
+    %Straight Lines [id:da12640039782348245] 
+    \draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ][fill={rgb, 255:red, 208; green, 2; blue, 27 }  ,fill opacity=1 ]   (203,187) -- (266,155) ;
+    %Straight Lines [id:da517062228478639] 
+    \draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ]   (266,155) -- (326,207) ;
+    %Straight Lines [id:da23425723851504388] 
+    \draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ]   (326,207) -- (430.33,156.33) ;
+    %Straight Lines [id:da9838323731219862] 
+    \draw [color={rgb, 255:red, 208; green, 2; blue, 27 }  ,draw opacity=1 ]   (430.33,156.33) -- (474,210) ;
+    
+    % Text Node
+    \draw (43.33,171.4) node [anchor=north west][inner sep=0.75pt]    {$\gamma ( a)$};
+    % Text Node
+    \draw (117.33,196.07) node [anchor=north west][inner sep=0.75pt]    {$\gamma ( t_{1})$};
+    % Text Node
+    \draw (167.33,166.07) node [anchor=north west][inner sep=0.75pt]    {$\gamma ( t_{2})$};
+    % Text Node
+    \draw (268,133.4) node [anchor=north west][inner sep=0.75pt]    {$\gamma ( t_{3})$};
+    % Text Node
+    \draw (328,210.4) node [anchor=north west][inner sep=0.75pt]    {$\gamma ( t_{4})$};
+    % Text Node
+    \draw (394.67,135.07) node [anchor=north west][inner sep=0.75pt]    {$\gamma ( t_{5})$};
+    % Text Node
+    \draw (436.67,211.07) node [anchor=north west][inner sep=0.75pt]    {$\gamma ( b)$};
+    
+    
+    \end{tikzpicture}
+    
+\end{figure}
+\end{frame}
+
+\begin{frame}{Primeras Ideas}
+  Podemos aproximar la curva por segmentos.
+  \begin{itemize}
+    \item Dados $a=t_0<t_1<t_2<\dots<t_n=b$, consideramos los segmentos $[\ga(t_i),\ga(t_{i+1})]$ con $0\leq i\leq n-1$ donde $P=\set{t_0,t_1,\dots,t_n}$.
+    \item Tomando particiones cada vez más finas esperaríamos que la longitud de las curvas poligonales aproximen la longitud de la curva. ¿Será cierto que el límite es finito?
+    \item Note que estos límites no pueden ser aproximados por la integral de Riemann a menos que $\ga_1,\ga_2$ sean diferenciables.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Componentes Diferenciables}
+  En el caso que $\ga_1,\ga_2$ sean diferenciables, vale el teorema del valor medio:
+  $$(\ga(t_{i+1})-\ga(t_i))=\ga'(\xi_i)(t_{i+1}-t_i).$$
+  En general no es claro que el conjunto $L(\Ga,\rho)$ es acotado.
+\end{frame}
+
+\begin{frame}{Masa de un Alambre}
+  Un problema similar surge a la hora de medir la masa de un alambre. Aquí el área transversal es $A$.
+
+  \begin{figure}
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+      %uncomment if require: \path (0,241); %set diagram left start at 0, and has height of 241
+      
+      %Flowchart: Direct Access Storage [id:dp5786229900826654] 
+      \draw   (210.68,98) -- (79.29,98) .. controls (59.76,98) and (39.03,84.57) .. (33,68) .. controls (26.97,51.43) and (37.92,38) .. (57.45,38) -- (188.84,38)(235.14,68) .. controls (241.17,84.57) and (230.22,98) .. (210.68,98) .. controls (191.15,98) and (170.42,84.57) .. (164.39,68) .. controls (158.36,51.43) and (169.31,38) .. (188.84,38) .. controls (208.38,38) and (229.11,51.43) .. (235.14,68) ;
+      %Straight Lines [id:da5893074994090735] 
+      \draw    (75.71,100.35) -- (76,110.75) ;
+      \draw [shift={(75.64,98)}, rotate = 88.4] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]   ;
+      %Straight Lines [id:da19694637791321545] 
+      \draw    (107.21,100.35) -- (107.5,110.75) ;
+      \draw [shift={(107.14,98)}, rotate = 88.4] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]      (0, 0) circle [x radius= 3.35, y radius= 3.35]   ;
+      %Flowchart: Direct Access Storage [id:dp15114335913071741] 
+      \draw  [dash pattern={on 4.5pt off 4.5pt}] (185.5,186.32) -- (166.91,186.32) .. controls (164.15,186.32) and (161.91,172.89) .. (161.91,156.32) .. controls (161.91,139.75) and (164.15,126.32) .. (166.91,126.32) -- (185.5,126.32)(190.5,156.32) .. controls (190.5,172.89) and (188.26,186.32) .. (185.5,186.32) .. controls (182.73,186.32) and (180.49,172.89) .. (180.49,156.32) .. controls (180.49,139.75) and (182.73,126.32) .. (185.5,126.32) .. controls (188.26,126.32) and (190.5,139.75) .. (190.5,156.32) ;
+      %Curve Lines [id:da5804114816457824] 
+      \draw    (146,106.25) .. controls (127.38,152.8) and (125.09,154.69) .. (155.12,154.28) ;
+      \draw [shift={(157,154.25)}, rotate = 539.1] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+      %Straight Lines [id:da8081791899844226] 
+      \draw    (166.64,185.5) -- (167,198.68) ;
+      %Straight Lines [id:da7670770097216806] 
+      \draw    (185.64,185) -- (186,197.75) ;
+      
+      % Text Node
+      \draw (77.64,101.4) node [anchor=north west][inner sep=0.75pt]    {$t_{0}$};
+      % Text Node
+      \draw (109.14,101.4) node [anchor=north west][inner sep=0.75pt]    {$t_{1}$};
+      % Text Node
+      \draw (151.14,188.78) node [anchor=north west][inner sep=0.75pt]    {$t_{i}$};
+      % Text Node
+      \draw (187.5,189.72) node [anchor=north west][inner sep=0.75pt]    {$t_{i+1}$};
+      
+      
+      \end{tikzpicture}
+  \end{figure}
+  
+\end{frame}
+
+\begin{frame}{Análisis del Problema}
+  En este caso podemos considerar 
+  $$\sum_{i=1}^{n-1}\rho(t_i)A(t_i,t_{i+1}),$$
+  donde $\rhd(t_i)$ es la densidad del alambre en el punto
+  $t_i$ y $A(t_i,t_{i+1})$ es el area del segmento $t_i$ a $t_{i+1}$. Es decir 
+  $$A(t_i,t_{i+1})\approx A\nm{\ga(t_i)-\ga(t_{i+1})}.$$
+  La masa se aproxima por 
+  $$\sum_{i=1}^{n-1}\rho(t_i)A\nm{\ga(t_i)-\ga(t_{i+1})}.$$
+\end{frame}
+
+\subsection{La Definición de la Variación Acotado}
+
+\begin{frame}{Variación Acotada}
+  Antes de explorar una nueva definición de integral que nos permite abordar estos problemas, vamos a centrarnos en el problema de las funciones tales que existe un $M\geq 0$ con 
+  $$\sum_{i=1}^{n-1}|f(t_i)-f(t_{i+1})|\leq M$$
+  para cualquier partición.
+\end{frame}
+
+\begin{frame}{Variación Acotada}
+  \begin{Def}\label{def:varAcot}
+    Decimos que $f:[a,b]\to\bR$ es de \alert{variación acotada} si existe un $M> 0$ tal que para toda partición 
+    $$\Ga=\set{t_0=a<t_1<\dots<t_n=b}$$
+    se tiene que 
+    $$S(f,\Ga):=\sum_{i=1}^{n-1}|f(t_i)-f(t_{i+1})|\leq M.$$
+    En otras palabras $f$ es variación acotada si vale que $$\sup_\Ga S(f,\Ga)<\infty.$$
+  \end{Def}
+\end{frame}
+
+\begin{frame}{Ejemplos de Funciones de Variación Acotada}
+  \newcounter{saveenumi}
+  \begin{enumerate}
+    \item Si $f$ es creciente, entonces
+    $$\sum_{i=1}^{n-1}|f(t_i)-f(t_{i+1})|=\sum_{i=1}^{n-1}f(t_i)-f(t_{i+1})=f(b)-f(a).$$
+    Análogamente si $f$ es decreciente $S(f,\Ga)=f(a)-f(b)$. Por lo tanto \alert{toda función monótona es de variación acotada}.
+    \setcounter{saveenumi}{\value{enumi}}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Ejemplos de Funciones de Variación Acotada}
+  
+  \begin{enumerate}
+  \setcounter{enumi}{\value{saveenumi}}    
+\item Tomemos $\phi:[0,1]\to\bR$ dada por 
+$$\phi(x)=\begin{cases}
+  0,\ x\in\bQ\\
+  1,\ x\not\in\bQ
+\end{cases}$$
+y sea $x_n$ tal que $x_{2k}\in\bQ$ para $0\leq k\leq n$ mientras que $x_{2k+1}\in\bR\less\bQ$ para $0\leq k\leq n-1$. Tomamos $x_0=0$ y $x_{2n}=1$. Así vale que 
+$$S(\phi,\Ga)=\sum{i=0}^{2n-1}|\phi(x_{i+1})-\phi(x_i)|=n$$
+y por tanto $\phi$ \alert{no es de variación acotada}.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{La Variación Total}
+  Dada $f:[a,b]\to\bR$ una función de variación acotada, definimos 
+  $$\Var(f,[a,b])=\sup_{\Ga}S(f,\Ga).$$
+  Sea $\Ga_1=\set{x_0=a<x_1<\dots<x_n=x}$ con $a<x<b$, entonces $\Ga=\Ga_1\cup\set{b}$ es una partición de $[a,b]$. Si $x_{n+1}=b$, 
+  $$S(f,\Ga)=\sum_{i=1}^{n-1}|f(t_{x+1})-f(x_i)|=S(f,\Ga_1)+|f(b)-f(x)|.$$
+  Por lo tanto $f:[a,x]\to\bR$ es de variación acotada y 
+  $$\Var(f,[a,x])\leq\Var(f,[a,b]).$$
+  Además
+  \begin{align*}
+    &|f(a)-f(x)|+|f(x)-f(b)\leq\Var(f,[a,b])\\
+    \To &2|f(x)|\leq \Var(f,[a,b])+|f(a)|+|f(b)|.
+  \end{align*}
+\end{frame}
+  
+\begin{frame}{Propiedades}
+  \begin{Lem}\label{lem:propsVA}
+    Sean $f,g:[a,b]\to\bR$ de variación acotada. Entonces 
+    \begin{enumerate}[(i)]
+      \item $cf+g$ es de variación acotada para $c\in\bR$.
+      \item $fg$ es de variación acotada.
+      \item Si existe $\eps>0 $ tal que $|g(x)|\geq\eps$ para $x\in[a,b]$, entonces $\frac{1}{g}$ es de variación acotada.
+      \item $f,g$ son acotadas.
+    \end{enumerate}
+  \end{Lem}
+  La prueba de este lema es un \alert{ejercicio}.
+\end{frame}
+
+\begin{frame}{Subintervalos y la Variación}
+  Usando los argumentos expuestos se prueba que si $\Ga_1$ es una partición de $[a_1,b_1]$ con $a<a_1<b_1<b$. %%Qué? 
+  Tome $\Ga=\Ga_1\cup\set{a,b}$, entonces
+\begin{align*}
+  &S(f,\Ga_1)\leq S(f,\Ga)\leq\Var\bonj{f,[a,b]}\\
+  \To&\Var\bonj{f,[a_1,b_1]}\leq \Var\bonj{f,[a,b]}.
+\end{align*}
+
+\end{frame}
+
+\begin{frame}{Subintervalos y la Variación}
+  \begin{itemize}
+    \item Sea $a<c<b$, considere $\Ga$ una partición de $[a,b]$ con 
+    $$\Ga=\set{x_0=a<x_1<\dots<x_n=x}.$$
+    \item Tome $x_{m_0}$ tal que $x_{m_0}\leq c<x_{m_0+1}$.
+    \item Defina $\Ga'=\Ga\cup\set{c}$ y
+    \begin{align*}
+      \Ga_1&=\set{x_0=a<x_1<\dots\leq x_{m_0}\leq c}\\
+      \Ga_2&=\set{c\leq x_{m_0+1}<\dots<b=x_n}.
+    \end{align*}
+    
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Subintervalos y la Variación}
+  Entonces
+    \begin{align*}
+      S(f,\Ga)&\leq S(f,\Ga')=S(f,\Ga_1)+S(f,\Ga_2)\\
+      &\leq\Var\bonj{f,[a,c]}+\Var\bonj{f,[c,b]} 
+    \end{align*}
+    Por lo tanto 
+    $$\Var\bonj{f,[a,b]}\leq \Var\bonj{f,[a,c]}+\Var\bonj{f,[c,b]} $$
+    Por otro lado si $\Ga_1$ es una partición de $[a,c]$ y $\Ga_2$ es una partición de $[c,b]$, entonces $\Ga=\Ga_1\cup\Ga_2$ es una partición de $[a,b]$. Es decir 
+    $$S(f,\Ga_1)+S(f,\Ga_2)=S(f,\Ga)\leq\Var\bonj{f,[a,b]}.$$
+\end{frame}
+
+\begin{frame}{Subintervalos y la Variación}
+  Así tenemos que 
+\begin{align*}
+  &\sup_{\Ga_1}S(f,\Ga_1)+S(f,\Ga_2)\leq\Var\bonj{f,[a,b]}\\
+  \To&\sup_{\Ga_1}S(f,\Ga_1)+\sup_{\Ga_2}S(f,\Ga_2)\leq\Var\bonj{f,[a,b]}\\
+  \To&\Var\bonj{f,[a,c]}+\Var\bonj{f,[c,b]}\leq\Var\bonj{f,[a,b]}.
+\end{align*}
+\begin{Lem}\label{lem:SubVar}
+  Sea $f:[a,b]\to\bR$ de variación acotada. Entonces 
+  $$\Var\bonj{f,[a,b]}=\Var\bonj{f,[a,c]}+\Var\bonj{f,[c,b]}.$$
+\end{Lem}
+\end{frame}
+
+\subsection{Variación con Signo}
+
+\begin{frame}
+  Dado $x\in\bR$ definimos
+  $$x^+=\begin{cases}
+    x,\ x\geq 0\\
+    0,\ x<0
+  \end{cases}\quad
+  x^-=\begin{cases}
+    -x,\ x\leq 0\\
+    0,\ x>0
+  \end{cases}$$
+  y así $x^+,x^-$ son positivas. Además $x^++x^-=|x|$ y $x^+-x^-=x$. Dada $f:[a,b]\to\bR$ y $\Ga=\set{x_0=a<x_1<\dots<x_n=b}$, una partición, consideremos
+  \begin{align*}
+    &P(f,\Ga)=\sum_{i=1}^{n-1}(f(t_i)-f(t_{i+1}))^+\\
+    &N(f,\Ga)=\sum_{i=1}^{n-1}(f(t_i)-f(t_{i+1}))^-
+  \end{align*}
+\end{frame}
+
+\begin{frame}{Observaciones}
+  Note que 
+  \begin{itemize}
+    \item $S(f,\Ga)=N(f,\Ga)+P(f,\Ga)$.
+    \item $-N(f,\Ga)+P(f,\Ga)\leq \sum_{i=1}^{n-1}(f(t_i)-f(t_{i+1}))\leq f(b)-f(a)$.
+  \end{itemize}
+  Definimos 
+  $$P(f,[a,b])=\sup_\Ga P(f,\Ga),\ N(f,[a,b])=\sup_\Ga N(f,\Ga).$$
+  Entonces
+  $$S(f,\Ga)=N(f,\Ga)+P(f,\Ga)\leq N(f,[a,b])+P(f,[a,b])$$
+  y por lo tanto 
+  $$\Var(f,[a,b]))\leq N(f,[a,b])+P(f,[a,b]).$$
+\end{frame}
+
+\begin{frame}{El Otro Lado}
+  $$f(a)+P(f,\Ga)=f(b)+N(f,\Ga),$$
+  entonces
+  $$f(a)+P(f,[a,b])=f(b)+N(f,[a,b]).$$
+  Además 
+  $$N(f,\Ga)+P(f,\Ga)=S(f,\Ga)\leq \Var(f,[a,b]).$$
+  Entonces 
+  \begin{align*}
+    &f(a)-f(b)+2P(f,\Ga)=S(f,\Ga)\\
+    \To&f(a)-f(b)+2P(f,[a,b])=\Var(f,[a,b])\\
+    \To&N(f,[a,b])+P(f,[a,b])=\Var(f,[a,b]).
+  \end{align*}
+\end{frame}
+
+\begin{frame}{Descomposición}
+  \begin{Lem}\label{lem:descompVarPN}
+    Sea $f:[a,b]\to\bR$ de variación acotada. Entonces vale que
+    \begin{itemize}
+      \item $P(f,[a,b])-N(f,[a,b])=f(b)-f(a)$.
+      \item $P(f,[a,b])+N(f,[a,b])=\Var(f,[a,b])$.
+    \end{itemize}
+  \end{Lem}
+Equivalentemente se tiene que 
+\begin{itemize}
+  \item $P(f,[a,b])=\half\set{\Var(f,[a,b])+f(b)-f(a)}$.
+  \item $N(f,[a,b])=\half\set{\Var(f,[a,b])-f(b)+f(a)}$.
+\end{itemize}
+\end{frame}
+
+\subsection{Caracterización}
+
+\begin{frame}
+  Note que 
+  $$f(x)-f(a)=P(f,[a,x])-N(f,[a,x]).$$
+  Como $P(f,[a,x])$ y $N(f,[a,x])$ son funciones crecientes de $x$ y positivas, entonces 
+  $$f(x)=P(f,[a,x])+f(a)-N(f,[a,x]).$$
+  \begin{Th}\label{thm:caracVA}
+  Sea $f:[a,b]\to\bR$ una función. Entones $f$ es de variación acotada si y sólo si $f$ es la resta de dos funciones crecientes y positivas.
+  \end{Th}
+\end{frame}
+
+\begin{frame}{Discontinuidades}
+  \begin{Th}\label{thm:contablesDiscont}
+    Sea $f:[a,b]\to\bR$ de variación acotada. Entonces $f$ tiene a lo sumo un número contable de discontinuidades. Toda discontinuidad es un salto o es removible. 
+  \end{Th}
+  Dado que $f=f_1-f_2$ con tales funciones positivas y crecientes, basta analizar las discontinuidades de funciones positivas y crecientes.
+\end{frame}
+
+\begin{frame}{Prueba del Teorema}
+  \begin{itemize}
+    \item Considere 
+    $$D_n=\Set{x\in[a,b]:\ f(x_+)-f(x_-)\geq\frac1k}$$
+    donde $f(x_+)=\lim_{y\to x_+}f(y)$ y $f(x_-)=\lim_{y\to x_-}f(y)$.
+    \item De esta forma, si $x_0<x_1<\dots< x_m\in D_n$, existe $y_i,z_i$ tales que para $i=1,\dots,n$
+    \begin{align*}
+      &a=y_0\leq x_0<z_0=y_1<x_1,\\
+      &x_{i-1}<z_{i-1}=y_i<x_i,\\
+      &x_m\leq z_m=b.
+    \end{align*}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Prueba del Teorema}
+ \begin{itemize}
+   \item Entonces
+   \begin{align*}
+     &=f(y_{i+1})-f(y_i)\\
+     f(x_i^+)-f(x_i^-)&\leq f(z_i)-f(y_i) %%Hmmm
+   \end{align*}
+   \item Es decir 
+   $$\frac mk\leq \sum\sucm f(z_i)-f(y_i)=f(b)-f(a)$$
+   y así concluimos que $|D_n|<\infty$.
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{Th}\label{thm:lastHoy}
+    Sea $f:[a,b]\to\bR$ de variación acotada y continua. Entonces dado $M<\Var(f,[a,b])=V$, existe $\dl>0$ que satisface
+    $$|\Ga|<\dl\To M< S(f,\Ga)\leq V.$$
+  \end{Th}
+  Sea $\mu>0$ tal que $M+\mu<V$. Sea $\Ga_1$ una partición que satisface $M+\mu<S(f,\Ga_1)$ con 
+  $$\Ga_1=\set{\tilde{x}_0=a<\tilde{x}_1<\dots<\tilde{x}_k=b}.$$
+  Al ser $f$ uniformemente continua, existe $\dl>0$ tal que 
+  $$|x-y|<\dl\To |f(x)-f(y)|<\frac{\mu}{2(k+1)}.$$
+\end{frame}
+
+\begin{frame}{Continuamos la Prueba}
+  \begin{itemize}
+    \item Sea $\Ga$ una partición tal que 
+    $$|\Ga|<\half\min\set{\dl,|\Ga_1|}.$$
+    \item Si $\Ga=\set{x_0=a<x_1<\dots<x_n=x}$, tome $\Ga_2=\Ga\cup\Ga_1$. 
+  \item Vamos a mostrar que $S(f,\Ga_2)-\mu<S(f,\Ga)$. 
+  \item Entonces
+  $$M<S(f,\Ga_1)-\mu\leq S(f,\Ga_2)-\mu\leq S(f,\Ga).$$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Continuamos la Prueba}
+  Sean $\set{\tilde{x}_i,\dots,\tilde{x}_{i_\l}}=\Ga_2\less\Ga$, entonces existe $1\leq j\leq m$ tal que 
+  $$x_i<\tilde{x}_{i_k}<x_{i+1}.$$
+  Note que $1\leq \l\leq k+1$ y además
+\begin{align*}
+  S(f,\Ga)=&\sum_{\set{1\leq j\leq m:\ \Ga_1\cap]x_{j-1},x_j[\neq\emptyset}}|f(x_j)-f(x_{j-1})|=\Sg''\\
+  +&\sum_{\set{1\leq j\leq m:\ \Ga_1\cap]x_{j-1},x_j[=\emptyset}}|f(x_j)-f(x_{j-1})|=\Sg'
+\end{align*}
+\end{frame}
+
+\begin{frame}{Terminamos la Prueba}
+  Como $\Ga_2=\set{x_0<x_1<\dots<x_m}\cup\set{\tilde{x}_{i_1},\dots,\tilde{x}_{i_m}}$, se tiene que 
+  \begin{align*}
+    S(f,\Ga_2)&=\Sg'+\sum_{\set{1\leq j\leq m:\ \Ga_1\cap]x_{i-1},x_i[\neq\emptyset}}|f(x_j)-f(x_{i_k})|+|f(x_{i_k})-f(x_{j-1})|\\
+    &\leq \Sg'+\frac{2\mu}{2(k+1)}(k+1)\\
+    &\leq \Sg'+\mu\\
+    &\leq S(f,\Ga)+\mu,
+  \end{align*}
+\end{frame}
+
+\begin{frame}{Un Corolario}
+  \begin{Cor}\label{cor:intsYVar}
+Sea $f:[a,b]\to\bR$ tal que $f'$ es continua en $[a,b]$. Entonces 
+\begin{itemize}
+  \item $\Var(f,[a,b])=\int\limits_a^b|f'(x)|\dd x$.
+  \item $P(f,[a,b])=\int\limits_a^b(f'(x))^+\dd x$.
+  \item $N(f,[a,b])=\int\limits_a^b(f'(x))^-\dd x$
+\end{itemize}
+  \end{Cor}
+  La prueba de este resultado es un \alert{ejercicio}.
+\end{frame}
+\section*{Resumen}
+
+\subsection*{Qu\'e vimos hoy}
+
+\begin{frame}{Resumen}
+
+  % Keep the summary *very short*.
+  \begin{itemize}
+  \item La definición \ref{def:varAcot} de una función de variación acotada.
+  \item El lema \ref{lem:propsVA} sobre propiedades de las funciones de variación acotada. 
+  \item El lema \ref{lem:SubVar} sobre subintervalos y el comportamiento de la variación.
+  \item El lema \ref{lem:descompVarPN} sobre la variación positiva y negativa.
+  \item El teorema \ref{thm:caracVA} que caracteriza las funciones de variación acotada.
+  \item El teorema \ref{thm:contablesDiscont} sobre las discontinuidades de una función de variación acotada. 
+  \item El teorema \ref{thm:lastHoy} sobre las sumas. %Qué nombre?
+  \item El corolario \ref{cor:intsYVar} sobre las integrales y la variación.
+  \end{itemize}
+  
+\end{frame}
+
+\subsection*{Ejercicios a trabajar}
+\begin{frame}{Ejercicios}
+    
+  \begin{itemize}
+    \item
+      Lista 10
+      \begin{itemize}
+      \item La prueba del lema \ref{lem:propsVA} sobre funciones de variación acotada.
+      \item La prueba del corolario \ref{cor:intsYVar} sobre integrales y variación.
+      \end{itemize}
+    \end{itemize}
+  
+\end{frame}
+
+
+% All of the following is optional and typically not needed. 
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{Lectura adicional}
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{Lecturas adicionales}
+    
+  \begin{thebibliography}{10}
+    
+  \beamertemplatebookbibitems
+  % Start with overview books.
+
+  \bibitem{CambroNotas}
+    S.Cambronero.
+    \newblock {\em Notas MA0505}.
+    \newblock 20XX.
+
+    \bibitem{NachoNotas}
+    I.Rojas
+    \newblock {\em Notas MA0505}.
+    \newblock 2018.
+ 
+  \end{thebibliography}
+  
+\end{frame}
+%% 6 - 2:10:52 48
+%% 7 - 1:17:44 44
+%% 8 - 27:37 69
+%% 9 - 1:07:47 86 + 59:38 40 approx 2 h c 7 min
+%% 10 - 2:22:39 63
+\end{document}
+
+
