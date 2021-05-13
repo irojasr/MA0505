@@ -243,8 +243,6 @@
   \end{Ej}
 \end{frame}
 
-\subsection{Propiedades}
-
 \begin{frame}
   \begin{Lem}\label{lem:NotRSIntCuando}
 Asuma que existe $z_0\in [a,b]$ tal que $f$ y $\phi$ son discontinuas en $z_0$. Entonces $f$ no es Riemann-Stieltjes integrable respecto a $\phi$.
@@ -331,6 +329,7 @@ $$L(f,\Ga_1,\phi)\leq L(f,\Ga,\phi)\leq U(f,\Ga,\phi)\leq U(f,\Ga_2,\phi).$$
 
  \section{Propiedades de la Integral}
 
+ \subsection{La Integral es Acotada}
  \begin{frame}
    Utilizando la definición es fácil probar que si $\int\limits_a^bf\dd\phi_1$ y $\int\limits_a^bf\dd\phi_2$ existen, y vale $\phi=\phi_1-\phi_2$, entonces $\int\limits_a^bf\dd\phi$ existe y además 
    $$\int\limits_a^bf\dd\phi=\int\limits_a^bf\dd\phi_1-\int\limits_a^bf\dd\phi_2.$$
@@ -393,7 +392,112 @@ $$\left|\int\limits_a^bf\dd\phi\right|\leq\sup_{[a,b]}|f|\Var(\phi,[a,b]).$$
      \end{frame}
 
 \begin{frame}{Segundo Paso}
-  Si $\set{\tilde\Ga_k}\suck$
+  Si $\set{\tilde\Ga_k}\suck$ es otra sucesión de particiones que satisface
+  $$\lim_{k\to\infty}|\tilde{\Ga}_k|=0.$$
+  Tome $\hat\Ga_k=\tilde\Ga_k\cup\Ga_k$ y $k_0$ tal que 
+  $$k\geq k_0\To |\tilde\Ga_k|<\dl_1,\ |\Ga_k|<\dl_1.$$
+  Entonces 
+  \begin{itemize}
+    \item $U(f,\Ga_k,\phi)\leq U(f,\hat\Ga_k,\phi)+\frac\eps2$.
+    \item $U(f,\hat\Ga_k,\phi)\leq U(f,\Ga_k,\phi) +\frac\eps2$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Terminamos}
+  Luego 
+  \begin{align*}
+    -\eps&<U(f,\Ga_k,\phi)-U\leq U(f,\hat\Ga_k,\phi)-U+\frac\eps2\\
+    &\leq U(f,\Ga_k,\phi)-U+\eps<2\eps.
+  \end{align*}
+  Finalmente 
+  \begin{enumerate}[a)]
+    \item $R(f,\Ga,\phi)-U\leq U(f,\Ga,\phi)-U\leq \frac\eps2$.
+    \item $R(f,\Ga,\phi)-U\geq L(f,\Ga,\phi)-U\geq U(f,\Ga,\phi)-U-\frac\eps2>\eps$.
+  \end{enumerate}
+\end{frame}
+
+\subsection{Linealidad}
+
+\begin{frame}
+  Las propiedades básicas de la integral de Riemann se mantienen. (Probar este teorema es un \alert{ejercicio}).
+  \begin{Th}\label{thm:linealidadRS}
+    Asuma que para $1\leq i,j\leq 2$, que $f_i:[a,b]\to\bR$ es R-S integrable respecto a $\phi_j:[a,b]\to\bR$. Si $c\in\bR$, tenemos que 
+    \begin{enumerate}[(a)]
+      \item $\int\limits_a^b(cf_1+f_2)\dd\phi_1=c\int\limits_a^bf_1\dd\phi_1+\int\limits_a^bf_2\dd\phi_1$.
+      \item $\int\limits_a^bf_1\dd(c\phi_1)=c\int\limits_a^bf_1\dd\phi_1$.
+      \item $\int\limits_a^bf_1\dd(\phi_1+\phi_2)=\int\limits_a^bf_1\dd\phi_1+\int\limits_a^bf_1\dd\phi_2$.
+      \item $\int\limits_a^bf_1\dd\phi_1=\int\limits_a^cf_1\dd\phi_1+\int\limits_b^cf_1\dd\phi_1$.
+    \end{enumerate}
+  \end{Th}
+  
+\end{frame}
+
+\subsection{Valor Medio, Partes y Convergencia Uniforme}
+\begin{frame}{Valor Medio}
+  Si $\phi:[a,b]\to\bR$ es creciente, tenemos que
+  \begin{enumerate}[a)]
+    \item $L(f,\Ga,\phi)\leq R(f,\Ga,\phi)\leq U(f,\Ga,\phi)$.
+    \item $U(f,\Ga,\phi)\leq\sup_{[a,b]}f(\phi(b)-\phi(a))$.
+    \item $L(f,\Ga,\phi)\geq\inf_{[a,b]}f(\phi(b)-\phi(a))$.
+  \end{enumerate}
+  Entonces vale 
+  $$\inf_{[a,b]}f(\phi(b)-\phi(a))\leq\int\limits_a^bf\dd\phi\leq\sup_{[a,b]}f(\phi(b)-\phi(a)).$$
+  
+\end{frame}
+
+\begin{frame}{Valor Medio}
+  \begin{Lem}\label{lem:valorMedio}
+    Si $f$ es continua y R-S integrable respecto a $\phi$, creciente, entonces
+    $$\exists\xi\in[a,b]\left(\int\limits_a^bf\dd\phi=f(\xi)(\phi(b)-\phi(a))\right).$$
+  \end{Lem}
+\end{frame}
+
+\begin{frame}{Integración por Partes}
+  \begin{Th}\label{thm:partes}
+    Si $\int_a^bf\dd\phi$ existe, entonces $\int_a^b\phi\dd f $ existe y vale 
+    $$\int_a^bf\dd\phi+\int_a^b\phi\dd f=f(b)\phi(b)-f(a)\phi(a).$$
+  \end{Th}
+  Comenzamos por tomar $\Ga=\set{x_0=a<x_1<\dots<x_n=b}$ y $x_{i-1}\leq \xi_i\leq x_i$ para $1\leq i\leq n$. Definimos $\Ga'=\set{a,b}\cup\set{\xi_1,\dots,\xi_n}$ y $\xi_0=a$, $\xi_{n+1}=b$.
+\end{frame}
+
+\begin{frame}
+  Así tenemos que $R(f,\Ga,\phi)$ es
+  \small{
+  \begin{align*}
+    =&\sum\sucn f(xi_i)(\phi(x_i)-\phi(x_{i-1}))=\sum\sucn f(xi_i)\phi(x_i)-\sum_{i=0}^{n-1}f(\xi_{i+1})\phi(x_{i})\\
+    =&-\sum_{i=1}^{n-1}\phi(x_i)(f(\xi_{i+1})-f(\xi_i))+f(\xi_n)\phi(b)-\phi(a)f(\xi_1)\\
+    =&-\sum_{i=1}^{n-1}\phi(x_i)(f(\xi_{i+1})-\phi(a)(f(\xi_1)-f(\xi_0))-\phi(b)(f(\xi_{n+1})-f(\xi_n))\\
+    &-\phi(a)f(a)+\phi(b)f(b)\\
+    =&-\sum_{i=0}^{n}\phi(x_i)(f(\xi_{i+1})+\phi(b)f(b)-\phi(a)f(a)
+  \end{align*}}
+  Y por tanto $R(f,\Ga,\phi)=R(\phi,\Ga',f)+f(b)\phi(b)-f(a)\phi(a)$. El resultado se concluye tomando límites.
+\end{frame}
+
+\begin{frame}{Convergencia Uniforme}\label{ej:integralNoDefn}
+  Considere $\set{r_n}\sucn=\bQ\cap[0,1]$. Defina 
+  $$f_n:[0,1]\to\bR,\ x\mapsto\begin{cases}
+    1,\ x=r_1,\dots,r_n.\\
+    0,\ \text{si no}.
+  \end{cases}$$
+  Note que $f_n\leq f_{n+1}$ y que 
+  $$\lim_{n\to\infty}f_n=\mapsto\begin{cases}
+    1,\ x\in\bQ\cap[0,1].\\
+    0,\ \text{si no}.
+  \end{cases}$$
+  Es un \alert{ejercicio} probar que
+  \begin{itemize}
+    \item $\int\limits_0^1f_n(x)\dd x=0$.
+    \item $f$ no es Riemann integrable.
+  \end{itemize}
+  Luego $\int_0^1f(x)\dd x$ no se puede  definir.
+\end{frame}
+
+\begin{frame}{Sucesiones Uniformemente Convergentes}
+  \begin{Lem}\label{lem:ConvUnifRS}
+    Sea $\phi$ de variación acotada y $\set{f_n}\sucn$ una sucesión de funciones R-S integrables respecto a $\phi$.\par 
+    Si $f_n\xrightarrow[n\to\infty]{}f$ uniformemente y $f$ es R-S integrable respecto a $\phi$, entonces
+    $$\lim_{n\to\infty}\int\limits_a^bf_n\dd\phi=\int\limits_a^bf\dd\phi.$$
+  \end{Lem}
 \end{frame}
 \section*{Resumen}
 
@@ -406,6 +510,10 @@ $$\left|\int\limits_a^bf\dd\phi\right|\leq\sup_{[a,b]}|f|\Var(\phi,[a,b]).$$
   \item La definición \ref{def:rsIntegrable} de funciones Riemann-Stieltjes integrables.
   \item El criterio \ref{lem:NotRSIntCuando} que nos dice cuando una función NO es R-S integrable.
   \item El lema \ref{lem:PropsSumasInfSup} que resume algunas propiedades de las sumas superiores e inferiores.
+  \item El teorema \ref{thm:linealidadRS} sobre la linealidad de la integral.
+  \item El lema \ref{lem:valorMedio} sobre la propiedad del valor medio.
+  \item El teorema \ref{thm:partes} de integración por partes.
+  \item El lema \ref{lem:ConvUnifRS} de convergencia uniforme de sucesiones de funciones.
   \end{itemize}
   
 \end{frame}
@@ -419,6 +527,8 @@ $$\left|\int\limits_a^bf\dd\phi\right|\leq\sup_{[a,b]}|f|\Var(\phi,[a,b]).$$
       \begin{itemize}
       \item El ejercicio \ref{ej:CauchyRS} sobre el criterio de Cauchy para integrales de Riemann y Stieltjes.
       \item Terminar la prueba del lema \ref{lem:NotRSIntCuando} es un ejercicio.
+      \item Realizar la prueba del teorema \ref{thm:linealidadRS} es un ejercicio.
+      \item El ejercicio \ref{ej:integralNoDefn} sobre la función indicadora de los primeros $n$ racionales en $[0,1]$.
       \end{itemize}
     \end{itemize}
   
