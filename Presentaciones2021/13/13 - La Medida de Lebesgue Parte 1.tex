@@ -1,0 +1,506 @@
+\documentclass[utf8]{beamer}
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  \setbeamercovered{transparent}
+}
+
+
+\usepackage{amsfonts,mathtools,amssymb}
+\usepackage[spanish]{babel}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tikz}
+\usepackage{physics}
+
+\title[MA0505]{MA0505 - An\'alisis I}
+\subtitle{Lecci\'on XIII: La Medida de Lebesgue I}
+
+\author{Pedro M\'endez\inst{1}}
+
+\institute[Universidad de Costa Rica] % (optional, but mostly needed)
+{
+  \inst{1}%
+  Departmento de Matem\'atica Pura y Ciencias Actuariales\\
+  Universidad de Costa Rica
+  }
+
+\date[I-2021] {Semestre I, 2021}
+
+%%%%%%%%% === Theorems and suchlike === %%%%%%%%%%%%%%
+
+\theoremstyle{plain}
+\newtheorem{Th}{Teorema}               %%% Theorem 1.1.1
+\newtheorem{Tmon}{Teoremón}
+\newtheorem{Prop}{Proposición}         %%% Proposition 1.1.2
+\newtheorem{Lem}{Lema}                 %%% Lemma 3
+\newtheorem{Cor}{Corolario}            %%% Corollary 4
+
+\theoremstyle{definition}
+\newtheorem{Def}{Definición}           %%% Definition 5
+\newtheorem{Ex}{Ejemplo}               %%% Example 6
+\newtheorem{Ej}{Ejercicio}             %%% Ejercicio 7
+\newtheorem{Hec}[Th]{Hecho}            %%% Hecho 1.1.8
+
+\theoremstyle{remark}
+\newtheorem{Rmk}[Th]{Observación}      %%%Remark 1.1.9
+\newtheorem*{nonum-Rmk}{Observación}         %%% No number Fact
+\newtheorem*{Notn}{Notaci\'on}        %% Notaciones
+\newtheorem*{Warn}{Advertencia}       %% Advertencias
+
+\numberwithin{equation}{section}
+
+%% Accomodations 
+
+\makeatletter
+\def\moverlay{\mathpalette\mov@rlay}
+\def\mov@rlay#1#2{\leavevmode\vtop{%
+   \baselineskip\z@skip \lineskiplimit-\maxdimen
+   \ialign{\hfil$\m@th#1##$\hfil\cr#2\crcr}}}
+\newcommand{\charfusion}[3][\mathord]{
+    #1{\ifx#1\mathop\vphantom{#2}\fi
+        \mathpalette\mov@rlay{#2\cr#3}
+      }
+    \ifx#1\mathop\expandafter\displaylimits\fi}
+\makeatother
+
+% Greek letters:
+
+\newcommand{\al}{\alpha}                %% short for  \alpha
+\newcommand{\bt}{\beta}                 %% short for  \beta
+\newcommand{\Dl}{\Delta}                %% short for  \Delta
+\newcommand{\dl}{\delta}                %% short for  \delta
+\newcommand{\eps}{\varepsilon}          %% short for  \varepsilon
+\newcommand{\Ga}{\Gamma}                %% short for  \Gamma
+\newcommand{\ga}{\gamma}                %% short for  \gamma
+\newcommand{\La}{\Lambda}               %% short for  \Lambda
+\newcommand{\la}{\lambda}               %% short for  \lambda
+\newcommand{\Om}{\Omega}                %% short for  \Omega
+\newcommand{\om}{\omega}                %% short for  \omega
+\newcommand{\Sg}{\Sigma}                %% short for  \Sigma
+\newcommand{\sg}{\sigma}                %% short for  \sigma
+\newcommand{\te}{\theta}                %% short for  \theta
+\newcommand{\vf}{\varphi}               %% short for  \varphi
+\newcommand{\ze}{\zeta}                 %% short for  \zeta
+
+%Boldface letters
+
+\newcommand{\bC}{\mathbb{C}}    %%% números complejos
+\newcommand{\bN}{\mathbb{N}}    %%% números naturales
+\newcommand{\bP}{\mathbb{P}}        %% números enteros positivos
+\newcommand{\bQ}{\mathbb{Q}}    %%% números racionales
+\newcommand{\bR}{\mathbb{R}}    %%% números reales
+\newcommand{\bS}{\mathbb{S}}    %%% esfera
+\newcommand{\bZ}{\mathbb{Z}}    %%% números enteros
+
+%Script letters:
+
+\newcommand{\cA}{\mathcal{A}}           %% formas diferenciales
+\newcommand{\cB}{\mathcal{B}}           %% una base vectorial
+\newcommand{\cC}{\mathcal{C}}           %% otra base vectorial
+\newcommand{\cF}{\mathcal{F}}           %% espacio de Fock
+\newcommand{\cL}{\mathcal{L}}           %% operadores lineales
+\newcommand{\cM}{\mathcal{M}}           %% multiplicadores
+\newcommand{\cN}{\mathcal{N}}           %% funciones nulas
+\newcommand{\cP}{\mathcal{P}}           %% una particion
+\newcommand{\cR}{\mathcal{R}}           %% funciones representativas
+\newcommand{\cS}{\mathcal{S}}           %% funciones de Schwartz
+
+
+%Brackets
+
+\newcommand{\bonj}[1]{\left\lbrack#1\right\rbrack}
+\newcommand{\obonj}[1]{\left\rbrack#1\right\lbrack}
+\newcommand{\rbonj}[1]{\left\rbrack#1\right\rbrack}
+\newcommand{\lbonj}[1]{\left\lbrack#1\right\lbrack}
+\newcommand{\snm}[1]{\|#1\|}           %small norma
+\newcommand{\nm}[1]{\left\|#1\right\|} %norma pegadita
+\newcommand{\pnm}[1]{\biggl|\biggl|#1\biggr|\biggr|}
+\newcommand{\set}[1]{\{\,#1\,\}}    %% set notation
+\newcommand{\floor}[1]{\lfloor#1\rfloor} %% mayor entero <= x
+\newcommand{\Set}[1]{\biggl\{\,#1\,\biggr\}} %% set notation (large)
+\newcommand\quot[2]{
+        \mathchoice
+            {% \displaystyle
+                \text{\raise1ex\hbox{$#1$}\Big/\lower1ex\hbox{$#2$}}%
+            }
+            {% \textstyle
+                {^{ #1}/_{ #2}}
+            }
+            {% \scriptstyle
+                {^{ #1}/_{ #2}}
+            }
+            {% \scriptscriptstyle
+                {^{ #1}/_{ #2}}
+            }
+    }
+\newcommand*\squot[2]{{^{ #1}/_{ #2}}}%%%small quotient
+
+%Symbols 
+
+\newcommand{\x}{\times}
+\renewcommand{\geq}{\geqslant}          %% mayor o igual (variante)
+\newcommand{\hookto}{\hookrightarrow}     %% inclusion arrow
+\newcommand{\isom}{\simeq}              %% isomorfismo
+\renewcommand{\l}{\ell}                   %% ele cursiva
+\renewcommand{\leq}{\leqslant}          %% menor o igual (variante)
+\newcommand{\less}{\setminus}           %% set difference
+\newcommand{\To}{\Rightarrow}
+\newcommand{\ov}{\overline}
+\newcommand{\un}{\underline}
+\newcommand{\del}{\partial}
+\newcommand{\ind}{\mathbf{1}}       %%%indicator function
+
+%%% Small fractions in displays:
+
+\newcommand{\half}{{\mathchoice{\nhalf}{\thalf}{\shalf}{\shalf}}} %%display text script script^2
+\newcommand{\happi}{{\tfrac{\pi}{2}}} %% small fraction  \pi/2
+\newcommand{\quarter}{\tfrac{1}{4}} %% small fraction  1/4
+\newcommand{\nhalf}{\frac{1}{2}}
+\newcommand{\shalf}{{\scriptstyle\frac{1}{2}}} %% tiny fraction 1/2
+\newcommand{\thalf}{{\tfrac{1}{2}}} %% small fraction  1/2
+\newcommand{\third}{\tfrac{1}{3}}   %% small fraction  1/3 %Hay que renew porque mathabx toma second y third como x'' y x''' por ejemplo
+
+\newcommand{\ihalf}{{\tfrac{i}{2}}} %% small fraction  i/2
+
+\newcommand{\suci}{_{i=1}^\infty} %% diminutivo
+\newcommand{\suck}{_{k=1}^\infty} %% diminutivo
+\newcommand{\sucl}{_{\l=1}^\infty} %% diminutivo
+\newcommand{\sucm}{_{m=1}^\infty} %% diminutivo
+\newcommand{\sucn}{_{n=1}^\infty} %% diminutivo
+
+\newcommand*{\Cdot}{{\raisebox{-0.25ex}{\scalebox{1.5}{$\cdot$}}}}      %% cdot más grande
+\renewcommand{\.}{\Cdot}                %% producto escalar
+\newcommand{\cupdot}{\charfusion[\mathbin]{\cup}{\.}}
+\newcommand{\bigcupdot}{\charfusion[\mathbin]{\bigcup}{\.}}
+\DeclareMathOperator{\Var}{Var}     %%%variance
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Agenda}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{Conjuntos Medibles}
+
+\begin{frame}{Cerrados}
+  \begin{Lem}\label{ej:parcial1I2018Ej7}
+    Sea $G\subseteq\bR^d$ abierto, entonces $G=\bigcup_{k=1}^\infty I_k$ con $I_k=\bonj{a_1^k,b_1^k}\x\dots\x\bonj{a_d^k,b_d^k}$ y $I_k^o\cap I_\ell^o=\emptyset$ para $k\neq\ell$.
+  \end{Lem}
+  La prueba de este lema es un \alert{ejercicio}.
+  \begin{Th}\label{th:closedMeasurable}
+    Sea $F\subseteq\bR^d$ un cerrado, entonces $F$ es medible.
+  \end{Th}
+\end{frame}
+
+\begin{frame}{Prueba del Teorema}
+  Si asumimos adicionalmente que $F$ es compacto, entonces dado $\eps>0$ existe un $G$ abierto que satisface:
+  $$m_e(G)\leq m_e(F)+\frac{\eps}{2}.$$
+  Note que $G\less F$ es abierto. Luego existen $\set{I_k}\suck$ cubos cerrados tales que 
+  $$G\less F=\bigcup\suck I_k.$$
+  Como $F$ y $\bigcup_{k=1}^\l I_k$ son cerrados disjuntos y $F$ es compacto, entonces $d\left(F,\bigcup_{k=1}^\l I_k\right)>0$ y así
+  $$m_e(G)\geq m_e\left(F\cup\bigcup_{k=1}^\l I_k\right)=m_e\left(F\right)+m_e\left(\bigcup_{k=1}^\l I_k\right).$$
+\end{frame}
+
+\begin{frame}{Terminamos la Prueba}
+  De esta manera 
+  \begin{align*}
+    &m_e\left(\bigcup_{k=1}^\l I_k\right)\leq m_e(G)-m_e(F)\leq \frac{\eps}{2}\\
+    \To&\forall \l\geq 1\left(\sum_{k=1}^\l m_e(I_k)\leq \frac{\eps}{2}\right)\\
+    \To&\sum\suck m_e(I_k)\leq\frac\eps2\To m_e(G\less F)<\eps.
+  \end{align*}
+  Y finalmente si $F$ no es compacto, podemos tomar $F=\bigcup F_k$ con $F_k=F\cap\ov{B(0,k)}$ que sí es compacto. De esta manera, $F$ es medible.
+\end{frame}
+
+\begin{frame}{Complementos}
+  \begin{Th}\label{th:complementMeasurable}
+    El complemento de un conjunto medible es medible.
+  \end{Th}
+  Sea $E$ medible, dado $k\geq 1$, existe $G_k$ un abierto tal que 
+  $$E\subseteq G_k,\quad m_e(G_k\less E)<\frac1k.$$
+  Note que $E\subseteq\bigcap\suck G_k$ y que $G_k^c$ es cerrado para $k\geq 1$. Así $H=\bigcup\suck G_k^c$ es medible con 
+  $$H=\left(\bigcap\suck G_k\right)^c=\bigcup\suck G_k^c\subseteq E^c.$$
+\end{frame}
+
+\begin{frame}{Terminamos la Prueba}
+  Ahora vale 
+  $$E^c\less H\subseteq E^c\less G_k^c=G_k\less E.$$
+  Es decir, para $k\geq 1$ tenemos $m_e(E^c\less H)\less \frac1k$. Concluimos que $Z=E^c\less H$ tiene medida exterior cero y entonces podemos expresar 
+  $$E^c=Z\cup H$$
+  de manera que $E^c$ es medible.
+\end{frame}
+
+\begin{frame}{Extraemos un Resultado}
+  Si $\set{E_k}\suck$ es una colección de medibles, entonces 
+  \begin{enumerate}[(i)]
+    \item $\bigcup\suck E_k$ es medible.
+    \item $\bigcup\suck E_k^c$ es medible.
+  \end{enumerate}
+  Entonces tenemos que 
+  $$\bigcap\suck E_k=\left(\bigcup\suck E_k^c\right)^c$$
+  es medible también.\par 
+  Además $E_1\less E_2=E_1\cap E_2^c$ es medible.
+\end{frame}
+
+\section{Sigma Álgebras}
+
+\begin{frame}
+  \begin{Def}\label{def:sgAlgebra}
+  Sea $\Om$ un conjunto, una \alert{$\sg$-álgebra} $\cF$ es un subconjunto de $2^\Om$ que satisface
+  \begin{enumerate}[(i)]
+    \item Si $E\in\cF$, entonces $E^c\in\cF$.
+    \item $\Om\in\cF$.
+    \item Si $\set{F_k}\suck\subseteq F$ entonces $\bigcup\suck F_k\in\cF$.
+  \end{enumerate}
+  \end{Def}
+
+  \begin{Lem}\label{lem:whoisSigmaAlg}
+    Sea $\cF$ una $\sg$-álgebra y $\set{E_k}\suck\subseteq\cF$. Entonces
+    \begin{enumerate}[(i)]
+      \item $\bigcap\suck E_k\in\cF$.
+      \item $E_1\less E_2\in\cF$.
+      \item $\emptyset\in\cF$.
+    \end{enumerate}
+  \end{Lem}
+  La prueba de este lema es un \alert{ejercicio}.
+\end{frame}
+
+\begin{frame}{El Conjunto de los Medibles}
+  Sea $\cM=\set{E\subseteq\bR^d:\ E\ \text{medible}}$. Los resultados anteriores se resumen en el siguiente lema.
+  \begin{Lem}\label{lem:MesSgAlg}
+    $\cM$ es una $\sg$-álgebra.
+  \end{Lem}
+  Sea $\cS\subseteq 2^\Om$, la \alert{$\sg$-álgebra generada por $\cS$} es 
+  $$\sg(\cS)=\bigcap_{\substack{\cF\ \sg-\text{álg.}\\ \cS\subseteq \cF}}\cF$$
+  y de esto se desprende que $\sg(\cS)$ es la $\sg$-álgebra más pequeña que contiene a $\cS$.
+\end{frame}
+
+\begin{frame}{Borelianos}
+  \begin{Def}\label{def:borelSets}
+    $\cB$ la $\sg$-álgebra \alert{Boreliana}, es la $\sg$-álgebra generada por los abiertos de $\bR^d$.
+  \end{Def}
+  Al ser $\cB$ una $\sg$-álgebra, $\cB$ contiene a los cerrados, $G_\dl$, $F_\sg$ y además $\cB\subseteq\cM$.
+\end{frame}
+
+\section{Medida Nuevamente}
+
+\begin{frame}
+  Los medibles se pueden definir en términos de cerrados.
+  \begin{Lem}\label{lem:equivMedible}
+    Sea $E\subseteq\bR^d$, entonces $E$ es medible si y sólo si dado $\eps>0$, existe un $F\subseteq E$ cerrado que satisface 
+    $$m_e(E\less F)<\eps.$$
+  \end{Lem}
+  Sabemos que $E$ es medible si y sólo si $E^c$ es medible. Dado $\eps>0$, existe $G$ abierto tal que 
+  $$E^c\subseteq G,\quad m_e(G\less E^c)<\eps.$$
+  Entonces $G^c=F\subseteq E$ y 
+  $$m_e(E\less F)=m_e(E\cap G)=m_e(G\less E^c)<\eps.$$
+  Es un \alert{ejercicio} terminar la prueba.
+\end{frame}
+
+\begin{frame}
+  Con el resultado anterior en mano procedemos a probar este:
+  \begin{Th}\label{th:sumaMedidaDisjuntos}
+    Sea $\set{E_k}\suck$ una colección contable de conjuntos disjuntos y medibles. Entonces 
+    $$m\left(\bigcup\suck E_k\right)=\sum\suck m(E_k).$$
+  \end{Th}
+\end{frame}
+
+\begin{frame}{Prueba del Teorema}
+  Comenzamos por asumir $E_k$ es acotado.
+  \begin{itemize}
+    \item Sabemos que existe $F_k\subseteq E_k$ cerrado tal que $m(E_k\less F_k)<\frac{\eps}{2^k}$.
+    \item Dado que $F_k$ es compacto, para $k\geq 1$ y $F_k\cap F_\l=\emptyset$ se tiene que 
+    $$m\left(\bigcup_{i=1}^m F_i\right)=\sum_{i=1}^m m(F_i).$$
+    \item Entonces 
+    $$\sum_{i=1}^m m(F_i)\leq m\left(\bigcup\suci E_i\right)\To\sum\suci m(F_i)\leq m\left(\bigcup\suci E_i\right).$$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Terminamos la Prueba}
+  Ahora 
+  $$m(E_k)=m(F_k\cup E_k\less F_k)\leq m(F_k)+m(E_k\less F_k)\leq m(F_k)+\frac{\eps}{2^k}.$$
+  Luego 
+  $$\sum\suci m(E_i)-\frac{\eps}{2^i}\leq m\left(\bigcup\suci E_i\right)$$
+  y por tanto 
+  $$\sum\suci m(E_i)\leq m\left(\bigcup\suci E_i\right)+\eps.$$
+  El resto de la prueba es un \alert{ejercicio}
+\end{frame}
+
+\begin{frame}
+  Sea $I^k=I_1^k\x\dots\x I_d^k$ donde $I^k_i$ es un intervalo. Si vale que $(I^k)^o\cap(I^l)^o=\emptyset$, tenemos que:
+  $$m\left(\bigcup\suck(I^k)^o\right)=\sum\suck m((I_k)^o)=\sum\suck m(I^k).$$
+  Así tenemos que 
+  $$\sum\suck m(I^k)\leq m\left(\bigcup\suck I^k\right)\To \sum\suck m(I^k)= m\left(\bigcup\suck I^k\right).$$
+\end{frame}
+
+\begin{frame}
+  Sean $E_1,E_2$ medibles con $E_1\subseteq E_2$. Tenemos que 
+  $$m(E_2)=m(E_1\cup E_2\less E_1)=m(E_1)+m(E_2\less E_1).$$
+  Si ocurre que $m(E_1)<\infty$, entonces 
+  $$m(E_2\less E_1)=m(E_2)-m(E_1).$$
+  Por otro lado si $\set{E_i}\suci$ es una sucesión de medibles tales que $E_i\subseteq E_{i+1}$, tenemos que 
+  $$\bigcup\suci E_i=\bigcupdot\suci E_i\less E_{i-1}$$
+  donde asumimos $E_0=\emptyset$.
+\end{frame}
+
+\begin{frame}
+  De esto tenemos que
+  \begin{align*}
+    &m\left(\bigcup\suci E_i\right)=\sum\suci m(E_i\less E_{i-1})\\
+    =&\lim_{n\to\infty}\sum_{k=1}^n m(E_i)-m(E_{i-1})=\lim_{n\to\infty}m(E_n)
+  \end{align*}
+  siempre que $m(E_n)<\infty$ para $k\geq 1$. Note que la identidad es cierta si $m(E_k)=\infty$ para algún $k$. 
+  
+\end{frame}
+
+\begin{frame}
+  Si asumimos ahora que $E_i\supseteq E_{i+1}$ para $i\geq 1$ y $m(E_1)<\infty$, entonces
+  $$E_1=\bigcup\suci E_i=\left(\bigcup\suci E_i\less E_{i+1}\right)\cup E$$
+  con $E=\bigcap\suci E_i$. Entonces 
+  $$m(E_1)=\sum\suci m(E_i\less E_{i+1})+m(E).$$ 
+\end{frame}
+
+\begin{frame}
+  Como $\sum\suci m(E_i)-m(E_{i+1})=\lim_{n\to\infty}m(E_1)-m(E_n)$, concluimos que 
+  \begin{align*}
+    &m(E_1)=\lim_{n\to\infty}(m(E_1)-m(E_n))+m\left(\bigcap\suci E_i\right)\\
+\To &m\left(\bigcap\suci E_i\right)=\lim_{n\to\infty}m(E_n).
+  \end{align*}
+  En este caso \alert{sí es necesario} asumir que $m(E_1)<\infty$.
+\end{frame}
+
+\begin{frame}
+  Considere ahora $E_k=\bonj{-k,k}^c$. Entonces 
+  $$E_{k+1}\subseteq E_k,\ m(E_k)=\infty,\ \bigcap\suck E_k=\emptyset.$$
+  \begin{Th}
+    Sea $\set{E_k}\suck$ una sucesión de conjuntos medibles:
+    \begin{enumerate}[(i)]
+      \item Si $E_i\subseteq E_{i+1}$, $1\leq i$, entonces 
+      $$m\left(\bigcup\suci E_i\right)=\lim_{k\to\infty}m(E_k).$$
+      \item Si $E_{i+1}\subseteq E_i$ y existe $i_0\geq 1$ tal que $m(E_{i_0})<\infty$, entonces 
+      $$m\left(\bigcap\suci E_i\right)=\lim_{i\to\infty}m(E_i).$$
+    \end{enumerate}
+  \end{Th}
+
+\end{frame}
+
+\begin{frame}{Una Generalización}
+  El resultado previo se puede generalizar. Dados $E_k\subseteq\bR^d$, no necesariamente medibles, que satisface $E_k\subseteq E_{k+1}$ para $k\geq 1$, tomemos $G_k$ $G_\dl$'s
+ tales que
+$$E_k\subseteq G_k,\quad m_e(E_k)=m(G_k).$$
+No podemos deducir que $G_k\subseteq G_{k+1}$, entonces tome $V_k=\bigcap_{j=k}^\infty G_j$ y así $V_k\subseteq V_{k+1}$.\par 
+Como $E_k\subseteq E_{k+\l}\subseteq G_{k+\l}$, tenemos que $E_k\subseteq V_k$. Y además 
+$$m_e(E_k)\leq m_e(V_k)=m(V_k)$$
+y $m(V_k)\leq m(G_k)=m_e(E_k)$. Es decir $m_e(E_k)=m(V_k)$.
+\end{frame}
+
+\begin{frame}
+  Finalmente 
+  \begin{align*}
+    m_e(E_k)&\leq m_e\left(\bigcup\suck E_k\right)\leq m_e\left(\bigcup\suck V_k\right)\\
+    &\leq \lim_{k\to\infty}m(V_k)=\lim_{k\to\infty}m_e(E_k).
+  \end{align*}
+  Con esto tenemos el teorema 
+  \begin{Th}\label{th:sucDeConjsMedida}
+    Si $E_k\subseteq E_{k+1}\subseteq\bR^d$, entonces 
+    $$m_e\left(\bigcup\suck E_k\right)=\lim_{k\to\infty}m_e(E_k).$$
+  \end{Th}
+\end{frame}
+\section*{Resumen}
+
+\subsection*{Qu\'e vimos hoy}
+
+\begin{frame}{Resumen}
+
+  % Keep the summary *very short*.
+  \begin{itemize}
+  \item El lema \ref{ej:parcial1I2018Ej7} sobre la caracterización de abiertos.
+  \item Los teoremas \ref{th:closedMeasurable} y \ref{th:complementMeasurable} sobre cerrados y complementos medibles.
+  \item La definición \ref{def:sgAlgebra} y el lema \ref{lem:whoisSigmaAlg} sobre $\sg$-álgebras.
+  \item Por el lema \ref{lem:MesSgAlg}, el conjunto de medibles es una $\sg$-álgebra.
+  \item La definición \ref{def:borelSets} de la $\sg$-álgebra Boreliana.
+  \item La caracterización \ref{lem:equivMedible} de medibles por cerrados.
+  \item El teorema \ref{th:sumaMedidaDisjuntos} sobre medidas de conjuntos disjuntos.
+  \item El teorema \ref{th:sucDeConjsMedida}.
+  \end{itemize}
+  
+\end{frame}
+
+\subsection*{Ejercicios a trabajar}
+\begin{frame}{Ejercicios}
+    
+  \begin{itemize}
+    \item
+      Lista 13
+      \begin{itemize}
+      \item El lema \ref{ej:parcial1I2018Ej7} sobre la caracterización de abiertos.
+      \item El lema \ref{lem:whoisSigmaAlg} sobre quienes están dentro de una $\sg$-álgebra.
+      \item Terminar la prueba del lema \ref{lem:equivMedible}.
+      \item Terminar la prueba del teorema \ref{th:sumaMedidaDisjuntos}.
+      \end{itemize}
+    \end{itemize}
+  
+\end{frame}
+
+
+% All of the following is optional and typically not needed. 
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{Lectura adicional}
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{Lecturas adicionales}
+    
+  \begin{thebibliography}{10}
+    
+  \beamertemplatebookbibitems
+  % Start with overview books.
+
+  \bibitem{CambroNotas}
+    S.Cambronero.
+    \newblock {\em Notas MA0505}.
+    \newblock 20XX.
+
+    \bibitem{NachoNotas}
+    I.Rojas
+    \newblock {\em Notas MA0505}.
+    \newblock 2018.
+ 
+  \end{thebibliography}
+  
+\end{frame}
+%% 6 - 2:10:52 48
+%% 7 - 1:17:44 44
+%% 8 - 27:37 69
+%% 9 - 1:07:47 86 + 59:38 40 approx 2 h c 7 min
+%% 10 - 2:22:39 63
+%% 11 - Approx 2h c 2 min
+%% 12 - Motiv y figs 1:00:17.53, en tot: 2:22:23.43
+\end{document}
+
+
