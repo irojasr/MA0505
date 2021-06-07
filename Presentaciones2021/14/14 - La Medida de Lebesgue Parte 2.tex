@@ -206,9 +206,9 @@
 % - If you omit details that are vital to the proof/implementation,
 %   just say so once. Everybody will be happy with that.
 
-\section{Conjuntos Medibles}
+\section{Caracterizaciones}
 
-\begin{frame}{Una Caracterización}
+\begin{frame}{Con Medida Cero}
   La siguiente caracterización será de mucha utilidad.
   \begin{Th}\label{th:caracMedibles}
     Las siguientes condiciones son equivalentes.
@@ -222,10 +222,232 @@
 \end{frame}
 
 \begin{frame}{Prueba del Teorema}
+  Sea $E$ medible. Entonces existe $k$ tal que $G_k$ es abierto y $E\subseteq G_k$ con 
+  $$m_e(G_k\less E)<\frac1k.$$
+  Tome $H=\bigcap\suck G_k, entonces E\subseteq H$ y 
+  $$m_e(H\less E)\leq m_e(G\less E)\leq \frac1k.$$
+  Se sigue que $m_e(H\less E)=0$ y $E=H\less Z$ con $Z=H\less E$.
+\end{frame}
+
+\begin{frame}{Otra Caracterización}
+  \begin{Th}\label{th:carac2Medib}
+    Sea $E\subseteq\bR^d$ tal que $m_e(E)<\infty$. Entonces $E$ es medible si y s\'olo si dado $\eps>0$ existen $\tilde{S}, N_1$ y $N_2$, que satisfacen:
+    \begin{enumerate}
+      \item $E=(\tilde{S}\cup N_1)\less N_2$.
+      \item $\tilde{S}=\bigcup\suck I_k$ con $I_k\in S$.
+      \item $m_e(N_1)<\eps$ y $m_e(N_2)<\eps$.
+    \end{enumerate}
+  \end{Th}
+  La prueba de este teorema tambi\'en es un \alert{ejercicio}.
+\end{frame}
+
+\begin{frame}{El Teorema de Carathe\'odory}
+  \begin{Th}\label{th:Caratheodory}
+    Sea $E\subseteq\bR^d$. Entonces $E$ es medible si y s\'olo si para todo $A\subseteq\bR^d$ vale que:
+  $$m_e(A)=m_e(A\cap E)+m_e(A\less E).$$
+  \end{Th}
   
 \end{frame}
 
+\begin{frame}{$\To$}
+  Asumimos que $E$ es medible y tomamos $A\subseteq\bR^d$. Entonces existe $H$ de clase $G_\dl$ tal que 
+  $$m_e(A)=m(H),\ A\subseteq H.$$
+  Por lo tanto 
+  \begin{align*}
+    m(H)&=m(H\cap E)+m(H\less E)\\
+    &\geq m_e(A\cap E)+m_e(A\less E).
+  \end{align*}
+  Concluimos que 
+  $$m_e(A)\geq m_e(A\cap E)+m_e(A\less E).$$
+\end{frame}
 
+\begin{frame}{$\Leftarrow$}
+  Tomemos $E$ de medida exterior finita. Existe $H$ de clase $G_\dl$ tal que 
+  $$m_e(E)=m(H).$$
+  Por hip\'otesis tenemos que 
+  $$m_e(H)=m_e(E)+m_e(H\less E)$$
+  y as\'i llegamos a que $m_e(H\less E)=0$ de manera que $E=H\less Z$ con $Z$ de medida exterior cero.
+\end{frame}
+
+\begin{frame}{$\Leftarrow$}
+  Si $m_e(E)=+\infty$, defina $E_k=E\cap B(0,k)$. As\'i, tomemos $\set{H_k}$ una colecci\'on de conjuntos $G_\dl$ tales que 
+  $$m_e(E_k)=m(H_k),\ E_k\subseteq H_k.$$ 
+  De esta manera vale
+  \begin{align*}
+    m_e(H_k)&=m_e(H_k\cap E)+m_e(H_k\less E)\\
+    &\geq m_e(E_k)+m_e(H_k\less E)
+  \end{align*}
+  pues $E_k\subseteq H_k\cap E$. Concluimos que $m_e(H_k\less E)=0$.
+  \end{frame}
+
+\begin{frame}{$\Leftarrow$}
+Consideremos ahora $H=\bigcup\suck H_k$, este conjunto es medible y adem\'as vale
+$$m_e(H\less E)=m_e\left(\bigcup\suck H_k\less E\right)\leq \sum\suck m_e(H_k\less E)=0.$$
+Por lo tanto $E=H\less Z$ con $Z=H\less E$.
+\begin{Cor}\label{cor:Caratheodory}
+Sea $E$ medible. Si $E\subseteq A\subseteq\bR^d$, entonces
+$$m_e(A)=m(E)+m_e(A\less E).$$
+Si adem\'as $E$ tiene medida finita, entonces
+$$m_e(A\less E)=m_e(A)-m(E).$$
+\end{Cor}
+\end{frame}
+
+\begin{frame}{Un Resultado T\'ecnico}
+\begin{Th}\label{th:elTecnico}
+  Sea $E\subseteq\bR^d$. Entonces existe $H$ de tipo $G_\dl$ tal que $E\subseteq H$ y 
+  $$m(H\cap M)=m_e(E\cap M),\ M\ \text{medible}.$$
+\end{Th}
+\end{frame}
+
+\begin{frame}{Cuando $E$ tiene Medida Finita}
+  Sea $H$ de clase $G_\dl$ que satisface $m(H)=m_e(E)$. Si $M$ es medible entonces
+  \begin{align*}
+    m(H)&=m(H\cap M)+m(H\less M)\\
+    m_e(E)&=m_e(E\cap M)+m_e(E\less M).
+  \end{align*}
+  Como vale que 
+  \begin{align*}
+    &m_e(E\cap M)\leq m_e(H\cap M),\\
+    &m_e(E\less M)\leq m_e(H\less M),\\
+    &\text{y}\ m_e(E)=m(H),
+  \end{align*}
+  entonces $m(H\cap M)=m_e(E\cap M)$.
+\end{frame}
+
+\begin{frame}{El Caso con Medida Infinita}
+Partimos $E$ en $E_k=E\cap B(0,k)$. Tomamos $\set{G_k}$ conjuntos $G_\dl$ tales que 
+$$m(M\cap G_k)=m_e(M\cap E_k),\ E_k\subseteq G_k.$$
+Como $E_k\subseteq E_{k+\l}\subseteq G_{k+\l}$, enotnces 
+$$E_k\subseteq \bigcap_{m=k}^\infty G_m=H_k.$$
+Estos conjuntos nos permiten tomar limites. Note que $E_k\leq H_k$, es decir 
+\begin{align*}
+  m_e(E_k\cap M)&\leq m_e(H_k\cap M)\\
+  &\leq m_e(G_k\cap M)\\
+&= m_e(E_k\cap M)
+\end{align*}
+Por lo tanto $m_e(E_k\cap M)=m_e(H_k\cap M)$.
+\end{frame}
+    
+\begin{frame}{El Caso con Medida Infinita}
+  Dado que 
+  $$E_k\cap M\subseteq E_{k+1}\cap M,\ H_k\cap M\subseteq H_{k+1}\cap M,$$
+  obtenemos 
+  \begin{align*}
+    m_e(E\cap M)&=m_e\left(\bigcup\sucn E_n\cap M\right)\\
+    &=\lim_{n\to\infty}m_e\left(E_n\cap M\right)\\
+    &=\lim_{n\to\infty}m_e\left(H_n\cap M\right)\\
+    &=m_e\left(\bigcup\suck H_k\cap M\right).
+  \end{align*}
+\end{frame}
+
+\begin{frame}{Concluimos la Prueba}
+  Finalmente, note que 
+  $$\tilde{H}=\bigcup\suck H_k=\bigcup\suck\bigcap_{m=n}^\infty G_k$$
+  no es necesariamente de clase $G_\dl$. Pero como $\tilde{H}$ es medible, existe $H_1$ de clase $G_\dl$ y $Z$ de medida cero tales que $\tilde{H}=H_1\less Z$. Entonces
+  \begin{align*}
+    m_e(E\cap M)&=m_e(\tilde{H}\cap M)\\
+    &=m_e(H_1\less Z\cap M)\\
+    &=m_e(H_1\less Z\cap M)+m_e(H_1\cap Z\cap M)\\
+    &=m_e(H_1\cap M).
+  \end{align*}
+\end{frame}
+
+\section{Algunos Ejemplos}
+
+\subsection{El Conjunto de Cantor}
+
+\begin{frame}{La Definición}\label{ComienzaConjCantor}
+  Considere $C_0=\bonj{0,1}$. Dividimos $C_0$ en tres intervalos de misma longitud y removemos el del medio. Obtenemos 
+  $$C_1=C_0\less\obonj{\frac{1}{3},\frac{2}{3}}=\bonj{0,\frac{1}{3}}\cup\bonj{\frac{2}{3},1}.$$
+  Llamemos $C_2$ al conjunto que obtenemos al remover los tercios del medio a los intervalos que resultaron. Obtenemos 
+  $$C_2=\bonj{0,\frac19}\cup\bonj{\frac29,\frac13}\cup\bonj{\frac69,\frac79}\cup\bonj{\frac89,1}.$$
+  Definimos as\'i $C=\bigcap\suck C_k$.
+\end{frame}
+
+\begin{frame}{Propiedades del Conjunto}
+Es claro que $C$ es cerrado y por tanto medible. Adem\'as 
+$$m(C_{k+1})=\frac23m(C_k)\To m(C_k)=\left(\frac23\right)^k$$
+y como $C_{k+1}\subseteq C_k$, entonces 
+$$m(C)=m\left(\bigcap\suck C_k\right)=\lim_{k\to\infty} m(C_k)=0.$$
+Observemos $C_3$, esto es:
+\begin{align*}
+&\bonj{1,\frac{1}{27}}\cup\bonj{\frac{2}{27},\frac{3}{27}}\cup\bonj{\frac{6}{27},\frac{7}{27}}\cup\bonj{\frac{8}{27},\frac{9}{27}}\\
+\cup&\bonj{\frac{18}{27},\frac{19}{27}}\cup\bonj{\frac{20}{27},\frac{21}{27}}\cup\bonj{\frac{24}{27},\frac{25}{27}}\cup\bonj{\frac{26}{27},1}.
+\end{align*}
+Podemos notar que los extremos son de la forma $\frac{p}{3^k}$.
+\end{frame}
+
+\begin{frame}{Base Tres}
+  Para $x\in\bonj{0,1}$ consideremos su expansi\'on en base 3:
+  $$x=\sum\suci \frac{n_i}{3^i},\ n_i\in\set{0,1,2}.$$
+  Estas expansiones no son \'unicas puesto que 
+  $$\frac13=\sum\suci \frac{2}{3^i}.$$
+  La expansi\'on no es \'unica si y s\'olo si $x=\frac{p}{3^k}$ para $p\in\bN$ y $k\geq 1$. 
+\end{frame}
+
+\begin{frame}{Base Tres}
+  En los casos que la expansi\'on no es \'unica se toma la expansi\'on sin el uno. Es decir:
+  \begin{Ej}\label{ej:1baseTres}
+    Sea $x=\sum\suck\frac{b_k}{3^k}=\sum\suck\frac{a_k}{3^k}$ con $b_k,a_k\in\set{0,1,2}$. Entonces existe un $k_0$ tal que 
+    \begin{enumerate}[(i)]
+      \item $a_k=b_k$ si $1\leq k\leq k_0$.
+      \item $|b_{k_0+1}-a_{k_0+1}|=1$.
+      \item Si $b_{k_0+1}>a_{k_0+1}$, entonces $b_k=0$ para $k>k_0+1$ y $a_k=2$ para $k>k_0+1$.
+    \end{enumerate}
+  \end{Ej}
+  En los casos en que hay dos expansiones, tomamos la expansi\'on dada por los $a_k$'s.
+\end{frame}
+
+\begin{frame}{Un \'Ultimo Ejercicio de Base Tres}
+  \begin{Ej}\label{ej:2baseTres}
+    $x\in C_k$ si y s\'olo si $n_k=0$ \'o $n_k=2$. Luego $x\in C_k$ si y s\'olo si $n_k=0$ \'o $n_k=2$ para todo $k\geq 1$.
+  \end{Ej}
+\end{frame}
+
+\begin{frame}{La Funci\'on de Cantor}
+  Considere la funci\'on 
+  $$\Phi: C\to\bonj{0,1},\ x\mapsto\sum_{i=0}^\infty\frac{n_i}{2}\frac{1}{2^i}.$$
+  Entonces $\Phi$ est\'a bien definida y es sobreyectiva. Luego $C$ es no contable, cerrado y tiene medida cero.
+\end{frame}
+
+\subsection{El Ejemplo de Vitali}
+
+\begin{frame}
+  Vamos a construir un conjunto no medible. Primero probamos un resultado preliminar.
+  \begin{Lem}\label{lem:tecnicoVitali}
+    Sea $E\subseteq\bR$ medible tal que $m(E)>0$. Entonces el conjunto 
+    $$E-E=\set{z\in\bR:\ z=x-y,\ x,y\in E}$$
+    contiene a un intervalo centrado en cero.
+  \end{Lem}
+\end{frame}
+
+\begin{frame}{Prueba del Lema}
+  Sea $\eps>0$, entonces existe $G$ abierto tal que $E\subseteq G$ y $$m(G)<(1+\eps)m(E).$$
+  Sabemos que existen $\set{I_k}\suck\subseteq\cP(G)$ tales que 
+  \begin{itemize}
+    \item $I_k=\bonj{a_k,b_k}$.
+    \item $G=\bigcup\suck[a_k,b_k]$.
+    \item $I_k^o\cap I_l^o=\emptyset$.
+  \end{itemize}
+  Defina $E_k=i_k\cap E$. Entonces $E_k\cap E_\l=\emptyset$ \'o $E_k\cap E_l=\set{a}$ para alg\'un $a\in\bR$. 
+\end{frame}
+
+\begin{frame}{Continuamos la Prueba}
+  Dado que 
+  $$\sum\suck m(I_k)=m(G)\leq (1+\eps)m(E)=(1+\eps)\sum\suck m(E_k),$$
+  existe $k_0$ tal que 
+  $$m(I_{k_0})\leq (1+\eps)m(E_{k_0}).$$
+  Sea $I=I_{k_0}$ y $\tilde{E}=E_{k_0}$, vamos a mostrar que si $\eps=\frac{1}{3}$ y $|d|<\frac{m(I)}{2}$, entonces $(\tilde{E}-d)\cap\tilde{E}\neq\emptyset$. Note que 
+  \begin{align*}
+    &(\tilde{E}-d)\cap\tilde{E}\neq\emptyset\\
+    \iff&\exists x,y\in\tilde{E}(x-d=y)\\
+    \iff& d\in\tilde{E}-\tilde{E}\subseteq E-E.
+  \end{align*}
+\end{frame}
+
+\begin{frame}
+  Luego $\obonj{-\half m(I),\half m(I)}\subseteq E-E$. 
+\end{frame}
 \section*{Resumen}
 
 \subsection*{Qu\'e vimos hoy}
@@ -235,6 +457,10 @@
   % Keep the summary *very short*.
   \begin{itemize}
   \item El teorema \ref{th:caracMedibles} sobre una caracterización de conjuntos medibles con $G_\dl$'s y $F_\sg$'s. 
+  \item El segundo teorema \ref{th:carac2Medib} sobre caracterizaciones.
+  \item El teorema \ref{th:Caratheodory} de Carathe\'odory y un corolario \ref{cor:Caratheodory}.
+  \item El teorema \ref{th:elTecnico} t\'ecnico.
+  \item Aprendemos sobre el conjunto de Cantor \ref{ComienzaConjCantor}.
   \end{itemize}
   
 \end{frame}
@@ -247,6 +473,8 @@
       Lista 14
       \begin{itemize}
       \item La última parte de la prueba del teorema \ref{th:caracMedibles}.
+      \item La prueba del teorema \ref{th:carac2Medib}
+      \item Dos ejercicios \ref{1baseTres} y \ref{2baseTres} sobre base tres.
       \end{itemize}
     \end{itemize}
   
