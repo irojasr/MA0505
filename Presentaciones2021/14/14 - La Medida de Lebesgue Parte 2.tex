@@ -446,7 +446,49 @@ Podemos notar que los extremos son de la forma $\frac{p}{3^k}$.
 \end{frame}
 
 \begin{frame}
-  Luego $\obonj{-\half m(I),\half m(I)}\subseteq E-E$. 
+  Luego $\obonj{-\half m(I),\half m(I)}\subseteq E-E$. Asuma que $(\tilde{E}-d)\cap\tilde{E}=\emptyset$. Entonces
+  $$m(\tilde{E}\cup(\tilde{E}-d))=m(\tilde{E})+m(\tilde{E}-d)=2m(\tilde{E}).$$
+  Por otro lado:
+  \begin{figure}
+    \includegraphics{figs14/1/fig1.pdf}
+  \end{figure}
+\end{frame}
+
+\begin{frame}{Terminamos la Prueba}
+  Entonces ocurre uno de los siguientes escenarios:
+  \begin{itemize}
+    \item $\tilde{E}\cup(\tilde{E}-d)\subseteq\bonj{a_k-|d|,b_k}$.
+    \item $\tilde{E}\cup(\tilde{E}-d)\subseteq\bonj{a_k,b_k+|d|}$.
+  \end{itemize}
+  Estos intervalos tienen medida 
+  \begin{align*}
+    |d|+m(I)<\frac32m(I)&\To 2m(E) <\frac32m(I)\\ 
+    &\iff m(E)<\frac34m(I)
+  \end{align*}
+  y esto nos lleva a una contradicci\'on.
+\end{frame}
+
+\begin{frame}{El Conjunto de Vitali}
+  Definamos la relaci\'on de equivalencia sobre $\bR$:
+  $$x\sim y\iff x-y\in\bQ.$$
+  Llamemos $E_x$ a la clase de equivalencia de $x$, este conjunto es $\set{x+r:\ r\in\bQ}$. Note que $E_x$ es contable y por tanto hay una cantidad no contable de clases de equivalencia. El \alert{Conjunto de Vitali} es $E$, formado por un elemento de cada clase de equivalencia.
+\end{frame}
+
+\begin{frame}{Propiedades}
+  \begin{itemize}
+    \item $E$ es no contable.
+    \item $(E-E)\cap U=\set{0}$.
+  \end{itemize}
+  Por el lema t\'ecnico \ref{lem:tecnicoVitali}, $E$ es no medible o bien $m_e(E)=0$. Pero como $\bR=\bigcup_{r\in\bQ}E+r$, entonces 
+  $$m_e(E+r)=m_e(E)\neq 0.$$
+  Concluimos que $E$ es no medible.
+\end{frame}
+
+\begin{frame}
+  \begin{Cor}\label{cor:DeVitali}
+    Sea $A\subseteq\bR$ con $m_e(A)>0$. Entonces existe $E\subseteq A$ tal que $E$ es no medible.
+  \end{Cor}
+  Como $\bR=\bigcup_{r\in\bQ}E+r$, entonces $A=\bigcup_{r\in\bQ}((E+r)\cap A)$. Llamemos $A_q=(E+q)\cap A$, un argumento similar al anterior muestra que $A_q$ es no medible.
 \end{frame}
 \section*{Resumen}
 
@@ -461,6 +503,7 @@ Podemos notar que los extremos son de la forma $\frac{p}{3^k}$.
   \item El teorema \ref{th:Caratheodory} de Carathe\'odory y un corolario \ref{cor:Caratheodory}.
   \item El teorema \ref{th:elTecnico} t\'ecnico.
   \item Aprendemos sobre el conjunto de Cantor \ref{ComienzaConjCantor}.
+  \item El lema \ref{lem:tecnicoVitali} t\'ecnico usado para probar el resultado de Vitali. Y el corolario \ref{cor:DeVitali} que garantiza que hay m\'as de un conjunto no medible.
   \end{itemize}
   
 \end{frame}
@@ -474,7 +517,7 @@ Podemos notar que los extremos son de la forma $\frac{p}{3^k}$.
       \begin{itemize}
       \item La última parte de la prueba del teorema \ref{th:caracMedibles}.
       \item La prueba del teorema \ref{th:carac2Medib}
-      \item Dos ejercicios \ref{1baseTres} y \ref{2baseTres} sobre base tres.
+      \item Dos ejercicios \ref{ej:1baseTres} y \ref{ej:2baseTres} sobre base tres.
       \end{itemize}
     \end{itemize}
   
