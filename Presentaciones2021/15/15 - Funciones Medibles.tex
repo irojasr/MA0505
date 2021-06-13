@@ -208,8 +208,10 @@
 
 \section{Funciones Lebesgue Medibles}
 
+\subsection{Definición y Propiedades}
+
 \begin{frame}{Definición}
-\begin{Def}
+\begin{Def}\label{def:funcMedible}
 Sea $f:E\to\ov\bR=\bR\cup\set{\pm\infty}$. Decimos que $f$ es \alert{medible} si para todo $a\in\bR$ vale que 
 $$\set{x\in E:\ f(x)>a}\in\cM.$$
 \end{Def}
@@ -233,7 +235,7 @@ Entonces $E$ es medible si y s\'olo si $\set{f=-\infty}$ es medible. Por el rest
 \end{frame}
 
 \begin{frame}{Equivalencias}
-  \begin{Th}
+  \begin{Th}\label{th:equivsMedib}
     Sea $f:E\to\bR$ con $E$ medible. Entonces $f$ es medible si se cumple cualquiera de los siguientes postulados para todo $a\in\bR$.
     \begin{enumerate}[(i)]
       \item $\set{f>a}$ es medible.
@@ -261,6 +263,75 @@ Entonces $E$ es medible si y s\'olo si $\set{f=-\infty}$ es medible. Por el rest
   son medibles.
 \end{frame}
 
+\begin{frame}{Funciones Borel Medibles}
+  \begin{Def}\label{def:funcBorelMedible}
+    Diremos que $f:E\to\bR$ es \alert{Borel medible} si 
+    \begin{enumerate}
+      \item $E\in\cB$.
+      \item $\set{f>a}\in\cB$ para $a\in\bR$. 
+    \end{enumerate}
+  \end{Def}
+  Esta definición nos será útil para realizar los ejercicios.
+  \begin{Th}\label{th:caracMedibAbiertos}
+    Sea $f:E\to\bR$. Entonces $f$ es medible si y sólo si $f^{-1}(G)$ es medible para todo abierto $G$.
+  \end{Th}
+\end{frame}
+
+\begin{frame}{Prueba del Teorema}
+  \begin{itemize}
+    \item Supongamos que la imagen inversa de abiertos es medible. Entonces si $G=\obonj{a,\infty}$, tenemos que 
+    $$f^{-1}(G)=\set{x\in E:\ f(x)>a}.$$
+    \item Por otro lado, si $G$ es un abierto en $\bR$, entonces $G=\bigcup\suck\obonj{a_k,b_k}$. De esta manera 
+    $$f^{-1}(G)=\bigcup\suck f^{-1}(\obonj{a_k,b_k})=\bigcup\suck\set{a_k<f<b_k}.$$
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Composición}
+  \begin{Lem}\label{lem:compContConMed}
+    Sea $f:E\to\bR$ medible y $\phi:\bR\to\bR$ continua. Entonces $\phi\circ f$ es medible.
+  \end{Lem}
+  Si $G$ es abierto, entonces 
+  $$(\phi\circ f)^{-1}(G)=f^{-1}(\phi^{-1}(G)).$$
+  Como $\phi$ es continua, entonces $\phi^{-1}(G)$ es abierto y $f^{-1}(\phi^{-1}(G))$ es medible.\par 
+  En particular si $f$ es medible, $|f|$, $|f|^p$, $e^{cf}$, $f^{+}=\max\set{f,0}$ y $f^{-}=\min\set{f,0}$ son medibles.
+\end{frame}
+
+\begin{frame}{Casi Por Doquier}
+  \begin{Def}\label{def:cpd}
+    Diremos que una propiedad se cumple \alert{casi por doquier} si se cumple excepto en un conjunto de medida cero.
+  \end{Def}
+  \begin{Lem}\label{lem:igualdadCPDimplicaMedible}
+    Sean $f:E\to\bR$, $g:E\to\bR$. Si $f$ es medible y $g=f$ casi por doquier, entonces $g$ es medible.
+  \end{Lem}
+\end{frame}
+
+\begin{frame}{Prueba del Lema}
+  Sea $a\in\bR$, entonces
+  $$\set{g>a}=(\set{g>a}\cap \set{f=g})\cup(\set{g>a}\cap\set{f\neq g}).$$
+  El conjunto $\set{g>a}\cap \set{f=g}=\set{f>a}\cap \set{f=g}$ es medible y $\set{f\neq g}$ tiene medida cero de manera tal que $\set{g>a}$ es la unión de medibles.
+\end{frame}
+
+\begin{frame}{Una Variante}
+  Tenemos una variante del lema \ref{lem:compContConMed} para funciones con valores infinitos. 
+  \begin{Lem}\label{lem:VarCompContMed}
+    Sea $f:E\to\ov\bR$ medible con 
+    $$m(f=\infty)=m(f=-\infty)=0.$$
+    Entonces $\phi\circ f$ es medible para $\phi$ continua.
+  \end{Lem}
+  Si llamamos $F=\set{x\in E:\ f\in\bR}$ y consideramos $f_1=f$ cuando $x\in F$ y cero si no, entonces $\phi\circ f_1=\phi\circ f$ c.p.d. Como $\phi\circ f_1$ es medible, entonces $\phi\circ f$ también lo es.
+\end{frame}
+
+\subsection{Álgebra de Funciones Medibles}
+
+\begin{frame}{Espacio Vectorial de Funciones Medibles}
+  \begin{Lem}\label{lem:conjMedibEntreFuncs}
+    Sean $f:E\to\bR$, $g:E\to\bR$ medibles. Entonces $\set{f>g}$ es medible.
+  \end{Lem}
+  Sea $\set{q_n}\sucn$ una enumeración de $\bQ$. Entonces 
+  $$\set{f>g}=\bigcup\sucn\set{f>q_n>g}=\bigcup\sucn\set{f>q_n}\cap\set{q_n>g}$$
+  es una unión de medibles.
+\end{frame}
+
 \section*{Resumen}
 
 \subsection*{Qu\'e vimos hoy}
@@ -269,7 +340,13 @@ Entonces $E$ es medible si y s\'olo si $\set{f=-\infty}$ es medible. Por el rest
 
   % Keep the summary *very short*.
   \begin{itemize}
-  \item 
+  \item La definición \ref{def:funcMedible} de función medible y el teorema \ref{th:equivsMedib} que nos da condiciones equivalentes.
+  \item La definición \ref{def:funcBorelMedible} de función Borel medible.
+  \item La caracterización \ref{th:caracMedibAbiertos} de funciones medibles con abiertos.
+  \item El lema \ref{lem:compContConMed} sobre la composición de funciones medibles con continuas.
+  \item La definición \ref{def:cpd} de propiedades que se dan casi por doquier junto con el lema \ref{lem:igualdadCPDimplicaMedible}.
+  \item El lema \ref{lem:VarCompContMed} que es levemente diferente del lema \ref{lem:compContConMed}.
+  \item El lema \ref{lem:conjMedibEntreFuncs} técnico necesario para hablar del álgebra de medibles.
   \end{itemize}
   
 \end{frame}
@@ -321,7 +398,7 @@ Entonces $E$ es medible si y s\'olo si $\set{f=-\infty}$ es medible. Por el rest
 %% 10 - 2:22:39 63
 %% 11 - Approx 2h c 2 min
 %% 12 - Motiv y figs 1:00:17.53, en tot: 2:22:23.43
-%% 13 - No apunte
+%% 13 - 1:18:03.51
 %% 14 - 2:05:13.72
 \end{document}
 
