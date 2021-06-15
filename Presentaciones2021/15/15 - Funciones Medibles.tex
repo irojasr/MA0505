@@ -323,7 +323,7 @@ Entonces $E$ es medible si y s\'olo si $\set{f=-\infty}$ es medible. Por el rest
 
 \subsection{Álgebra de Funciones Medibles}
 
-\begin{frame}{Espacio Vectorial de Funciones Medibles}
+\begin{frame}{Un Lema Técnico}
   \begin{Lem}\label{lem:conjMedibEntreFuncs}
     Sean $f:E\to\bR$, $g:E\to\bR$ medibles. Entonces $\set{f>g}$ es medible.
   \end{Lem}
@@ -332,6 +332,130 @@ Entonces $E$ es medible si y s\'olo si $\set{f=-\infty}$ es medible. Por el rest
   es una unión de medibles.
 \end{frame}
 
+\begin{frame}{Espacio Vectorial de Funciones Medibles}
+\begin{Lem}\label{lem:algFuncsMedib}
+  Sean $f,g:E\to\bR$ medibles, entonces 
+  \begin{enumerate}[(i)]
+    \item $f+\la$, $\la f$ son medibles para $\la\in\bR$.
+    \item $f+g$ es medible.
+  \end{enumerate}
+\end{Lem}
+  
+  La prueba del primer inciso es un \alert{ejercicio}. Por otro lado si $\la\in\bR$, entonces 
+  $$\set{f+g>\la}=\set{f>\la-g}$$
+  es un conjunto medible.
+ 
+\end{frame}
+
+\begin{frame}
+  Hay que tomar en cuenta que $f+g$ podría no estar definida en el caso que $f,g:E\to\ov\bR$.
+  \begin{Ej}\label{ej:sumaEnInfinito}
+El lema anterior es valido si $f+g$ está bien definida.
+  \end{Ej}
+  \begin{Cor}\label{cor:prodDivMedibles}
+Sean $f,g:E\to\ov\bR$ medibles. Entonces $fg$ es medible y $\frac fg$ es medible si $g\neq 0$.
+  \end{Cor}
+  
+\end{frame}
+
+\begin{frame}{Prueba del Corolario}
+Sea $F=\set{f\in\bR}\cap\set{g\in\bR}$. Entonces
+\begin{align*}
+  \set{fg>a}&=\set{fg>a}\cap F\\
+  &\cup(\set{f=\infty}\cap\set{g>0})\cup(\set{g=\infty}\cap\set{f>0})\\
+  &\cup(\set{f=-\infty}\cap\set{g<0})\cup(\set{g=-\infty}\cap\set{f<0}).
+\end{align*}
+Como en $F$ vale
+$$fg=\frac14\left((f+g)^2-(f-g)^2\right)$$
+deducimos que $\set{fg>a}\cap F$ es medible.\par 
+El resto de la prueba queda asignada como \alert{ejercicio}
+\end{frame}
+
+\subsection{Extremos}
+
+\begin{frame}
+  \begin{Th}\label{th:ExtremosMedibles}
+    Sea $\set{f_k}\suck$ una sucesión de funciones medibles. Entonces las siguientes son funciones medibles: 
+    \begin{itemize}
+      \item $\sup_{k\geq 1}f_k(x)$.
+      \item $\inf_{k\geq 1}f_k(x)$.
+      \item $\limsup_{k\to\infty}f_k(x)$.
+      \item $\liminf_{k\to\infty}f_k(x)$.
+    \end{itemize}
+  \end{Th}
+\end{frame}
+
+\begin{frame}{Prueba del Teorema}
+  Sea $a>0$, entonces 
+  $$\set{sup_{k\geq 1}f_k(x)>a}=\bigcup\suck\set{f_k>a}$$
+  es un conjunto medible. Además tenemos 
+  \begin{itemize}
+    \item $\inf_{k\geq 1}f_k=-\sup_{k\geq 1}(-f_k)$.
+    \item $\limsup_{k\to\infty}f_k=\inf_{k\geq 1}\sup_{\l\geq k}f_\l$.
+    \item $\liminf_{k\to\infty}f_k=\sup_{k\geq 1}\inf_{\l\geq k}f_\l$.
+  \end{itemize}
+\end{frame}
+
+\section{Aproximación de Funciones Medibles}
+
+\begin{frame}{La Definición}
+  \begin{Def}\label{def:funcSimple}
+    Una función $\phi$ es \alert{simple} si existen $A_1,\dots,A_n$ conjuntos y $a_1,\dots, a_n$ reales tales que 
+    $$\phi(x)=\sum_{k=1}^ma_k\ind_{A_k}.$$
+  \end{Def}
+\end{frame}
+
+\begin{frame}{Una Modificación}
+  \begin{Ej}\label{ej:simplesDisjuntos}
+    Dada $\phi$ simple, existen $b_1,\dots,b_\l\in\bR$ y $B_1,\dots,B_\l$ medibles tales que 
+    $$\phi(x)=\sum_{k=1}^\l b_k\ind_{B_k}$$
+    con $B_i\cap B_j=\emptyset$ y $b_i\neq b_j$ cuando $i\neq j$.
+  \end{Ej}
+\end{frame}
+
+\begin{frame}{Aproximación}
+  Sea $f\geq 0$, $f:E\to\bR$. Considere
+  $$
+  f_k(x)=\begin{cases}
+    \frac{j-1}{2^k}&\text{si }\frac{j-1}{2^k}\leq f(x)<\frac{j}{2^k},\ 1\leq j\leq k2^k.\\
+    k&\text{si }f(x)\geq k.
+  \end{cases}
+  $$
+  También considere 
+  $$f_k(x)=\sum_{j=1}^{k2^k}\frac{j-1}{2^k}\ind_{A^j_k}+k\ind_{B_k}$$
+  donde 
+  $$B_k=f^{-1}(\bonj{k,\infty}),\ A_k^j=f^{-1}\left(\bonj{\frac{j-1}{2^k},\frac{j}{2^k}}\right)$$
+  cuando $1\leq j\leq k2^k$.
+\end{frame}
+
+\begin{frame}
+  Es claro que 
+  $$0\leq f(x)<k\To 0\leq f(x)-f_k(x)\leq \frac{1}{2^k}.$$
+  Si $f(x)\geq k$, en cambio 
+  $$0\leq f(x)-f_k(x)=f(x)-k.$$
+  Luego si $f(x)\neq \infty$, existe $k_0$ tal que 
+  $$|f(x)-f_k(x)|<\frac{1}{2^k},\ k\geq k_0.$$
+\end{frame}
+
+\begin{frame}
+Además si $f(x)=\infty$, entonces 
+$$\lim_{k\to\infty}f_k(x)=f(x).$$
+Ahora si $\frac{j-1}{2^k}\leq f(x)<\frac{j}{2^k}$, entonces ocurre uno de dos escenarios:
+\begin{enumerate}[(1)]
+  \item $\frac{2j-2}{2^{k+1}}\leq f(x)<\frac{2j-1}{2^{k+1}}$.
+  \item $\frac{2j-1}{2^{k+1}}\leq f(x)<\frac{2j-2}{2^{k+1}}$.%%Creo que hay un TYPO
+\end{enumerate}
+Si vale lo primero, $f_k=\frac{j-1}{2^k}=f_{k+1}$. Y si vale lo segundo, $f_k=\frac{j-1}{2^k}$ y $f_{k+1}=\frac{2j-1}{2^{k+1}}$. En cuyo caso $f_k\leq f_{k+1}$.
+\end{frame}
+
+\begin{frame}
+  Hemos probado el teorema:
+  \begin{Th}\label{th:Aprox}
+    Sea $f:E\to\bR$. Entonces existe una sucesión de funciones simple $\psi_k$ tales que 
+    $$\lim_{k\to\infty}\psi_k=f.$$
+    Si $f\geq 0$, la sucesión puede ser tomada creciente. Si $f$ es medible, se pueden tomar $\psi_k$'s medibles.
+  \end{Th}
+\end{frame}
 \section*{Resumen}
 
 \subsection*{Qu\'e vimos hoy}
@@ -340,13 +464,16 @@ Entonces $E$ es medible si y s\'olo si $\set{f=-\infty}$ es medible. Por el rest
 
   % Keep the summary *very short*.
   \begin{itemize}
-  \item La definición \ref{def:funcMedible} de función medible y el teorema \ref{th:equivsMedib} que nos da condiciones equivalentes.
+  \item La definición \ref{def:funcMedible} de función medible y las equivalencias \ref{th:equivsMedib}.
   \item La definición \ref{def:funcBorelMedible} de función Borel medible.
   \item La caracterización \ref{th:caracMedibAbiertos} de funciones medibles con abiertos.
-  \item El lema \ref{lem:compContConMed} sobre la composición de funciones medibles con continuas.
+  \item El lema \ref{lem:compContConMed} sobre la composición.
   \item La definición \ref{def:cpd} de propiedades que se dan casi por doquier junto con el lema \ref{lem:igualdadCPDimplicaMedible}.
   \item El lema \ref{lem:VarCompContMed} que es levemente diferente del lema \ref{lem:compContConMed}.
-  \item El lema \ref{lem:conjMedibEntreFuncs} técnico necesario para hablar del álgebra de medibles.
+  \item El lema \ref{lem:conjMedibEntreFuncs} técnico necesario para hablar del álgebra de medibles. 
+  \item El lema \ref{lem:algFuncsMedib} junto con el corolario \ref{cor:prodDivMedibles}.
+  \item El teorema \ref{th:ExtremosMedibles} sobre supremos e ínfimos medibles.
+  \item La definición \ref{def:funcSimple} de función simple y el teorema \ref{th:Aprox} de aproximación.
   \end{itemize}
   
 \end{frame}
@@ -358,7 +485,10 @@ Entonces $E$ es medible si y s\'olo si $\set{f=-\infty}$ es medible. Por el rest
     \item
       Lista 15
       \begin{itemize}
-      \item 
+      \item El primer inciso del lema \ref{lem:algFuncsMedib}.
+      \item El ejercicio \ref{ej:sumaEnInfinito} sobre el caso infinito.
+      \item Terminar la prueba del corolario \ref{cor:prodDivMedibles} es un ejercicio.
+      \item El ejercicio \ref{ej:simplesDisjuntos} sobre la modificación para tener conjuntos disjuntos.
       \end{itemize}
     \end{itemize}
   
@@ -400,6 +530,7 @@ Entonces $E$ es medible si y s\'olo si $\set{f=-\infty}$ es medible. Por el rest
 %% 12 - Motiv y figs 1:00:17.53, en tot: 2:22:23.43
 %% 13 - 1:18:03.51
 %% 14 - 2:05:13.72
+%% 15 - 1:13:41.49
 \end{document}
 
 
