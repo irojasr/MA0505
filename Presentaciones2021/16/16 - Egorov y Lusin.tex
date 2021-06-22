@@ -1,0 +1,394 @@
+\documentclass[utf8]{beamer}
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  \setbeamercovered{transparent}
+}
+
+
+\usepackage{amsfonts,mathtools,amssymb}
+\usepackage[spanish]{babel}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tikz}
+\usepackage{physics}
+
+\title[MA0505]{MA0505 - An\'alisis I}
+\subtitle{Lecci\'on XVI: Egorov y Lusin}
+
+\author{Pedro M\'endez\inst{1}}
+
+\institute[Universidad de Costa Rica] % (optional, but mostly needed)
+{
+  \inst{1}%
+  Departmento de Matem\'atica Pura y Ciencias Actuariales\\
+  Universidad de Costa Rica
+  }
+
+\date[I-2021] {Semestre I, 2021}
+
+%%%%%%%%% === Theorems and suchlike === %%%%%%%%%%%%%%
+
+\theoremstyle{plain}
+\newtheorem{Th}{Teorema}               %%% Theorem 1.1.1
+\newtheorem{Tmon}{Teoremón}
+\newtheorem{Prop}{Proposición}         %%% Proposition 1.1.2
+\newtheorem{Lem}{Lema}                 %%% Lemma 3
+\newtheorem{Cor}{Corolario}            %%% Corollary 4
+
+\theoremstyle{definition}
+\newtheorem{Def}{Definición}           %%% Definition 5
+\newtheorem{Ex}{Ejemplo}               %%% Example 6
+\newtheorem{Ej}{Ejercicio}             %%% Ejercicio 7
+\newtheorem{Hec}[Th]{Hecho}            %%% Hecho 1.1.8
+
+\theoremstyle{remark}
+\newtheorem{Rmk}[Th]{Observación}      %%%Remark 1.1.9
+\newtheorem*{nonum-Rmk}{Observación}         %%% No number Fact
+\newtheorem*{Notn}{Notaci\'on}        %% Notaciones
+\newtheorem*{Warn}{Advertencia}       %% Advertencias
+
+\numberwithin{equation}{section}
+
+%% Accomodations 
+
+\makeatletter
+\def\moverlay{\mathpalette\mov@rlay}
+\def\mov@rlay#1#2{\leavevmode\vtop{%
+   \baselineskip\z@skip \lineskiplimit-\maxdimen
+   \ialign{\hfil$\m@th#1##$\hfil\cr#2\crcr}}}
+\newcommand{\charfusion}[3][\mathord]{
+    #1{\ifx#1\mathop\vphantom{#2}\fi
+        \mathpalette\mov@rlay{#2\cr#3}
+      }
+    \ifx#1\mathop\expandafter\displaylimits\fi}
+\makeatother
+
+% Greek letters:
+
+\newcommand{\al}{\alpha}                %% short for  \alpha
+\newcommand{\bt}{\beta}                 %% short for  \beta
+\newcommand{\Dl}{\Delta}                %% short for  \Delta
+\newcommand{\dl}{\delta}                %% short for  \delta
+\newcommand{\eps}{\varepsilon}          %% short for  \varepsilon
+\newcommand{\Ga}{\Gamma}                %% short for  \Gamma
+\newcommand{\ga}{\gamma}                %% short for  \gamma
+\newcommand{\La}{\Lambda}               %% short for  \Lambda
+\newcommand{\la}{\lambda}               %% short for  \lambda
+\newcommand{\kp}{\kappa}                %% short for  \kappa
+\newcommand{\Om}{\Omega}                %% short for  \Omega
+\newcommand{\om}{\omega}                %% short for  \omega
+\newcommand{\Sg}{\Sigma}                %% short for  \Sigma
+\newcommand{\sg}{\sigma}                %% short for  \sigma
+\newcommand{\te}{\theta}                %% short for  \theta
+\newcommand{\vf}{\varphi}               %% short for  \varphi
+\newcommand{\ze}{\zeta}                 %% short for  \zeta
+
+%Boldface letters
+
+\newcommand{\bC}{\mathbb{C}}    %%% números complejos
+\newcommand{\bN}{\mathbb{N}}    %%% números naturales
+\newcommand{\bP}{\mathbb{P}}        %% números enteros positivos
+\newcommand{\bQ}{\mathbb{Q}}    %%% números racionales
+\newcommand{\bR}{\mathbb{R}}    %%% números reales
+\newcommand{\bS}{\mathbb{S}}    %%% esfera
+\newcommand{\bZ}{\mathbb{Z}}    %%% números enteros
+
+%Script letters:
+
+\newcommand{\cA}{\mathcal{A}}           %% formas diferenciales
+\newcommand{\cB}{\mathcal{B}}           %% una base vectorial
+\newcommand{\cC}{\mathcal{C}}           %% otra base vectorial
+\newcommand{\cF}{\mathcal{F}}           %% espacio de Fock
+\newcommand{\cL}{\mathcal{L}}           %% operadores lineales
+\newcommand{\cM}{\mathcal{M}}           %% multiplicadores
+\newcommand{\cN}{\mathcal{N}}           %% funciones nulas
+\newcommand{\cP}{\mathcal{P}}           %% una particion
+\newcommand{\cR}{\mathcal{R}}           %% funciones representativas
+\newcommand{\cS}{\mathcal{S}}           %% funciones de Schwartz
+
+
+%Brackets
+
+\newcommand{\bonj}[1]{\left\lbrack#1\right\rbrack}
+\newcommand{\obonj}[1]{\left\rbrack#1\right\lbrack}
+\newcommand{\rbonj}[1]{\left\rbrack#1\right\rbrack}
+\newcommand{\lbonj}[1]{\left\lbrack#1\right\lbrack}
+\newcommand{\snm}[1]{\|#1\|}           %small norma
+\newcommand{\nm}[1]{\left\|#1\right\|} %norma pegadita
+\newcommand{\pnm}[1]{\biggl|\biggl|#1\biggr|\biggr|}
+\newcommand{\set}[1]{\{\,#1\,\}}    %% set notation
+\newcommand{\floor}[1]{\lfloor#1\rfloor} %% mayor entero <= x
+\newcommand{\Set}[1]{\biggl\{\,#1\,\biggr\}} %% set notation (large)
+\newcommand\quot[2]{
+        \mathchoice
+            {% \displaystyle
+                \text{\raise1ex\hbox{$#1$}\Big/\lower1ex\hbox{$#2$}}%
+            }
+            {% \textstyle
+                {^{ #1}/_{ #2}}
+            }
+            {% \scriptstyle
+                {^{ #1}/_{ #2}}
+            }
+            {% \scriptscriptstyle
+                {^{ #1}/_{ #2}}
+            }
+    }
+\newcommand*\squot[2]{{^{ #1}/_{ #2}}}%%%small quotient
+
+%Symbols 
+
+\newcommand{\x}{\times}
+\renewcommand{\geq}{\geqslant}          %% mayor o igual (variante)
+\newcommand{\hookto}{\hookrightarrow}     %% inclusion arrow
+\newcommand{\isom}{\simeq}              %% isomorfismo
+\renewcommand{\l}{\ell}                   %% ele cursiva
+\renewcommand{\leq}{\leqslant}          %% menor o igual (variante)
+\newcommand{\less}{\setminus}           %% set difference
+\newcommand{\To}{\Rightarrow}
+\newcommand{\ov}{\overline}
+\newcommand{\un}{\underline}
+\newcommand{\del}{\partial}
+\newcommand{\ind}{\mathbf{1}}       %%%indicator function
+
+%%% Small fractions in displays:
+
+\newcommand{\half}{{\mathchoice{\nhalf}{\thalf}{\shalf}{\shalf}}} %%display text script script^2
+\newcommand{\happi}{{\tfrac{\pi}{2}}} %% small fraction  \pi/2
+\newcommand{\quarter}{\tfrac{1}{4}} %% small fraction  1/4
+\newcommand{\nhalf}{\frac{1}{2}}
+\newcommand{\shalf}{{\scriptstyle\frac{1}{2}}} %% tiny fraction 1/2
+\newcommand{\thalf}{{\tfrac{1}{2}}} %% small fraction  1/2
+\newcommand{\third}{\tfrac{1}{3}}   %% small fraction  1/3 %Hay que renew porque mathabx toma second y third como x'' y x''' por ejemplo
+
+\newcommand{\ihalf}{{\tfrac{i}{2}}} %% small fraction  i/2
+
+\newcommand{\suci}{_{i=1}^\infty} %% diminutivo
+\newcommand{\suck}{_{k=1}^\infty} %% diminutivo
+\newcommand{\sucl}{_{\l=1}^\infty} %% diminutivo
+\newcommand{\sucm}{_{m=1}^\infty} %% diminutivo
+\newcommand{\sucn}{_{n=1}^\infty} %% diminutivo
+
+\newcommand*{\Cdot}{{\raisebox{-0.25ex}{\scalebox{1.5}{$\cdot$}}}}      %% cdot más grande
+\renewcommand{\.}{\Cdot}                %% producto escalar
+\newcommand{\cupdot}{\charfusion[\mathbin]{\cup}{\.}}
+\newcommand{\bigcupdot}{\charfusion[\mathbin]{\bigcup}{\.}}
+\DeclareMathOperator{\Var}{Var}     %%%variance
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Agenda}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{Dos Grandes Teoremas}
+
+\subsection{El Teorema de Egorov}
+
+\begin{frame}{El Teorema}
+  Sean $f_k:E\to\bR$ medibles tales que $f_k\xrightarrow[k\to\infty]{}f$ c.p.d. en $E$. Sabemos que no se puede esperar en general que $f_k\to f$ uniformemente en compactos.
+  \begin{Th}[Egorov]\label{th:Egorov}
+    Sea $E\subseteq\bR^d$ con $m(E)<\infty$. Si $|f(x)|\neq\infty$ c.p.d. en $E$ entonces dado $\eps>0$, existe $F_\eps\subseteq E$ cerrado que satisface:
+    \begin{enumerate}[(i)]
+      \item $m(E\less F_\eps)<\eps$.
+      \item $f_k\xrightarrow[k\to\infty]{} f$ uniformemente en $F_\eps$.
+    \end{enumerate}
+  \end{Th}
+\end{frame}
+
+\begin{frame}{Un Comentario}
+  \begin{itemize}
+    \item Sea $E=\bR^d$ y $f_k=\ind_{B(0,k)}(x)$, entonces $f_k\xrightarrow[k\to\infty]{}1$ puntualmente.
+    \item Si $f$ no es acotado, existe $x$ tal que $|1-f_k(x)|=1$.
+    \item Si $F$ es cerrado y $m(\bR^d\less F)\neq\infty$ entonces $F$ no es acotado.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Un Lema Previo}
+  Antes de probar el teorema \ref{th:Egorov} de Egorov, vamos a probar el siguiente lema.
+  \begin{Lem}\label{lem:tecEgorov}
+Dado $\eps>0$ y $\eta>0$, entonces existen $F\subseteq E$ un cerrado y $k_0=k_0(\eps,\eta)\geq 0$ que satisfacen:
+\begin{enumerate}[(i)]
+  \item $m(E\less F)<\eta$.
+  \item $|f_k(x)-f(x)|<\eps$ si $x\in F$ y $k\geq k_0$.
+\end{enumerate} 
+  \end{Lem}
+\end{frame}
+
+\begin{frame}{Prueba del Lema}
+  Llamemos 
+  $$\tilde E=\set{x\in E:\ \lim_{k\to\infty}f_k=f,\ |f|<\infty}.$$
+  Sean $\eps>0$ y $\eta>0$, definamos
+  $$E_m=\bigcap_{k=m}^\infty\set{|f-f_k|<\eps}=\set{x\in E:\ k>k_0\To |f(x)-f_k(x)|<\eps}.$$
+  Entonces $E_m$ es medible y $E_m\subseteq E_{m+1}$. 
+  \begin{Ej}\label{ej:pruebaLemEgorov}
+Muestre que $\bigcup\sucm E_m=\tilde{E}$.
+  \end{Ej}
+\end{frame}
+
+\begin{frame}{Continuamos la Prueba}
+ \begin{itemize}
+   \item Luego $m(\tilde{E})=\lim_{m\to\infty}m(E_m)$. Es decir
+   $$\lim_{m\to\infty}m(\tilde{E}\less E_m)=\lim_{m\to\infty}(m(\tilde{E})-m(E_m))=0.$$
+  \item Sea $k_0$ tal que $k\geq k_0\To m(E\less E_k)<\frac{\eta}{2}$. Si $x\in E_{k_0}$ entonces tenemos que 
+  $$k\geq k_0\To |f(x)-f_k(x)|<\eps.$$
+  \item Finalmente tomemos $F$ cerrado, $F\subseteq E_{k_0}$ que satisfaga $m(E_{k_0}\less F)<\frac{\eta}{2}$. Entonces
+  $$m(E\less F)\leq m(E\less E_{k_0})+m(E_{k_0}\less F)<\eta.$$
+ \end{itemize}
+\end{frame}
+
+\begin{frame}{Prueba del Teorema de Egorov}
+  Dado $\eps>0$ existen $F_m\subseteq E$ cerrados y $\kp_m^\eps$ tales que 
+  \begin{enumerate}[(i)]
+    \item $m(E\less F_m)<\frac{\eps}{2^m}$.
+    \item $|f(x)-f_k(x)|<\frac1m$ para $k\geq \kp_m^\eps$ y $x\in F_m$.
+  \end{enumerate}
+  Sea $F=\bigcap\sucm F_m$. Entonces $F$ es cerrado y 
+  $$m(E\less F)=m\left(E\cap\bigcup\sucm F_m^c\right)\leq \sum\sucm m(E\less F_m)<\eps.$$
+  Además si $x\in F$, dado $m\geq 1$ existe $\kp_m$ tal que
+  $$k\geq\kp_m\To|f(x)-f_k(x)|<\frac1m.$$
+\end{frame}
+
+\subsection{El Teorema de Lusin}
+
+\begin{frame}{Lusin}
+  \begin{Def}\label{def:propC}
+Una función $f:E\to\bR$ tiene la \alert{propiedad $C$} en $E$ si dado $\eps>0$, existe un $F\subseteq E$ tal que 
+\begin{enumerate}
+  \item $m(E\less F)<\eps$
+  \item $f$ es continua relativa a $F$. Es decir $f:F\to\bR$ es continua.
+\end{enumerate}
+  \end{Def}
+  En este caso si $\set{x_n}\sucn\subseteq F$ con $x_n\xrightarrow[n\to\infty]{}x\in F$, entonces $\lim_{n\to\infty}f(x_n)=f(x)$. Vamos a mostrar que esta condición es equivalente a la medibilidad de $f$.
+\end{frame}
+
+\begin{frame}{Funciones Simples}
+  \begin{Lem}\label{lem:SimpleToC}
+    Sea $\phi$ una función simple y medible. Entonces $\phi$ tiene la propiedad $C$.
+  \end{Lem}
+  \begin{itemize}
+    \item Sea $\phi(x)=\sum_{k=1}^m b_k\ind_{B_k}(x)$ con $B_i\cap B_j=\emptyset$ y $b_i\neq b_j$ si $i\neq j$.
+    \item Dado $\eps>0$, tome $F_\l\subseteq E_\l$ cerrado tal que $m(E_\l\less F_\l)<\frac\eps m$.
+    \item Entonces $F=\bigcupdot_{\l=1}^m F_\l$ es cerrado y $m(E\less F)<\eps$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Continuamos la Prueba}
+  \begin{itemize}
+  \item Sea $\set{x_n}\sucn\subseteq F$ tal que $x_n\xrightarrow[n\to\infty]{}y F_{\l_0}$.
+  \item Dado $\l\neq \l_0$, entonces $\set{x_n}\sucn\cap F_\l$ es finito.
+  \item En caso contrario, existe $\set{x_{n_k}}\suck\subseteq F_\l$ con $x_{n_k}\xrightarrow[n_k\to\infty]{}y$. Es decir $y\in F_\l$, lo que nos lleva a una contradicción.
+  \item Por lo tanto $\exists k_0$ tal que $x_n\in F_{\l_0}$ para $n\geq k_0$. Entonces $\phi(x_n)=a_{\l_0}=\phi(y)$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{El Teorema}
+  \begin{Th}[Lusin]\label{th:Lusin}
+    Sea $f:E\to\bR$ con $E$ medible. Entonces $f$ es medible si y sólo si $f$ tiene la propiedad $C$ en $E$.
+  \end{Th}
+  Sea $f:E\to\bR$ medible, entonces existe $\set{f_n}\sucn$ una sucesión de funciones simples y medibles tales que $\lim_{n\to\infty}f_n(x)=f(x)$ c.p.d. en $E$.\par 
+  Sabemos que existe $F_k\subseteq E$ cerrado que satisface:
+  \begin{enumerate}
+    \item $m(E\less F_k)<\frac{\eps}{2^{k+1}}$.
+    \item $f_k$ es continua relativa a $F_k$.  
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{El Caso de Medida Finita}
+  Si $m(E)<\infty$, entonces por el teorema de Egorov existe $F_0\subseteq E$ tal que 
+  $$m(E\less F_0)<\frac{\eps}{2},\ f_k\xrightarrow[k\to\infty]{}f\ (\text{unif. en }F_0).$$
+\end{frame}
+\section*{Resumen}
+
+\subsection*{Qu\'e vimos hoy}
+
+\begin{frame}{Resumen}
+
+  % Keep the summary *very short*.
+  \begin{itemize}
+  \item El teorema \ref{th:Egorov} de Egorov y el lema \ref{lem:tecEgorov} para probarlo.
+  \item La propiedad $C$ \ref{def:propC} y el lema \ref{lem:SimpleToC} que garantiza que las funciones simples cumplen dicha propiedad
+  \item El teorema \ref{th:Lusin} de Lusin
+  \end{itemize}
+  
+\end{frame}
+
+\subsection*{Ejercicios a trabajar}
+\begin{frame}{Ejercicios}
+    
+  \begin{itemize}
+    \item
+      Lista 16
+      \begin{itemize}
+      \item El ejercicio \ref{ej:pruebaLemEgorov} en medio de la prueba del lema previo a Egorov.
+      \end{itemize}
+    \end{itemize}
+  
+\end{frame}
+
+
+% All of the following is optional and typically not needed. 
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{Lectura adicional}
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{Lecturas adicionales}
+    
+  \begin{thebibliography}{10}
+    
+  \beamertemplatebookbibitems
+  % Start with overview books.
+
+  \bibitem{CambroNotas}
+    S.Cambronero.
+    \newblock {\em Notas MA0505}.
+    \newblock 20XX.
+
+    \bibitem{NachoNotas}
+    I.Rojas
+    \newblock {\em Notas MA0505}.
+    \newblock 2018.
+ 
+  \end{thebibliography}
+  
+\end{frame}
+%% 6 - 2:10:52 48
+%% 7 - 1:17:44 44
+%% 8 - 27:37 69
+%% 9 - 1:07:47 86 + 59:38 40 approx 2 h c 7 min
+%% 10 - 2:22:39 63
+%% 11 - Approx 2h c 2 min
+%% 12 - Motiv y figs 1:00:17.53, en tot: 2:22:23.43
+%% 13 - 1:18:03.51
+%% 14 - 2:05:13.72
+%% 15 - 1:13:41.49
+\end{document}
+
+
