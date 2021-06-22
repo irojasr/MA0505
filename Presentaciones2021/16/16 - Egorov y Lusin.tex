@@ -207,9 +207,7 @@
 % - If you omit details that are vital to the proof/implementation,
 %   just say so once. Everybody will be happy with that.
 
-\section{Dos Grandes Teoremas}
-
-\subsection{El Teorema de Egorov}
+\section{El Teorema de Egorov}
 
 \begin{frame}{El Teorema}
   Sean $f_k:E\to\bR$ medibles tales que $f_k\xrightarrow[k\to\infty]{}f$ c.p.d. en $E$. Sabemos que no se puede esperar en general que $f_k\to f$ uniformemente en compactos.
@@ -275,7 +273,7 @@ Muestre que $\bigcup\sucm E_m=\tilde{E}$.
   $$k\geq\kp_m\To|f(x)-f_k(x)|<\frac1m.$$
 \end{frame}
 
-\subsection{El Teorema de Lusin}
+\section{El Teorema de Lusin}
 
 \begin{frame}{Lusin}
   \begin{Def}\label{def:propC}
@@ -323,6 +321,33 @@ Una función $f:E\to\bR$ tiene la \alert{propiedad $C$} en $E$ si dado $\eps>0$,
 \begin{frame}{El Caso de Medida Finita}
   Si $m(E)<\infty$, entonces por el teorema de Egorov existe $F_0\subseteq E$ tal que 
   $$m(E\less F_0)<\frac{\eps}{2},\ f_k\xrightarrow[k\to\infty]{}f\ (\text{unif. en }F_0).$$
+  Si tomamos $F=F_0\cap\bigcap\suck F_k$, entonces 
+  $$m(E\less F)\leq m(E\less F_0)+\sum\suck m(E\less F_k)<\eps.$$
+  Como $f_k\xrightarrow[k\to\infty]{}f$ unif. en $F$, tenemos que $f$ es continua en $F$.
+\end{frame}
+
+\begin{frame}{El Caso de Medida Infinita}
+  Si $m(E)=\infty$, llamemos 
+  $$E_k=E\cap \set{x\in\bR^d:\ k-1\leq |x|<k}.$$
+  Ahora si $\set{x_k}\suck\subseteq F$ con $x_n\xrightarrow[n\to\infty]{}y\in F$, entonces existe $k_0$ tal que 
+  $$k\geq k_0\To |x_k|\leq |y|+1.$$
+  Si $m\geq |y|+1$, entonces $x_k\in E_m$ para $k\geq k_0$ y por un argumento anterior, existen $k_1,\l_1$ tales que 
+  $$n\geq k_1\To x_n\in F_{\l_1}.$$
+\end{frame}
+
+\begin{frame}{La Otra Dirección}\label{ej:dirContrariaLusin}
+  Si $f$ poseé la propiedad $C$, entonces para $k\geq 1$ existe $F_k\subseteq E$ que satisface
+  \begin{enumerate}[(i)]
+    \item $m(E\less F_k)<\frac1k$.
+    \item $f$ es continua relativa a $F_k$.
+  \end{enumerate}
+  Sea $H=\bigcup\suck F_k$, entonces $H\subseteq E$ y $m(E\less H)=0$ (\alert{ejercicio}). Finalmente 
+  \begin{gather*}
+    \set{x\in E:\ f(x)>a}\\
+    =\set{x\in H:\ f(x)>a}\cup \set{x\in Z:\ f(x)>a}\\
+    =\bigcup\suck\set{x\in F_k:\ f(x)>a} \cup\set{x\in Z:\ f(x)>a}
+  \end{gather*}
+  es un conjunto medible.
 \end{frame}
 \section*{Resumen}
 
@@ -347,6 +372,7 @@ Una función $f:E\to\bR$ tiene la \alert{propiedad $C$} en $E$ si dado $\eps>0$,
       Lista 16
       \begin{itemize}
       \item El ejercicio \ref{ej:pruebaLemEgorov} en medio de la prueba del lema previo a Egorov.
+      \item El ejercicio \ref{ej:dirContrariaLusin} en la dirección contraria del teorema de Lusin.
       \end{itemize}
     \end{itemize}
   
@@ -389,6 +415,7 @@ Una función $f:E\to\bR$ tiene la \alert{propiedad $C$} en $E$ si dado $\eps>0$,
 %% 13 - 1:18:03.51
 %% 14 - 2:05:13.72
 %% 15 - 1:13:41.49
+%% 16 - 46:11.67
 \end{document}
 
 
