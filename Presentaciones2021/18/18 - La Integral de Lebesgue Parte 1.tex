@@ -16,7 +16,7 @@
 \usepackage{physics}
 
 \title[MA0505]{MA0505 - An\'alisis I}
-\subtitle{Lecci\'on XVII: La Función de Cantor}
+\subtitle{Lecci\'on XVIII: La Integral de Lebesgue I}
 
 \author{Pedro M\'endez\inst{1}}
 
@@ -167,6 +167,7 @@
 \newcommand{\ihalf}{{\tfrac{i}{2}}} %% small fraction  i/2
 
 \newcommand{\suci}{_{i=1}^\infty} %% diminutivo
+\newcommand{\sucj}{_{j=1}^\infty} %% diminutivo
 \newcommand{\suck}{_{k=1}^\infty} %% diminutivo
 \newcommand{\sucl}{_{\l=1}^\infty} %% diminutivo
 \newcommand{\sucm}{_{m=1}^\infty} %% diminutivo
@@ -207,46 +208,183 @@
 % - If you omit details that are vital to the proof/implementation,
 %   just say so once. Everybody will be happy with that.
 
-\section{La Función de Cantor}
+\section{La Integral de Lebesgue}
 
-\begin{frame}{Preliminares}
-  Sea $D_k=[0,1]\less C_k$, entonces
-  $$D_1=\obonj{\frac13,\frac23},\ D_2=D_1\cup\obonj{\frac19,\frac29}\cup\obonj{\frac{7}{9},\frac89}.$$
-  En general $D_k=\bigcup_{j=1}^{2^k-1}[\al_j^k,\bt_j^k]$, con $\al_j<\bt_j<\al_{j+1}$. Tome entonces $I_j^k=[\al_j^k,\bt_j^k]$ y 
-  $$\l_j^k(x)=\frac{1}{2^k}\frac{x-\bt_j^k}{\al_{j+1}^k-\bt_j^k}+\frac{j}{2^k}.$$
+\subsection{Áreas y Gráficos}
+\begin{frame}{El Área Bajo la Curva}
+  Sea $f:E\to\ov\bR$ medible con $E$ medible y $f\geq 0$. Definimos 
+  $$R(f,E)=\set{(x,y)\in\bR^{d+1}:\ x\in E,\ 0\leq y\leq f(x)}.$$
+  Surge la pregunta, ¿es $R(f,E)$ medible? Analicemos el caso $f(x)=a$ dentro de $A\subseteq E$ y $a>0$.s
 \end{frame}
 
-\begin{frame}{La Función}
-  Definimos entonces 
-  $$f_k(x)=\begin{cases}
-    \frac{j}{2^k}&\text{si } \al_j^k\leq x\leq \bt_j^k\\
-    \frac{x}{\al_12^k}&\text{si } 0\leq x\leq \al_1^k\\
-    \l_j^k(x)&\text{si } \bt_j^k\leq x\leq \al_{j+1}^k.
-  \end{cases}$$
-\begin{figure}
-  \includegraphics[width=\textwidth]{figs17/1/fig1.pdf}
-\end{figure}
+\begin{frame}
+  Entonces ocurre que 
+  \begin{gather*}
+    R(f,E)=\set{(x,y)\in\bR^{d+1}:\ x\in E,\ 0\leq y\leq f(x)}\\
+    =\set{(x,y)\in\bR^{d+1}:\ x\in E,\ 0\leq y\leq a}\\
+    \cup\set{(x,y)\in\bR^{d+1}:\ x\in E\less A,\ y=0}\\
+    =A\x[0,a]\cup E\less A\x \set{0}.
+  \end{gather*}
+  \begin{Lem}\label{lem:casoConstArea}
+    Sea $A\subseteq E$ medible y $a\geq 0$. Entonces $A\x [0,a]$ es medible y su medida es $am(A)$.
+  \end{Lem}
 \end{frame}
 
-\begin{frame}{Propiedades}
-  \begin{itemize}
-    \item Es fácil probar que $f_k(x)$ es creciente.
-    \item Tenemos $$D_{k+1}=\bigcup_{j=1}^{2^k-1}[\al_j^k,\bt_j^k]\cup\bigcup_{m=1}^{2^k}[\tilde{\al}_m^k,\tilde{\bt}_m^k]$$
-    con $0<\tilde{\al}_1^k<\tilde{\bt}_1^k<\al_1$ y $\bt_i^k<\tilde{\al}_{i+1}^k<\tilde{\bt}_m^k<\al_{i+1}^k$. 
-    \item Entonces $f_{k+1}(x)=f_k(x)$ para $x\in[\al_j^k,\bt_j^k]$.
-    \item Si $x\in[\tilde{\al}_j^k,\tilde{\bt}_j^k]$, entonces $f_{k+1}(x)=\frac{j-1}{2^{k+1}}$.
-  \end{itemize}
+\begin{frame}{Prueba del Lema}
+  \begin{enumerate}
+    \item Sea $A=[a_1,b_1]\x\dots\x[a_d,b_d]$. Entonces es claro que se cumple el lema.
+    \item Sea $A$ un abierto, entonces existen $I_k$'s, cajas en $d$ dimensiones, tales que $A=\bigcup\suck I_k$ con $I_k^o\cap I_k^o=\emptyset$ si $j\neq k$. Entonces $A\x[0,a]=\bigcup\suck I_k\x[0,a]$ es un conjunto medible. Y como 
+    $$(I_k\x [0,a])^o\cap (I_j\x [0,a])^o=\emptyset,\ k\neq j,$$
+    entonces 
+    $$m(A\x[0,a])=\sum\suci(I_i\x[0,a])=a\sum\suci m(I_i)=am(A).$$
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Prueba del Lema}
+  \newcounter{saveenumi}
+  \begin{enumerate}
+    \item Sea $A=[a_1,b_1]\x\dots\x[a_d,b_d]$. Entonces es claro que se cumple el lema.
+    \item Sea $A$ un abierto, entonces existen $I_k$'s, cajas en $d$ dimensiones, tales que $A=\bigcup\suck I_k$ con $I_k^o\cap I_k^o=\emptyset$ si $j\neq k$. Entonces $A\x[0,a]=\bigcup\suck I_k\x[0,a]$ es un conjunto medible. Y como 
+    $$(I_k\x [0,a])^o\cap (I_j\x [0,a])^o=\emptyset,\ k\neq j,$$
+    entonces 
+    $$m(A\x[0,a])=\sum\suci(I_i\x[0,a])=a\sum\suci m(I_i)=am(A).$$
+    \setcounter{saveenumi}{\value{enumi}}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Continuamos}\label{ej:medCeroTimesInter}
+  \begin{enumerate}
+    \setcounter{enumi}{\value{saveenumi}}
+    \item Sea $A=\bigcap\sucj G_j$ un $G_\dl$ con $G_i$ abierto para $i\geq 1$ y $G_{i+1}\subseteq G_i$. \alert{¿Por qué podemos asumir esto?} Luego $A\x [0,a]=\bigcap\sucj G_j\x[0,a]$ con $G_{i+1}\x[0,a]\subseteq G_i\x[0,a]$ medibles con medida finita. Entonces 
+    $$m(A\x [0,a])=\lim_{i\to\infty}m(G_i\x[0,a])=\lim_{i\to\infty}am(G_i)=am(A).$$
+    \item Si $A=H\less Z$ con $H$ $G_\dl$ y $Z$ de medida cero, entonces por el paso anterior $H\x[0,a]$ es medible y $m(H\x[0,a])=a m(H)$. \alert{(Ej:$m_e(Z\x[0,a])=0$)} Entonces 
+    $$A\x[0,a]=(H\x[0,a])\less (Z\x[0,a])$$
+    y $m(A\x[0,a])=m(H\x[0,a])=a m(H)=am(A)$.
+    \setcounter{saveenumi}{\value{enumi}}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Terminamos}
+  \begin{enumerate}
+    \setcounter{enumi}{\value{saveenumi}}
+    \item Finalmente si $m(A)=\infty$, entonces llamemos $A_k=A\cap B(0,k)$. De esta manera $A=\bigcup\suck A_k$, con $A_k\subseteq A_{k+1}$ medibles y acotados. Por los argumentos anteriores 
+    $$A_k\x[0,a]\subseteq A_{k+1}\x[0,a]$$
+    son conjuntos medibles tales que $m(A_k\x[0,a])=am(A_k)$. Entonces
+    \begin{gather*}
+      m(A\x[0,a])=m\left(\bigcup\suck A_k\x [0,a]\right)=\lim_{k\to\infty}m(A_k\x[0,a])\\
+      =\lim_{k\to\infty} m(A_k\x[0,a])=\lim_{k\to\infty} am(A_k)=am(A).
+    \end{gather*}
+    
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Gráficos}
+  Sea $f:E\to\bR$ medible con $f\geq 0$. Entonces existe una sucesión creciente de funciones simple $\set{\phi_k}\suck$ que satisfacen
+  $$\phi_k(x)\xrightarrow[k\to\infty]{}f(x)\ \text{c.p.d.},\ x\in E.$$
+  Luego si $0\leq y\leq f(x)$, existe $\phi_k$ simple tal que $0\leq y\leq \phi_k(x)$. Entonces
+  $$R(f,E)=\bigcup\suck R(\phi_k,E)\cup\set{(x,y)\in\bR^{d+1}:\ x\in E,\ f(x)=y}.$$
+  Concluimos que $R(f,E)$ es medible si 
+  \begin{enumerate}[(a)]
+    \item $R(\phi_k,E)$ es medible.
+    \item $\Ga(f,E)=\set{(x,f(x)):\ x\in E}$ es medible.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{El Gráfico tiene Medida Cero}
+  \begin{Lem}\label{lem:GrafMedidaCero}
+    Sea $f:E\to\bR$ medible, entonces $m_e(\Ga(f,E))=0$.
+  \end{Lem}
+  Asumamos primero que $E$ tiene medida finita. Sea $\eps>0$ y 
+  $$E_k=\set{x\in E:\ k\eps\leq f(x)<(k+1)\eps},$$
+  entonces $E=\bigcup\suck E_k$. Note que 
+  $$\Ga(f,E_k)\subseteq (E_k\x[0,(k+1)\eps]\less(E_k\x[0,k\eps])).$$
+\end{frame}
+
+\begin{frame}{El Gráfico tiene Medida Cero}
+  De lo anterior tenemos 
+  $$m_e(\Ga(f,E_k))\leq m(E_k\x[0,(k+1)\eps])-m(E_k\x[0,k\eps])\leq\eps m(E).$$
+  Por lo tanto vale que 
+  $$m_e(\Ga(f,E_k))=0$$
+  y así 
+  $$m_E(\bigcup\suck\Ga(f,E_k))=m_e(\Ga(f,E))=0.$$
+  \begin{Ej}\label{ej:termPruebaGrafMedCero}
+    Terminar la prueba de este lema es un ejercicio.
+  \end{Ej}
+\end{frame}
+
+\begin{frame}{La Concluisión}
+  Finalmente si 
+  $$\phi_k(x)=\sum_{i=1}^ma_i\ind_{A_i},$$
+  con $a_i\neq a_j$, $A_i\cap A_j=\emptyset$ para $i\neq j$ y $E=\bigcup_{i=1}^m A_i$, tenemos que 
+  \begin{gather*}
+    \set{(x,y)\in\bR^d:\ x\in E,\ 0\leq y\leq\phi_k(x)}\\
+    =\bigcup_{k=1}^m\set{(x,y)\in\bR^d:\ x\in A_k,\ 0\leq y\leq a_k}
+  \end{gather*}
+  es un conjunto medible.
+\begin{Th}\label{th:AreaBajoCurvaMedible}
+Sea $f:E\to\bR$ medible, con $E$ medible. Entonces $R(f,E)\subseteq\bR^{d+1}$ es un conjunto medible.
+\end{Th}
+\end{frame}
+
+\subsection{La Integral y sus Propiedades}
+
+\begin{frame}{La Definición}
+  \begin{Def}\label{def:intLebesgue}
+  Dada $f:E\to\bR$ medible tal que $f\geq 0$, definimos su \alert{integral de Lebesgue} como 
+  $$\int\limits_E f\dd x=m(R(f,E)).$$
+  \end{Def}
   
 \end{frame}
 
-\begin{frame}{El Límite}
-  Note que para $x\in[0,1]$ tenemos 
-  $$|f_k(x)-f_{k+1}(x)|\leq\frac{1}{2^k}.$$
-  Por el M-test de Weierstrass tenemos que 
-  $$\sum\suck[f_{k+1}-f_k]$$
-  converge uniformemente de manera que $f_k\xrightarrow[k\to\infty]{}f$ uniformemente. La función resultante es la \alert{función de Cantor}. Entonces $f$ es continua, creciente y vale que $f(0)=0,\ f(1)=1$. Además para $x\in I_j^k$, $f_k(x)=f_j(x)=\frac{j}{2^k}$ si $j\geq k$. Entonces $f(x)=\frac{j}{2^k}$, $f'(x)=0$ en $I_j^k$ y $f'(x)=0$ en $[0,1]\less C$.
+\begin{frame}{Una Observación}
+  Note que si $\phi(x)=\sum_{i=1}^ma_i\ind_{A_i}$ con $A_i\cap A_j=\emptyset$ para $i\neq j$. Entonces, si $a_i\neq 0$,
+  $$\int\limits_E f(x)\dd x=\sum_{i=1}^ma_im(A_i)$$
+  pues 
+  \begin{align*}
+    &m(\set{(x,y):x\in E,\ 0\leq y\leq f(x)})\\
+    =&m(\set{f=0}\x\set{0})+m\left(\bigcup_{i=1}^m\set{(x,y):\ x\in A_j,\ 0\leq y\leq a_i}\right)\\
+    =&\sum_{i=1}^ma_im(A_i).
+  \end{align*}
 \end{frame}
-\iffalse
+
+\begin{frame}{Propiedades}
+  \begin{Th}\label{th:PropsIntLeb}
+    Sean $f,g:E\to\lbonj{0,\infty}$ medibles. 
+    \begin{enumerate}[(i)]
+      \item Si $0\leq g\leq f$, entonces 
+      $$\int\limits_E g(x)\dd x\leq\int\limits_E f(x)\dd x.$$
+      \item Si $\int\limits_E f(x)\dd x<\infty$, entonces $f\neq\infty$ c.p.d.
+      \item Si $E_1\subseteq E_2\subseteq E$, entonces 
+      $$\int\limits_{E_1}f(x)\dd x\leq \int\limits_{E_2}f(x)\dd x.$$
+    \end{enumerate}
+  \end{Th}
+\end{frame}
+
+\begin{frame}{Prueba del Teorema}
+  \begin{itemize}
+    \item Dado que $0\leq g\leq f$, tenemos que \begin{gather*}
+      \set{(x,y):\ x\in E,\ 0\leq y\leq g(x)}\\
+      \subseteq\set{(x,y):\ x\in E,\ 0\leq y\leq f(x)}.
+    \end{gather*}
+    Luego $R(g,E)\subseteq R(f,E)$.
+    \item Por otro lado si $E_1\subseteq E_2$, entonces $\ind_{E_1}f\leq \ind_{E_2}f$. Como 
+    \begin{gather*}
+      \set{(x,y):\ x\in E,\ 0\leq y\leq \ind_{E_i}f}\\
+      =(E\less E_i\x\set{0})\cup\set{(x,y):\ x\in E_1,\ 0\leq y\leq f}
+    \end{gather*}
+    Entonces $R(\ind_{E_i}f,E)=R(f,E_i)$. Es decir $\int\limits_{E_i}f(x)\dd x\leq \int\limits_{E_2}f(x)\dd x$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Terminamos la Prueba}
+  \begin{itemize}
+    \item Por otro lado si $E_1=\set{f=\infty}$, tomemos $f(x)=n\ind_{E_i}(x)$. Entonces $g(x)\leq f(x)$ para $x\in E$. Luego 
+    $$nm(E_1)\leq\int\limits_Ef(x)\dd x,$$
+    y por lo tanto $m(E_1)=0$
+  \end{itemize}
+\end{frame}
+
+%%Llevamos 1:03:50.64
 \section*{Resumen}
 
 \subsection*{Qu\'e vimos hoy}
@@ -255,7 +393,11 @@
 
   % Keep the summary *very short*.
   \begin{itemize}
-  \item 
+  \item El lema \ref{lem:casoConstArea} sobre el área bajo la curva de una función constante.
+  \item El lema \ref{lem:GrafMedidaCero} sobre medida cero del gráfico.
+  \item El teorema \ref{th:AreaBajoCurvaMedible} sobre el area bajo la curva.
+  \item La definición \ref{def:intLebesgue} de la integral de Lebesgue.
+  \item El teorema \ref{th:PropsIntLeb} sobre las propiedades de la integral de Lebesgue.
   \end{itemize}
   
 \end{frame}
@@ -265,14 +407,15 @@
     
   \begin{itemize}
     \item
-      Lista 17
+      Lista 18
       \begin{itemize}
-      \item 
+      \item El ejercicio \ref{ej:medCeroTimesInter} sobre los conjuntos de medida cero.
+      \item Terminar la prueba del lema \ref{lem:GrafMedidaCero} es el ejercicio \ref{ej:termPruebaGrafMedCero}.
       \end{itemize}
     \end{itemize}
   
 \end{frame}
-\fi
+
 
 % All of the following is optional and typically not needed. 
 \appendix
