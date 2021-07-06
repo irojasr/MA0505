@@ -16,7 +16,7 @@
 \usepackage{physics}
 
 \title[MA0505]{MA0505 - An\'alisis I}
-\subtitle{Lecci\'on XVIII: La Integral de Lebesgue I}
+\subtitle{Lecci\'on XIX: La Integral de Lebesgue II}
 
 \author{Pedro M\'endez\inst{1}}
 
@@ -210,181 +210,177 @@
 
 \section{La Integral de Lebesgue}
 
-\subsection{Áreas y Gráficos}
-\begin{frame}{El Área Bajo la Curva}
-  Sea $f:E\to\ov\bR$ medible con $E$ medible y $f\geq 0$. Definimos 
-  $$R(f,E)=\set{(x,y)\in\bR^{d+1}:\ x\in E,\ 0\leq y\leq f(x)}.$$
-  Surge la pregunta, ¿es $R(f,E)$ medible? Analicemos el caso $f(x)=a$ dentro de $A\subseteq E$ y $a>0$.s
-\end{frame}
-
-\begin{frame}
-  Entonces ocurre que 
-  \begin{gather*}
-    R(f,E)=\set{(x,y)\in\bR^{d+1}:\ x\in E,\ 0\leq y\leq f(x)}\\
-    =\set{(x,y)\in\bR^{d+1}:\ x\in E,\ 0\leq y\leq a}\\
-    \cup\set{(x,y)\in\bR^{d+1}:\ x\in E\less A,\ y=0}\\
-    =A\x[0,a]\cup E\less A\x \set{0}.
-  \end{gather*}
-  \begin{Lem}\label{lem:casoConstArea}
-    Sea $A\subseteq E$ medible y $a\geq 0$. Entonces $A\x [0,a]$ es medible y su medida es $am(A)$.
-  \end{Lem}
-\end{frame}
-
-\begin{frame}{Prueba del Lema}
-  \begin{enumerate}
-    \item Sea $A=[a_1,b_1]\x\dots\x[a_d,b_d]$. Entonces es claro que se cumple el lema.
-    \item Sea $A$ un abierto, entonces existen $I_k$'s, cajas en $d$ dimensiones, tales que $A=\bigcup\suck I_k$ con $I_k^o\cap I_k^o=\emptyset$ si $j\neq k$. Entonces $A\x[0,a]=\bigcup\suck I_k\x[0,a]$ es un conjunto medible. Y como 
-    $$(I_k\x [0,a])^o\cap (I_j\x [0,a])^o=\emptyset,\ k\neq j,$$
-    entonces 
-    $$m(A\x[0,a])=\sum\suci(I_i\x[0,a])=a\sum\suci m(I_i)=am(A).$$
-  \end{enumerate}
-\end{frame}
-
-\begin{frame}{Prueba del Lema}
-  \newcounter{saveenumi}
-  \begin{enumerate}
-    \item Sea $A=[a_1,b_1]\x\dots\x[a_d,b_d]$. Entonces es claro que se cumple el lema.
-    \item Sea $A$ un abierto, entonces existen $I_k$'s, cajas en $d$ dimensiones, tales que $A=\bigcup\suck I_k$ con $I_k^o\cap I_k^o=\emptyset$ si $j\neq k$. Entonces $A\x[0,a]=\bigcup\suck I_k\x[0,a]$ es un conjunto medible. Y como 
-    $$(I_k\x [0,a])^o\cap (I_j\x [0,a])^o=\emptyset,\ k\neq j,$$
-    entonces 
-    $$m(A\x[0,a])=\sum\suci(I_i\x[0,a])=a\sum\suci m(I_i)=am(A).$$
-    \setcounter{saveenumi}{\value{enumi}}
-  \end{enumerate}
-\end{frame}
-
-\begin{frame}{Continuamos}\label{ej:medCeroTimesInter}
-  \begin{enumerate}
-    \setcounter{enumi}{\value{saveenumi}}
-    \item Sea $A=\bigcap\sucj G_j$ un $G_\dl$ con $G_i$ abierto para $i\geq 1$ y $G_{i+1}\subseteq G_i$. \alert{¿Por qué podemos asumir esto?} Luego $A\x [0,a]=\bigcap\sucj G_j\x[0,a]$ con $G_{i+1}\x[0,a]\subseteq G_i\x[0,a]$ medibles con medida finita. Entonces 
-    $$m(A\x [0,a])=\lim_{i\to\infty}m(G_i\x[0,a])=\lim_{i\to\infty}am(G_i)=am(A).$$
-    \item Si $A=H\less Z$ con $H$ $G_\dl$ y $Z$ de medida cero, entonces por el paso anterior $H\x[0,a]$ es medible y $m(H\x[0,a])=a m(H)$. \alert{(Ej:$m_e(Z\x[0,a])=0$)} Entonces 
-    $$A\x[0,a]=(H\x[0,a])\less (Z\x[0,a])$$
-    y $m(A\x[0,a])=m(H\x[0,a])=a m(H)=am(A)$.
-    \setcounter{saveenumi}{\value{enumi}}
-  \end{enumerate}
-\end{frame}
-
-\begin{frame}{Terminamos}
-  \begin{enumerate}
-    \setcounter{enumi}{\value{saveenumi}}
-    \item Finalmente si $m(A)=\infty$, entonces llamemos $A_k=A\cap B(0,k)$. De esta manera $A=\bigcup\suck A_k$, con $A_k\subseteq A_{k+1}$ medibles y acotados. Por los argumentos anteriores 
-    $$A_k\x[0,a]\subseteq A_{k+1}\x[0,a]$$
-    son conjuntos medibles tales que $m(A_k\x[0,a])=am(A_k)$. Entonces
-    \begin{gather*}
-      m(A\x[0,a])=m\left(\bigcup\suck A_k\x [0,a]\right)=\lim_{k\to\infty}m(A_k\x[0,a])\\
-      =\lim_{k\to\infty} m(A_k\x[0,a])=\lim_{k\to\infty} am(A_k)=am(A).
-    \end{gather*}
-    
-  \end{enumerate}
-\end{frame}
-
-\begin{frame}{Gráficos}
-  Sea $f:E\to\bR$ medible con $f\geq 0$. Entonces existe una sucesión creciente de funciones simple $\set{\phi_k}\suck$ que satisfacen
-  $$\phi_k(x)\xrightarrow[k\to\infty]{}f(x)\ \text{c.p.d.},\ x\in E.$$
-  Luego si $0\leq y\leq f(x)$, existe $\phi_k$ simple tal que $0\leq y\leq \phi_k(x)$. Entonces
-  $$R(f,E)=\bigcup\suck R(\phi_k,E)\cup\set{(x,y)\in\bR^{d+1}:\ x\in E,\ f(x)=y}.$$
-  Concluimos que $R(f,E)$ es medible si 
-  \begin{enumerate}[(a)]
-    \item $R(\phi_k,E)$ es medible.
-    \item $\Ga(f,E)=\set{(x,f(x)):\ x\in E}$ es medible.
-  \end{enumerate}
-\end{frame}
-
-\begin{frame}{El Gráfico tiene Medida Cero}
-  \begin{Lem}\label{lem:GrafMedidaCero}
-    Sea $f:E\to\bR$ medible, entonces $m_e(\Ga(f,E))=0$.
-  \end{Lem}
-  Asumamos primero que $E$ tiene medida finita. Sea $\eps>0$ y 
-  $$E_k=\set{x\in E:\ k\eps\leq f(x)<(k+1)\eps},$$
-  entonces $E=\bigcup\suck E_k$. Note que 
-  $$\Ga(f,E_k)\subseteq (E_k\x[0,(k+1)\eps]\less(E_k\x[0,k\eps])).$$
-\end{frame}
-
-\begin{frame}{El Gráfico tiene Medida Cero}
-  De lo anterior tenemos 
-  $$m_e(\Ga(f,E_k))\leq m(E_k\x[0,(k+1)\eps])-m(E_k\x[0,k\eps])\leq\eps m(E).$$
-  Por lo tanto vale que 
-  $$m_e(\Ga(f,E_k))=0$$
-  y así 
-  $$m_E(\bigcup\suck\Ga(f,E_k))=m_e(\Ga(f,E))=0.$$
-  \begin{Ej}\label{ej:termPruebaGrafMedCero}
-    Terminar la prueba de este lema es un ejercicio.
-  \end{Ej}
-\end{frame}
-
-\begin{frame}{La Concluisión}
-  Finalmente si 
-  $$\phi_k(x)=\sum_{i=1}^ma_i\ind_{A_i},$$
-  con $a_i\neq a_j$, $A_i\cap A_j=\emptyset$ para $i\neq j$ y $E=\bigcup_{i=1}^m A_i$, tenemos que 
-  \begin{gather*}
-    \set{(x,y)\in\bR^d:\ x\in E,\ 0\leq y\leq\phi_k(x)}\\
-    =\bigcup_{k=1}^m\set{(x,y)\in\bR^d:\ x\in A_k,\ 0\leq y\leq a_k}
-  \end{gather*}
-  es un conjunto medible.
-\begin{Th}\label{th:AreaBajoCurvaMedible}
-Sea $f:E\to\bR$ medible, con $E$ medible. Entonces $R(f,E)\subseteq\bR^{d+1}$ es un conjunto medible.
+\subsection{Teoremas de Convergencia}
+\begin{frame}{Convergencia Monótona}
+\begin{Th}\label{th:TCMLebesgue}
+    Sea $\set{f_k}\suck$ una sucesión de funciones medibles tales que 
+    $$f_k(x)\leq f_{k+1}(x), x\in E.$$
+Si vale que $\lim_{k\to\infty}f_k(x)=f(x)$ casi por doquier en $E$, entonces
+$$\lim_{k\to\infty}\int\limits_Ef_k(x)\dd x=\int_Ef(x)\dd x.$$
 \end{Th}
 \end{frame}
 
-\subsection{La Integral y sus Propiedades}
-
-\begin{frame}{La Definición}
-  \begin{Def}\label{def:intLebesgue}
-  Dada $f:E\to\bR$ medible tal que $f\geq 0$, definimos su \alert{integral de Lebesgue} como 
-  $$\int\limits_E f\dd x=m(R(f,E)).$$
-  \end{Def}
-  
+\begin{frame}{Prueba del Teorema}
+Recordemos que 
+$$R(f,E)=\Ga(f,E)\cup\bigcup\suck R(f_k,E).$$
+Como $R(f_k,E)\subseteq R(f_{k+1},E)$ tenemos que 
+$$m(R(f,E))=\lim_{k\to\infty}m(R(f_k,E)).$$
 \end{frame}
 
-\begin{frame}{Una Observación}
-  Note que si $\phi(x)=\sum_{i=1}^ma_i\ind_{A_i}$ con $A_i\cap A_j=\emptyset$ para $i\neq j$. Entonces, si $a_i\neq 0$,
-  $$\int\limits_E f(x)\dd x=\sum_{i=1}^ma_im(A_i)$$
-  pues 
-  \begin{align*}
-    &m(\set{(x,y):x\in E,\ 0\leq y\leq f(x)})\\
-    =&m(\set{f=0}\x\set{0})+m\left(\bigcup_{i=1}^m\set{(x,y):\ x\in A_j,\ 0\leq y\leq a_i}\right)\\
-    =&\sum_{i=1}^ma_im(A_i).
-  \end{align*}
+\begin{frame}
+  En el caso que $E=\bigcup\suci E_i$ con $E_i\cap E_j=\emptyset$ si $i\neq j$, tenemos que
+  $$R(f,E)=\bigcupdot\suck R(f,E_k).$$
+  De esta manera
+  $$\int\limits_Ef(x)\dd x=m(R(f,E))=\sum\suck m(R(f,E_k))=\sum\suck\int\limits_{E_k}f(x)\dd x.$$
+  Esta fórmula es válida también para uniones finitas pues $R(f,\emptyset)=\emptyset$.
 \end{frame}
 
-\begin{frame}{Propiedades}
-  \begin{Th}\label{th:PropsIntLeb}
-    Sean $f,g:E\to\lbonj{0,\infty}$ medibles. 
-    \begin{enumerate}[(i)]
-      \item Si $0\leq g\leq f$, entonces 
-      $$\int\limits_E g(x)\dd x\leq\int\limits_E f(x)\dd x.$$
-      \item Si $\int\limits_E f(x)\dd x<\infty$, entonces $f\neq\infty$ c.p.d.
-      \item Si $E_1\subseteq E_2\subseteq E$, entonces 
-      $$\int\limits_{E_1}f(x)\dd x\leq \int\limits_{E_2}f(x)\dd x.$$
-    \end{enumerate}
+\begin{frame}{Una Fórmula Útil}
+  Dada $f:E\to\lbonj{0,\infty}$ medible, definimos 
+  $$\sum(f,\set{E_i}_{i=1}^N)=\sum_{i=1}^N(\inf_{E_i}f)\ind_{E_i}.$$
+  \begin{Th}\label{th:formulaInfSup}
+    Sea $f:E\to\bR$ medible, no negativa. Entonces
+    $$\int\limits_E f(x)\dd x=\sup_{E=\bigcupdot_{i=1}^NE_i}\sum(f,\set{E_i}_{i=1}^N).$$
   \end{Th}
 \end{frame}
 
 \begin{frame}{Prueba del Teorema}
-  \begin{itemize}
-    \item Dado que $0\leq g\leq f$, tenemos que \begin{gather*}
-      \set{(x,y):\ x\in E,\ 0\leq y\leq g(x)}\\
-      \subseteq\set{(x,y):\ x\in E,\ 0\leq y\leq f(x)}.
-    \end{gather*}
-    Luego $R(g,E)\subseteq R(f,E)$.
-    \item Por otro lado si $E_1\subseteq E_2$, entonces $\ind_{E_1}f\leq \ind_{E_2}f$. Como 
-    \begin{gather*}
-      \set{(x,y):\ x\in E,\ 0\leq y\leq \ind_{E_i}f}\\
-      =(E\less E_i\x\set{0})\cup\set{(x,y):\ x\in E_1,\ 0\leq y\leq f}
-    \end{gather*}
-    Entonces $R(\ind_{E_i}f,E)=R(f,E_i)$. Es decir $\int\limits_{E_i}f(x)\dd x\leq \int\limits_{E_2}f(x)\dd x$.
-  \end{itemize}
+  Dados $E_1,\dots,E_N$ tales que $E=\bigcupdot_{i=1}^NE_i$, tenemos que 
+  \begin{gather*}  
+    \sum(f,\set{E_i}_{i=1}^N)\leq f,\ \text{i.e.}\\
+    \sum_{i=1}^N(\inf_{E_i}f)m(E_i)\leq\int\limits_E f(x)\dd x.
+  \end{gather*}
+  Ahora dado $k\geq 1$ y $1\leq i\leq k2^k$ diremos que
+  $$E_k^0=\set{f\geq k},\ E_k^i=\Set{\frac{i-1}{2^k}\leq f(x)\leq \frac{i}{2^k}}.$$
+  Tenemos entonces $E=\bigcup_{i=0}^{k2^k}E_k^i$.
 \end{frame}
 
-\begin{frame}{Terminamos la Prueba}
+\begin{frame}{Continuamos la Prueba}
+  Si $f_k(x)=k\ind_{E_k^o}+\sum_{i=1}^{k2^k}\frac{i-1}{2^k}\ind_{E^i_k}$, entonces
   \begin{itemize}
-    \item Por otro lado si $E_1=\set{f=\infty}$, tomemos $f(x)=n\ind_{E_i}(x)$. Entonces $g(x)\leq f(x)$ para $x\in E$. Luego 
-    $$nm(E_1)\leq\int\limits_Ef(x)\dd x,$$
-    y por lo tanto $m(E_1)=0$
+    \item $f_k\leq f_{k+1}$.
+    \item $\lim_{k\to\infty}f_k=f$.
   \end{itemize}
+  Por el TCM, $\int_Ef_k\to\int_E f$ y como
+  $$f_k\leq \sum(f,\set{E_k^i}_{i=1}^{k2^k})$$
+  entonces tenemos que
+  $$\lim_{k\to\infty}\sum_{i=0}^{k2^k}(\inf_{E_i}f)\ind_{E_k^i}=\int\limits_E f(x)\dd x.$$
 \end{frame}
 
-%%Llevamos 1:03:50.64
+\begin{frame}{Un Corolario}
+  Note que este resultado implica lo siguiente:
+  \begin{Cor}\label{cor:ALaFormInfSup}
+Sea $f:E\to\bR$ medible. Entonces 
+$$\int\limits_E f(x)\dd x=\sup\Set{\int\limits_E\phi(x)\dd x:\ \phi\ \text{simple},\ \phi\leq f\ \text{en }E}.$$
+  \end{Cor}
+\end{frame}
+
+\subsection{Propiedades de la Integral}
+
+\begin{frame}{Medida Cero}
+  \begin{Lem}\label{lem:intSobreMedCero}
+  Sea $f:E\to\lbonj{0,\infty}$. Si $m(E)=0$, entonces $\int\limits_Ef(x)\dd x=0$.
+  \end{Lem}
+Sean $f_k=\sum_{i=1}^ma_i\ind_{A_i}$ funciones simples tales que 
+$$\int\limits_Ef_k\dd x\xrightarrow[k\to\infty]{}\int\limits_Ef(x)\dd x.$$
+Note que 
+$$\int\limits_Ef_k(x)\dd x)\sum_{i=1}^ma_im(A_i).$$
+Pero $A_i\subseteq E$ nos dice que $m(A_i)=0$ para $1\leq i\leq m$.
+\end{frame}
+
+\begin{frame}{Desigualdades}
+  \begin{Th}\label{th:intPreservaOrden}
+    Sean $f,g:E\to\lbonj{0,\infty}$ tales que $g(x)\leq f(x)$ casi por doquier en $E$. Entonces vale que 
+    $$\int\limits_Eg(x)\dd x\leq\int\limits_Ef(x)\dd x.$$
+    En particular si $f=g$ c.p.d. en $E$, entonces
+    $$\int\limits_Eg(x)\dd x=\int\limits_Ef(x)\dd x.$$
+  \end{Th}
+\end{frame}
+
+\begin{frame}{Prueba del Teorema}
+  Sea $A=\set{x\in E:\ g(x)\leq f(x)}$. Entonces $E=A\cup Z$ con $m(Z)=0$. Así tenemos
+  \begin{align*}
+    \int\limits_Ef(x)\dd x&=\int\limits_Af(x)\dd x+\int\limits_Zf(x)\dd x\\
+    &\geq \int\limits_Ag(x)\dd x\\
+    &= \int\limits_Ag(x)\dd x+\int\limits_ZSg(x)\dd x+\\
+&=\int\limits_Eg(x)\dd x.
+  \end{align*}
+\end{frame}
+
+\begin{frame}{Una Desigualdad Familiar\dots}\label{Markov}
+  Sea $\al> 0$, entonces
+  $$\al\ind_{\set{f\geq \al}}\leq f\ind_{\set{f\geq \al}}\leq f$$
+  cuando $f:E\to\lbonj{0,\infty}$. Entonces
+  $$\al m(\set{f\geq \al})\leq\int\limits_{\set{f\geq \al}}f(x)\dd x\leq \int\limits_Ef(x)\dd x.$$
+  A la desigualdad $ m(\set{f\geq \al})\leq\frac{1}{\al}\int\limits_Ef(x)\dd x$ se le conoce como \alert{desigualdad de Markov}.
+\end{frame}
+
+\begin{frame}
+  Ahora si $f:E\to\lbonj{0,\infty}$ es medible y $\int\limits_Ef(x)\dd x=0$ tenemos que 
+  $$m(\set{f\geq \al})=0$$
+  para $\al\geq 0$. Y luego 
+  $$\set{f\geq 0}=\bigcup\suck\set{f\geq\frac{1}{k}}$$
+  es un conjunto de medida cero. Es decir, $f=0$ c.p.d.
+  \begin{Cor}\label{cor:aMarkov}
+    Sea $f:E\to\lbonj{0,\infty}$ tal que $\int\limits_E f(x)\dd x=0$. Entonces $f=0$ casi por doquier.
+  \end{Cor}
+\end{frame}
+
+\begin{frame}{Linealidad}
+  Por otro lado si $c>0$ entonces veremos que 
+  $$\int\limits_E(cf(x)+g(x))\dd x=c\int\limits_Ef(x)\dd x+\int\limits_Eg(x)\dd x.$$
+  Sea $f_k$ una sucesión de funciones simples tales que 
+  \begin{itemize}
+    \item $0\leq f_k\leq f_{k+1}$.
+    \item $\lim_{k\to\infty}f_k=f$.
+  \end{itemize}
+  Si $f_k=\sum_{i=1}^{m_k}a_i\ind_{A_i}$, tenemos que 
+  $$cf_k=\sum_{i=1}^{m_k}ca_i\ind_{A_i}\xrightarrow[k\to\infty]{}cf(x)$$
+  y $cf_k\leq cf_{k+1}$.
+\end{frame}
+
+\begin{frame}{Linealidad}
+  Entonces tenemos 
+  \begin{align*}
+    \int\limits_Ecf(x)\dd x&=\lim_{k\to\infty}\int\limits_Ecf_k(x)\dd x\\
+    &=\lim_{k\to\infty}\sum_{i=1}^{m_k}ca_im(A_i)\\
+    &=c\lim_{k\to\infty}\sum_{i=1}^{m_k}a_im(A_i)\\
+    &=c\int\limits_Ef(x)\dd x.
+  \end{align*}
+
+\end{frame}
+
+\begin{frame}{Linealidad}
+  \begin{Th}\label{th:intLineal}
+    Sean $f,g:E\to\lbonj{0,\infty}$ medibles y $c\geq 0$. Entonces
+    $$\int\limits_E(cf(x)+g(x))\dd x=c\int\limits_Ef(x)\dd x+\int\limits_Eg(x)\dd x.$$
+  \end{Th}
+  Falta mostrar la aditividad. Para el efecto tomemos $g_k$ una sucesión de funciones simples tales que 
+  $$g_k\leq g_{k+1},\quad \lim_{k\to\infty}g_k=g.$$
+  Entonces se sigue que 
+  $$g_k+f_k\leq g_{k+1}+f_{k+1},\quad \lim_{k\to\infty}g_k+f_k=g+f.$$
+\end{frame}
+
+\begin{frame}{Linealidad}
+  Debemos mostrar que 
+  $$\int\limits_E(g_k(x)+f_k(x))\dd x=\int\limits_Eg_k(x)\dd x+\int\limits_Ef_k(x)\dd x.$$
+  Si $g_k=\sum_{i=1}^{\l_k}b_i\ind_{B_i}$, con $E=\bigcupdot_{i=1}^{\l_k}B_i=\bigcupdot_{j=1}^{m_k}A_j$, entonces 
+  $$g_k(x)+f_k(x)=\sum_{i=1}^{\l_k}\sum_{j=1}^{m_k}(a_j+b_i)\ind_{A_j\cap B_i}.$$
+\end{frame}
+
+\begin{frame}{Linealidad}
+Ahora
+\begin{align*}
+  \sum_{i=1}^{\l_k}\sum_{i=1}^{m_k}m(A_j\cap B_i)&=\sum_{i=1}^{\l_k}m\left(B_i\cap\bigcup_{j=1}^{m_k}A_j
+  \right)\\
+  &=\sum_{i=1}^{\l_k}m\left(B_i\cap E\right) =\sum_{i=1}^{\l_k}m\left(B_i\right).
+\end{align*}
+De igual forma tenemos 
+$$\sum_{i=1}^{m_k}\sum_{i=1}^{\l_k}m(A_j\cap B_i)=\sum_{i=1}^{m_k}m(A_i).$$
+Fácilmente deducimos que 
+$$\int\limits_E(g_k(x)+f_k(x))\dd x=\int\limits_Eg_k(x)\dd x+\int\limits_Ef_k(x)\dd x.$$
+\end{frame}
+
 \section*{Resumen}
 
 \subsection*{Qu\'e vimos hoy}
@@ -393,11 +389,15 @@ Sea $f:E\to\bR$ medible, con $E$ medible. Entonces $R(f,E)\subseteq\bR^{d+1}$ es
 
   % Keep the summary *very short*.
   \begin{itemize}
-  \item El lema \ref{lem:casoConstArea} sobre el área bajo la curva de una función constante.
-  \item El lema \ref{lem:GrafMedidaCero} sobre medida cero del gráfico.
-  \item El teorema \ref{th:AreaBajoCurvaMedible} sobre el area bajo la curva.
-  \item La definición \ref{def:intLebesgue} de la integral de Lebesgue.
-  \item El teorema \ref{th:PropsIntLeb} sobre las propiedades de la integral de Lebesgue.
+  \item El teorema \ref{th:TCMLebesgue} de convergencia monótona.
+  \item La fórmula \ref{th:formulaInfSup} para la integral y su corolario \ref{cor:ALaFormInfSup}.
+  \item Entre la propiedades de la integral tenemos:
+  \begin{itemize}
+    \item La de medida cero: \ref{lem:intSobreMedCero}.
+    \item Que preserva el orden: \ref{th:intPreservaOrden}.
+    \item La desigualdad de Markov \ref{Markov} y su corolario \ref{cor:aMarkov}.
+  \end{itemize}
+  \item La integral es un operador lineal \ref{th:intLineal}.
   \end{itemize}
   
 \end{frame}
@@ -407,10 +407,9 @@ Sea $f:E\to\bR$ medible, con $E$ medible. Entonces $R(f,E)\subseteq\bR^{d+1}$ es
     
   \begin{itemize}
     \item
-      Lista 18
+      Lista 19
       \begin{itemize}
-      \item El ejercicio \ref{ej:medCeroTimesInter} sobre los conjuntos de medida cero.
-      \item Terminar la prueba del lema \ref{lem:GrafMedidaCero} es el ejercicio \ref{ej:termPruebaGrafMedCero}.
+      \item No hay ejercicios en esta presentación.
       \end{itemize}
     \end{itemize}
   
@@ -456,6 +455,7 @@ Sea $f:E\to\bR$ medible, con $E$ medible. Entonces $R(f,E)\subseteq\bR^{d+1}$ es
 %% 16 - 46:11.67
 %% 17 - 44:18.85
 %% 18 - 1:03:50.64
+%% 19 - 51:57.37
 \end{document}
 
 
