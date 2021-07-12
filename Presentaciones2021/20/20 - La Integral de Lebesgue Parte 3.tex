@@ -1,0 +1,375 @@
+\documentclass[utf8]{beamer}
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  \setbeamercovered{transparent}
+}
+
+
+\usepackage{amsfonts,mathtools,amssymb}
+\usepackage[spanish]{babel}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tikz}
+\usepackage{physics}
+
+\title[MA0505]{MA0505 - An\'alisis I}
+\subtitle{Lecci\'on XX: La Integral de Lebesgue III}
+
+\author{Pedro M\'endez\inst{1}}
+
+\institute[Universidad de Costa Rica] % (optional, but mostly needed)
+{
+  \inst{1}%
+  Departmento de Matem\'atica Pura y Ciencias Actuariales\\
+  Universidad de Costa Rica
+  }
+
+\date[I-2021] {Semestre I, 2021}
+
+%%%%%%%%% === Theorems and suchlike === %%%%%%%%%%%%%%
+
+\theoremstyle{plain}
+\newtheorem{Th}{Teorema}               %%% Theorem 1.1.1
+\newtheorem{Tmon}{Teoremón}
+\newtheorem{Prop}{Proposición}         %%% Proposition 1.1.2
+\newtheorem{Lem}{Lema}                 %%% Lemma 3
+\newtheorem{Cor}{Corolario}            %%% Corollary 4
+
+\theoremstyle{definition}
+\newtheorem{Def}{Definición}           %%% Definition 5
+\newtheorem{Ex}{Ejemplo}               %%% Example 6
+\newtheorem{Ej}{Ejercicio}             %%% Ejercicio 7
+\newtheorem{Hec}[Th]{Hecho}            %%% Hecho 1.1.8
+
+\theoremstyle{remark}
+\newtheorem{Rmk}[Th]{Observación}      %%%Remark 1.1.9
+\newtheorem*{nonum-Rmk}{Observación}         %%% No number Fact
+\newtheorem*{Notn}{Notaci\'on}        %% Notaciones
+\newtheorem*{Warn}{Advertencia}       %% Advertencias
+
+\numberwithin{equation}{section}
+
+%% Accomodations 
+
+\makeatletter
+\def\moverlay{\mathpalette\mov@rlay}
+\def\mov@rlay#1#2{\leavevmode\vtop{%
+   \baselineskip\z@skip \lineskiplimit-\maxdimen
+   \ialign{\hfil$\m@th#1##$\hfil\cr#2\crcr}}}
+\newcommand{\charfusion}[3][\mathord]{
+    #1{\ifx#1\mathop\vphantom{#2}\fi
+        \mathpalette\mov@rlay{#2\cr#3}
+      }
+    \ifx#1\mathop\expandafter\displaylimits\fi}
+\makeatother
+
+% Greek letters:
+
+\newcommand{\al}{\alpha}                %% short for  \alpha
+\newcommand{\bt}{\beta}                 %% short for  \beta
+\newcommand{\Dl}{\Delta}                %% short for  \Delta
+\newcommand{\dl}{\delta}                %% short for  \delta
+\newcommand{\eps}{\varepsilon}          %% short for  \varepsilon
+\newcommand{\Ga}{\Gamma}                %% short for  \Gamma
+\newcommand{\ga}{\gamma}                %% short for  \gamma
+\newcommand{\La}{\Lambda}               %% short for  \Lambda
+\newcommand{\la}{\lambda}               %% short for  \lambda
+\newcommand{\kp}{\kappa}                %% short for  \kappa
+\newcommand{\Om}{\Omega}                %% short for  \Omega
+\newcommand{\om}{\omega}                %% short for  \omega
+\newcommand{\Sg}{\Sigma}                %% short for  \Sigma
+\newcommand{\sg}{\sigma}                %% short for  \sigma
+\newcommand{\te}{\theta}                %% short for  \theta
+\newcommand{\vf}{\varphi}               %% short for  \varphi
+\newcommand{\ze}{\zeta}                 %% short for  \zeta
+
+%Boldface letters
+
+\newcommand{\bC}{\mathbb{C}}    %%% números complejos
+\newcommand{\bN}{\mathbb{N}}    %%% números naturales
+\newcommand{\bP}{\mathbb{P}}        %% números enteros positivos
+\newcommand{\bQ}{\mathbb{Q}}    %%% números racionales
+\newcommand{\bR}{\mathbb{R}}    %%% números reales
+\newcommand{\bS}{\mathbb{S}}    %%% esfera
+\newcommand{\bZ}{\mathbb{Z}}    %%% números enteros
+
+%Script letters:
+
+\newcommand{\cA}{\mathcal{A}}           %% formas diferenciales
+\newcommand{\cB}{\mathcal{B}}           %% una base vectorial
+\newcommand{\cC}{\mathcal{C}}           %% otra base vectorial
+\newcommand{\cF}{\mathcal{F}}           %% espacio de Fock
+\newcommand{\cL}{\mathcal{L}}           %% operadores lineales
+\newcommand{\cM}{\mathcal{M}}           %% multiplicadores
+\newcommand{\cN}{\mathcal{N}}           %% funciones nulas
+\newcommand{\cP}{\mathcal{P}}           %% una particion
+\newcommand{\cR}{\mathcal{R}}           %% funciones representativas
+\newcommand{\cS}{\mathcal{S}}           %% funciones de Schwartz
+
+
+%Brackets
+
+\newcommand{\bonj}[1]{\left\lbrack#1\right\rbrack}
+\newcommand{\obonj}[1]{\left\rbrack#1\right\lbrack}
+\newcommand{\rbonj}[1]{\left\rbrack#1\right\rbrack}
+\newcommand{\lbonj}[1]{\left\lbrack#1\right\lbrack}
+\newcommand{\snm}[1]{\|#1\|}           %small norma
+\newcommand{\nm}[1]{\left\|#1\right\|} %norma pegadita
+\newcommand{\pnm}[1]{\biggl|\biggl|#1\biggr|\biggr|}
+\newcommand{\set}[1]{\{\,#1\,\}}    %% set notation
+\newcommand{\floor}[1]{\lfloor#1\rfloor} %% mayor entero <= x
+\newcommand{\Set}[1]{\biggl\{\,#1\,\biggr\}} %% set notation (large)
+\newcommand\quot[2]{
+        \mathchoice
+            {% \displaystyle
+                \text{\raise1ex\hbox{$#1$}\Big/\lower1ex\hbox{$#2$}}%
+            }
+            {% \textstyle
+                {^{ #1}/_{ #2}}
+            }
+            {% \scriptstyle
+                {^{ #1}/_{ #2}}
+            }
+            {% \scriptscriptstyle
+                {^{ #1}/_{ #2}}
+            }
+    }
+\newcommand*\squot[2]{{^{ #1}/_{ #2}}}%%%small quotient
+
+%Symbols 
+
+\newcommand{\x}{\times}
+\renewcommand{\geq}{\geqslant}          %% mayor o igual (variante)
+\newcommand{\hookto}{\hookrightarrow}     %% inclusion arrow
+\newcommand{\isom}{\simeq}              %% isomorfismo
+\renewcommand{\l}{\ell}                   %% ele cursiva
+\renewcommand{\leq}{\leqslant}          %% menor o igual (variante)
+\newcommand{\less}{\setminus}           %% set difference
+\newcommand{\To}{\Rightarrow}
+\newcommand{\ov}{\overline}
+\newcommand{\un}{\underline}
+\newcommand{\del}{\partial}
+\newcommand{\ind}{\mathbf{1}}       %%%indicator function
+
+%%% Small fractions in displays:
+
+\newcommand{\half}{{\mathchoice{\nhalf}{\thalf}{\shalf}{\shalf}}} %%display text script script^2
+\newcommand{\happi}{{\tfrac{\pi}{2}}} %% small fraction  \pi/2
+\newcommand{\quarter}{\tfrac{1}{4}} %% small fraction  1/4
+\newcommand{\nhalf}{\frac{1}{2}}
+\newcommand{\shalf}{{\scriptstyle\frac{1}{2}}} %% tiny fraction 1/2
+\newcommand{\thalf}{{\tfrac{1}{2}}} %% small fraction  1/2
+\newcommand{\third}{\tfrac{1}{3}}   %% small fraction  1/3 %Hay que renew porque mathabx toma second y third como x'' y x''' por ejemplo
+
+\newcommand{\ihalf}{{\tfrac{i}{2}}} %% small fraction  i/2
+
+\newcommand{\suci}{_{i=1}^\infty} %% diminutivo
+\newcommand{\sucj}{_{j=1}^\infty} %% diminutivo
+\newcommand{\suck}{_{k=1}^\infty} %% diminutivo
+\newcommand{\sucl}{_{\l=1}^\infty} %% diminutivo
+\newcommand{\sucm}{_{m=1}^\infty} %% diminutivo
+\newcommand{\sucn}{_{n=1}^\infty} %% diminutivo
+
+\newcommand*{\Cdot}{{\raisebox{-0.25ex}{\scalebox{1.5}{$\cdot$}}}}      %% cdot más grande
+\renewcommand{\.}{\Cdot}                %% producto escalar
+\newcommand{\cupdot}{\charfusion[\mathbin]{\cup}{\.}}
+\newcommand{\bigcupdot}{\charfusion[\mathbin]{\bigcup}{\.}}
+\DeclareMathOperator{\Var}{Var}     %%%variance
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Agenda}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{La Integral de Lebesgue}
+
+\subsection{Resta de Integrales}
+\begin{frame}
+Si $f,g:E\to\bonj{0,\infty}$ son medibles tales que $0\leq g\leq f$, entonces 
+\begin{align*}
+  \int\limits_Ef(x)\dd x&=\int\limits_E\left((f(x)-g(x))+g(x)\right)\dd x\\
+  &=\int\limits_E\left(f(x)-g(x)\right)\dd x+\int\limits_Eg(x)\dd x.
+\end{align*}
+Luego si $\int\limits_Eg(x)\dd x<\infty$, entonces
+$$\int\limits_E\left(f(x)-g(x)\right)\dd x=\int\limits_Ef(x)\dd x-\int\limits_Eg(x)\dd x$$
+\end{frame}
+
+\subsection{El Lema de Fatou}
+
+\begin{frame}{Un Ejemplo}
+  Sean $f_k:E\to\bonj{0,\infty}$ medibles para $1\leq k$. Entonces si llamamos
+  $$g_m=\sum_{k=1}^mf_k,$$
+  tenemos que $0\leq g_m\leq g_{m+1}$. Y luego 
+  \begin{align*}
+    \int\limits_E\left(\sum_{k=1}^\infty f_k\right)\dd x&=\int\limits_E \lim_{m\to\infty}g_m(x)\dd x=\lim_{m\to\infty}\int\limits_E \sum_{k=1}^mf_k(x)\dd x\\
+    &=\lim_{m\to\infty} \sum_{k=1}^m\int\limits_Ef_k(x)\dd x=\sum_{k=1}^\infty\int\limits_Ef_k(x)\dd x.
+  \end{align*}
+\end{frame}
+
+\begin{frame}
+  Sea $E=\bonj{0,1}$, definimos 
+  $$
+  f_k(x)=\begin{cases}
+    k &\text{si}\ 0\leq x\leq \frac1k.\\
+    0 &\text{si}\ \frac{1}{k}\leq x\leq 1.
+  \end{cases}
+  $$
+  Entonces vale que $\int\limits_Ef_k(x)\dd x=1$, pero $\lim_{k\to\infty}f_k=0$. Nos preguntamos:\par 
+  \begin{center}
+    ¿Cuándo $\displaystyle\lim_{k\to\infty}\int\limits_Ef_k(x)\dd x=\int\limits_E\lim_{k\to\infty}f_k(x)\dd x$?
+  \end{center}
+\end{frame}
+
+\begin{frame}{Fatou}
+  \begin{Th}[Fatou]\label{th:Fatou}
+Sea $f_k:E\to\bonj{0,\infty}$ una sucesión de funciones no negativas. Entonces 
+$$\int\limits_E\liminf_{k\to\infty}f_k\dd x\leq \liminf_{k\to\infty}\int\limits_Ef_k\dd x.$$
+  \end{Th}
+  Recordemos que 
+  $$  \liminf_{k\to\infty}f_k=\sup_{k\geq 1}\inf_{m\geq k}f_m=\lim_{k\to\infty}\inf_{m\geq k}f_m.$$
+  Como $g_k=\inf_{m\geq k}f_m$ es creciente, entonces
+  $$\int\limits_E(\liminf_{k\to\infty}f_k)\dd x=\lim_{k\to\infty}\int\limits_E\inf_{m\geq k}f_m\dd x.$$
+\end{frame}
+
+\begin{frame}{Prueba de Fatou}
+  Note que $\inf_{m\geq k}f_m\leq f_k$ para $k\geq 1$. Entonces para $k\geq m$
+  $$\int\limits_E(\inf_{m\geq k}f_m(x))\dd x\leq \int\limits_Ef_k(x)\dd x.$$
+  Entonces 
+  $$\liminf_{k\to\infty}\int\limits_E(\inf_{m\geq k}f_m(x))\dd x\leq \liminf_{k\to\infty}\int\limits_Ef_k(x)\dd x.$$
+  Por monotonía vale $\liminf_{k\to\infty}\int\limits_Eg_k\dd x=\lim_{k\to\infty}\int_Eg_k\dd x$. Entonces concluimos que
+  $$\int\limits_E\liminf_{k\to\infty}f_k\dd x\leq \liminf_{k\to\infty}\int\limits_Ef_k\dd x.$$
+\end{frame}
+
+\subsection{Convergencia Dominada}
+
+\begin{frame}
+  Note que si $f_k:E\to\bonj{0,\infty}$ es medible y $\int\limits_Ef_k(x)\dd x\leq M$, entonces $\int\limits_Ef(x)\dd x\leq M$.
+  \begin{Th}[Convergencia Dominada]\label{th:LebesgueDCT}
+    Sea $\set{f_k}\suck$ una sucesión de funciones medibles no negativas. Si valen 
+    \begin{enumerate}
+      \item $\lim_{k\to\infty}f_k=f$ c.p.d. en $E$.
+      \item Si $0\leq f_k\leq\phi$ c.p.d. para $k\geq 0$ y $\int\limits_E\phi(x)\dd x<\infty$.
+    \end{enumerate}
+    Entonces
+    $$\lim_{k\to\infty}\int\limits_Ef_k(x)\dd x=\int\limits_Ef(x)\dd x.$$
+  \end{Th}
+\end{frame}
+
+\begin{frame}{Prueba TCD}
+  \begin{itemize}
+    \item Primero por Fatou: $\displaystyle\int\limits_Ef(x)\dd x\leq \liminf_{k\to\infty}\int\limits_Ef_k\dd x$.
+    \item Considere así $h_k=\phi-f_k$, entonces 
+    $$\int\limits_E\liminf_{k\to\infty}(\phi-f_k)\dd x\leq \liminf_{k\to\infty}\int(\phi-f_k)\dd x.$$
+    \item Note que $\displaystyle \liminf_{k\to\infty}(\phi-f_k)=\phi-f$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Continuamos la Prueba}
+  Por otro lado tenemos que
+  \begin{align*}
+    \liminf_{k\to\infty}\int\limits_E(\phi-f_k)(x)\dd x&=\liminf_{k\to\infty}\left(\int\limits_E\phi(x)\dd x-\int\limits_Ef_k(x)\dd x\right)\\
+    &=\int\limits_E\phi(x)\dd x-\limsup_{k\to\infty}\int\limits_Ef_k(x)\dd x.
+  \end{align*}
+  \alert{¿Por qué vale la última igualdad?} Así concluimos que 
+  $$\limsup_{k\to\infty}\int\limits_E f_k(x)\dd x\leq \int\limits_Ef(x)\dd x.$$
+\end{frame}
+\section*{Resumen}
+
+\subsection*{Qu\'e vimos hoy}
+
+\begin{frame}{Resumen}
+
+  % Keep the summary *very short*.
+  \begin{itemize}
+  \item La linealidad de la integral con restas.
+  \item El lema \ref{th:Fatou} de Fatou.
+  \item El teorema \ref{th:LebesgueDCT} de Convergencia Dominada.
+  \end{itemize}
+  
+\end{frame}
+
+\subsection*{Ejercicios a trabajar}
+\begin{frame}{Ejercicios}
+    
+  \begin{itemize}
+    \item
+      Lista 20
+      \begin{itemize}
+      \item El detalle en la prueba del teorema \ref{th:LebesgueDCT} de Convergencia Dominada.
+      \end{itemize}
+    \end{itemize}
+  
+\end{frame}
+
+
+% All of the following is optional and typically not needed. 
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{Lectura adicional}
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{Lecturas adicionales}
+    
+  \begin{thebibliography}{10}
+    
+  \beamertemplatebookbibitems
+  % Start with overview books.
+
+  \bibitem{CambroNotas}
+    S.Cambronero.
+    \newblock {\em Notas MA0505}.
+    \newblock 20XX.
+
+    \bibitem{NachoNotas}
+    I.Rojas
+    \newblock {\em Notas MA0505}.
+    \newblock 2018.
+ 
+  \end{thebibliography}
+  
+\end{frame}
+%% 6 - 2:10:52 48
+%% 7 - 1:17:44 44
+%% 8 - 27:37 69
+%% 9 - 1:07:47 86 + 59:38 40 approx 2 h c 7 min
+%% 10 - 2:22:39 63
+%% 11 - Approx 2h c 2 min
+%% 12 - Motiv y figs 1:00:17.53, en tot: 2:22:23.43
+%% 13 - 1:18:03.51
+%% 14 - 2:05:13.72
+%% 15 - 1:13:41.49
+%% 16 - 46:11.67
+%% 17 - 44:18.85
+%% 18 - 1:03:50.64
+%% 19 - 51:57.37
+%% 20 - 30:52.52
+\end{document}
+
+
