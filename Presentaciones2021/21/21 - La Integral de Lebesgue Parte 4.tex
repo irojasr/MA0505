@@ -264,7 +264,146 @@ Sea $f:E\to\ov{\bR}$ y $g:E\to\ov\bR$ medibles tales que $\int\limits_E f\dd x$ 
   $$\int\limits_{E}f\dd x=\sum\suck\int\limits_{E_k}f\dd x.$$
 \end{frame}
 
-\section{}
+\section{Linealidad de la Integral}
+
+\begin{frame}
+  \begin{Th}\label{th:linealidad}
+  Sean $f,g:E\to\ov\bR$ medibles tales que $\int\limits_Ef\dd x$ y $\int\limits_Eg\dd x$ existen. Entonces vale que
+  \begin{enumerate}
+    \item $\displaystyle \int\limits_Ecf\dd x=c\int\limits_Ef\dd x$.
+    \item Además, si $f,g\in L^1(E)$, entonces
+    $$\int\limits_E(f+g)\dd x=\int\limits_Ef\dd x+\int\limits_Eg\dd x.$$
+  \end{enumerate}
+\end{Th}
+
+\end{frame}
+
+\begin{frame}{Prueba del Teorema}
+  Primero si $c\leq 0$ entonces 
+$$(cf)^+=-cf^-,\quad (cf)^-=-cf^+.$$
+Entonces vale que
+$$\int\limits_Ecf\dd x=-c\int\limits_Ef^-\dd x+c\int\limits_Ef^+\dd x=c\int\limits_Ef\dd x.$$
+\end{frame}
+
+\begin{frame}{Segunda Parte}
+  Si $f,g$ son integrables entonces
+  $$0\leq \int\limits_E|f+g|\dd x\leq \int\limits_E|f|\dd x+ \int\limits_E|g|\dd x<\infty.$$
+  Note que los siguientes conjuntos cubren $E$:
+\begin{align*}
+  &E_1=\set{f\geq 0,\ g\geq 0},\\
+  &E_2=\set{f\leq 0,\ g\leq 0},\\
+  &E_3=\set{f\geq 0,\ g< 0,\ f+g\geq 0},\\
+  &E_4=\set{f< 0,\ g\geq 0,\ f+g\geq 0},\\
+  &E_5=\set{f\geq 0,\ g< 0,\ f+g< 0},\\
+  &E_6=\set{f< 0,\ g\geq 0,\ f+g< 0}.
+\end{align*}  
+\end{frame}
+
+\begin{frame}{Continuamos la Prueba}
+Note que 
+$$\int\limits_{E_1}(f+g)\dd x=\hspace{-2pt}\int\limits_{E_1}(f^++g^+)\dd x=\hspace{-2pt}\int\limits_{E_1}f^+\dd x+\int\limits_{E_1}g^+\dd x=\hspace{-2pt}\int\limits_{E_1}f\dd x+\int\limits_{E_1}g\dd x$$
+y también
+\begin{align*}
+  \int\limits_{E_2}(f+g)\dd x&=\hspace{-2pt}\int\limits_{E_2}-(f^-+g^-)\dd x=\hspace{-2pt}-\int\limits_{E_2}(f^-+g^-)\dd x\\
+  &=-\hspace{-2pt}\int\limits_{E_2}f^-\dd x-\int\limits_{E_2}g^-\dd x=\int\limits_{E_2}f\dd x+\int\limits_{E_2}g\dd x.
+\end{align*}
+\end{frame}
+
+\begin{frame}
+  De esta manera 
+  $$\int\limits_{E_3}((f+g)-g)\dd x=\int\limits_{E_3}(f+g)\dd x+\int\limits_{E_3}(-g)\dd x.$$
+  Entonces 
+  \begin{align*}
+    \int\limits_{E_3}f\dd x&=\int\limits_{E_3}(f+g)\dd x+\int\limits_{E_3}(-g)\dd x\\
+    &=\int\limits_{E_3}(f+g)\dd x-\int\limits_{E_3}g\dd x.
+  \end{align*}
+  Por lo tanto 
+  $$\int\limits_{E_3}(f+g)\dd x=\int\limits_{E_3}f\dd x+\int\limits_{E_3}g\dd x.$$
+\end{frame}
+
+\begin{frame}{Terminamos}
+ Finalmente
+ $$\int\limits_{E_5}(-(f+g)+f)\dd x=\int\limits_{E_5}(-g)\dd x=\int\limits_{E_5}-(f+g)\dd x+\int\limits_{E_5}f\dd x.$$
+ Así tenemos que 
+ $$\int\limits_{E_5}f\dd x+\int\limits_{E_5}g\dd x=\int\limits_{E_5}(f+g)\dd x.$$
+Terminar el resto de la prueba es un \alert{ejercicio}.
+\end{frame}
+
+\subsection{Y las Restas}
+\begin{frame}
+  Luego si $f_1,\dots,f_n\in L(E)$, entonces $\sum_{k=1}^na_kf_k\in L(E)$ y vale que
+  $$\int\limits_E\left(\sum_{k=1}^na_kf_k\right)\dd x=\sum_{k=1}^na_k\int\limits_Ef_k\dd x.$$
+  Ojo que en general no es cierto que 
+  $$\int\limits_E(f-g)\dd x=\int\limits_Ef\dd x-\int\limits_Eg\dd x.$$
+  Por ejemplo considere $f=\ind_{\bonj{n,\infty}}$ y $g=\ind_{\bonj{n+1,\infty}}.$
+\end{frame}
+
+\begin{frame}
+  Sin embargo si $f$ y $\phi$ son medibles con $\phi\leq f$ c.p.d. y $\phi\in L(E)$, entonces $f^-\leq \phi^-$. Es decir
+  $$\int\limits_Ef^-\dd x\leq\int\limits_E\phi^-\dd x<\infty$$
+   y por lo tanto $\int\limits_Ef \dd x$ existe. Ahora si $\int\limits_Ef^+=\infty$ (es decir, $f\not\in L(E)$), entonces $f-\phi\not\in L(E)$ y 
+   $$\int\limits_E(f-\phi)\dd x=\int\limits_E(f-\phi)^+\dd x=\infty.$$
+\end{frame}
+
+\begin{frame}{El Resultado}
+  \begin{Prop}\label{prop:restasInt}
+Si $\phi\leq f$ c.p.d.
+ y $\phi\in L(E)$, entonces 
+ $$\int\limits_E(f-\phi)\dd x=\int\limits_Ef\dd x-\int\limits_E\phi\dd x.$$
+  \end{Prop}
+\end{frame}
+
+\subsection{¿Y qué hay de Productos?}
+
+\begin{frame}{Productos}
+  Las condiciones para que $fg$ sea integrable son más complejas. Por ejemplo si $f\in L(E)$ y $|g(x)|\leq M$ para $x\in E$, entonces $fg\in L(E)$.
+\end{frame}
+
+\section{Los Teoremas de Convergencia}
+
+\begin{frame}{Convergencia Monótona}
+  \begin{Th}\label{th:TCM}
+    Sea $\set{f_k}\suck$ una sucesión de funciones medibles en $E$, tales que $\lim_{k\to\infty}f_k=f$ c.p.d. en $E$.
+    \begin{enumerate}[(i)]
+      \item Si existe $\phi\in L(E)$ tal que $\phi\leq f_k\leq f_{k+1}$ c.p.d. para $k\geq 1$, entonces $\lim_{k\to\infty}\int\limits_Ef_k\dd x=\int\limits_Ef\dd x$.
+      \item Si existe $\phi\in L(E)$ tal que $f_{k+1}\leq f_k\leq \phi$ c.p.d. para $k\geq 1$, entonces $\lim_{k\to\infty}\int\limits_Ef_k\dd x=\int\limits_Ef\dd x$.
+    \end{enumerate}
+  \end{Th}
+\end{frame}
+
+\begin{frame}{Prueba TCM}
+  Si se cumple la primera condición entonces $f_k-\phi\geq 0$ y $f_{k+1}-\phi\geq f_{k}-\phi$ para $k\geq 1$. Entonces 
+  $$\lim_{k\to\infty}\int\limits_E(f_k-\phi)\dd x=\int\limits_E(f-\phi)\dd x.$$
+  Es decir 
+  $$\lim_{k\to\infty}\int\limits_Ef_k\dd x-\int\limits_E\phi\dd x=\int\limits_Ef\dd x-\int\limits_E\phi\dd x.$$
+\end{frame}
+
+\begin{frame}{Fatou}
+  \begin{Th}\label{th:fatou}
+    Sea $\set{f_k}\suck$ una sucesión de funciones medibles en $E$. Si existe $\phi\in L(E)$ tal que $f_k\geq\phi$ c.p.d. en $E$ para $k\geq 1$, entonces 
+    $$\int\limits_E\left(\liminf_{k\to\infty}f_k\right)\dd x\leq \liminf_{k\to\infty}\int\limits_Ef_k\dd x.$$
+  \end{Th}
+\end{frame}
+
+\begin{frame}{Convergencia Dominada}
+  \begin{Th}\label{th:DCT}
+    Sea $\set{f_k}\suck$ una sucesión de funciones medibles en $E$ tales que $\lim_{k\to\infty}f_k=f$ en $E$. Si existe $\phi\in L(E)$ tal que $|f_k|\leq \phi$ c.p.d. en $E$ para $k\geq 1$, entonces 
+    $$\lim_{k\to\infty}\int\limits_Ef_k\dd x=\int\limits_Ef\dd x.$$
+  \end{Th}
+La prueba se basa en considerar $\phi+f_k$ y $\phi-f_k$.
+\end{frame}
+
+\begin{frame}{Convergencia Uniforme}
+  \begin{Th}\label{th:UCT}
+    Sea $f_k\in L(E)$, $k\geq 1$. Si $\lim_{k\to\infty}f_k=f$ uniformemente en $E$ con $m(E)<\infty$, entonces $f\in L(E)$ y 
+    $$\lim_{k\to\infty}\int\limits_Ef_k\dd x=\int\limits_Ef\dd x.$$
+  \end{Th}
+  La prueba de este teorema es un \alert{ejercicio}.
+  \begin{Rmk}
+Note que $f_k(x)=\frac{1}{k}$ converge a cero en $\bR$ pero $\int\limits_\bR f_k\dd x=\infty$.
+  \end{Rmk}
+\end{frame}
+
 \section*{Resumen}
 
 \subsection*{Qu\'e vimos hoy}
@@ -274,6 +413,9 @@ Sea $f:E\to\ov{\bR}$ y $g:E\to\ov\bR$ medibles tales que $\int\limits_E f\dd x$ 
   % Keep the summary *very short*.
   \begin{itemize}
   \item El teorema \ref{th:propsInt} que resumen las propiedades de las integrales en general.
+  \item El teorema \ref{th:linealidad} sobre la linealidad de la integral en general.
+  \item El caso de las restas \ref{prop:restasInt}.
+  \item Los teoremas de convergencia: \ref{th:TCM} (Convergencia Monótona), \ref{th:fatou} (Fatou), \ref{th:DCT} (Convergencia Dominada) y \ref{th:UCT} (Convergencia Uniforme).
   \end{itemize}
   
 \end{frame}
@@ -285,7 +427,8 @@ Sea $f:E\to\ov{\bR}$ y $g:E\to\ov\bR$ medibles tales que $\int\limits_E f\dd x$ 
     \item
       Lista 21
       \begin{itemize}
-      \item 
+      \item Concluir la prueba del teorema \ref{th:linealidad} es un ejercicio.
+      \item Probar el teorema \ref{th:UCT} de convergencia uniforme es un ejercicio.
       \end{itemize}
     \end{itemize}
   
@@ -333,6 +476,7 @@ Sea $f:E\to\ov{\bR}$ y $g:E\to\ov\bR$ medibles tales que $\int\limits_E f\dd x$ 
 %% 18 - 1:03:50.64
 %% 19 - 51:57.37
 %% 20 - 30:52.52
+%% 21 - 1:06:30.84
 \end{document}
 
 
