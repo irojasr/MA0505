@@ -1,0 +1,389 @@
+\documentclass[utf8]{beamer}
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  \setbeamercovered{transparent}
+}
+
+
+\usepackage{amsfonts,mathtools,amssymb}
+\usepackage[spanish]{babel}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage[shortlabels]{enumitem}
+\usepackage{tikz}
+\usepackage{physics}
+
+\title[MA0505]{MA0505 - An\'alisis I}
+\subtitle{Lecci\'on XXII: Riemann y Lebesgue IV}
+
+\author{Pedro M\'endez\inst{1}}
+
+\institute[Universidad de Costa Rica] % (optional, but mostly needed)
+{
+  \inst{1}%
+  Departmento de Matem\'atica Pura y Ciencias Actuariales\\
+  Universidad de Costa Rica
+  }
+
+\date[I-2021] {Semestre I, 2021}
+
+%%%%%%%%% === Theorems and suchlike === %%%%%%%%%%%%%%
+
+\theoremstyle{plain}
+\newtheorem{Th}{Teorema}               %%% Theorem 1.1.1
+\newtheorem{Tmon}{Teoremón}
+\newtheorem{Prop}{Proposición}         %%% Proposition 1.1.2
+\newtheorem{Lem}{Lema}                 %%% Lemma 3
+\newtheorem{Cor}{Corolario}            %%% Corollary 4
+
+\theoremstyle{definition}
+\newtheorem{Def}{Definición}           %%% Definition 5
+\newtheorem{Ex}{Ejemplo}               %%% Example 6
+\newtheorem{Ej}{Ejercicio}             %%% Ejercicio 7
+\newtheorem{Hec}[Th]{Hecho}            %%% Hecho 1.1.8
+
+\theoremstyle{remark}
+\newtheorem{Rmk}[Th]{Observación}      %%%Remark 1.1.9
+\newtheorem*{nonum-Rmk}{Observación}         %%% No number Fact
+\newtheorem*{Notn}{Notaci\'on}        %% Notaciones
+\newtheorem*{Warn}{Advertencia}       %% Advertencias
+
+\numberwithin{equation}{section}
+
+%% Accomodations 
+
+\makeatletter
+\def\moverlay{\mathpalette\mov@rlay}
+\def\mov@rlay#1#2{\leavevmode\vtop{%
+   \baselineskip\z@skip \lineskiplimit-\maxdimen
+   \ialign{\hfil$\m@th#1##$\hfil\cr#2\crcr}}}
+\newcommand{\charfusion}[3][\mathord]{
+    #1{\ifx#1\mathop\vphantom{#2}\fi
+        \mathpalette\mov@rlay{#2\cr#3}
+      }
+    \ifx#1\mathop\expandafter\displaylimits\fi}
+\makeatother
+
+% Greek letters:
+
+\newcommand{\al}{\alpha}                %% short for  \alpha
+\newcommand{\bt}{\beta}                 %% short for  \beta
+\newcommand{\Dl}{\Delta}                %% short for  \Delta
+\newcommand{\dl}{\delta}                %% short for  \delta
+\newcommand{\eps}{\varepsilon}          %% short for  \varepsilon
+\newcommand{\Ga}{\Gamma}                %% short for  \Gamma
+\newcommand{\ga}{\gamma}                %% short for  \gamma
+\newcommand{\La}{\Lambda}               %% short for  \Lambda
+\newcommand{\la}{\lambda}               %% short for  \lambda
+\newcommand{\kp}{\kappa}                %% short for  \kappa
+\newcommand{\Om}{\Omega}                %% short for  \Omega
+\newcommand{\om}{\omega}                %% short for  \omega
+\newcommand{\Sg}{\Sigma}                %% short for  \Sigma
+\newcommand{\sg}{\sigma}                %% short for  \sigma
+\newcommand{\te}{\theta}                %% short for  \theta
+\newcommand{\vf}{\varphi}               %% short for  \varphi
+\newcommand{\ze}{\zeta}                 %% short for  \zeta
+
+%Boldface letters
+
+\newcommand{\bC}{\mathbb{C}}    %%% números complejos
+\newcommand{\bN}{\mathbb{N}}    %%% números naturales
+\newcommand{\bP}{\mathbb{P}}        %% números enteros positivos
+\newcommand{\bQ}{\mathbb{Q}}    %%% números racionales
+\newcommand{\bR}{\mathbb{R}}    %%% números reales
+\newcommand{\bS}{\mathbb{S}}    %%% esfera
+\newcommand{\bZ}{\mathbb{Z}}    %%% números enteros
+
+%Script letters:
+
+\newcommand{\cA}{\mathcal{A}}           %% formas diferenciales
+\newcommand{\cB}{\mathcal{B}}           %% una base vectorial
+\newcommand{\cC}{\mathcal{C}}           %% otra base vectorial
+\newcommand{\cF}{\mathcal{F}}           %% espacio de Fock
+\newcommand{\cL}{\mathcal{L}}           %% operadores lineales
+\newcommand{\cM}{\mathcal{M}}           %% multiplicadores
+\newcommand{\cN}{\mathcal{N}}           %% funciones nulas
+\newcommand{\cP}{\mathcal{P}}           %% una particion
+\newcommand{\cR}{\mathcal{R}}           %% funciones representativas
+\newcommand{\cS}{\mathcal{S}}           %% funciones de Schwartz
+
+
+%Brackets
+
+\newcommand{\bonj}[1]{\left\lbrack#1\right\rbrack}
+\newcommand{\obonj}[1]{\left\rbrack#1\right\lbrack}
+\newcommand{\rbonj}[1]{\left\rbrack#1\right\rbrack}
+\newcommand{\lbonj}[1]{\left\lbrack#1\right\lbrack}
+\newcommand{\snm}[1]{\|#1\|}           %small norma
+\newcommand{\nm}[1]{\left\|#1\right\|} %norma pegadita
+\newcommand{\pnm}[1]{\biggl|\biggl|#1\biggr|\biggr|}
+\newcommand{\set}[1]{\{\,#1\,\}}    %% set notation
+\newcommand{\floor}[1]{\lfloor#1\rfloor} %% mayor entero <= x
+\newcommand{\Set}[1]{\biggl\{\,#1\,\biggr\}} %% set notation (large)
+\newcommand\quot[2]{
+        \mathchoice
+            {% \displaystyle
+                \text{\raise1ex\hbox{$#1$}\Big/\lower1ex\hbox{$#2$}}%
+            }
+            {% \textstyle
+                {^{ #1}/_{ #2}}
+            }
+            {% \scriptstyle
+                {^{ #1}/_{ #2}}
+            }
+            {% \scriptscriptstyle
+                {^{ #1}/_{ #2}}
+            }
+    }
+\newcommand*\squot[2]{{^{ #1}/_{ #2}}}%%%small quotient
+
+%Symbols 
+
+\newcommand{\x}{\times}
+\renewcommand{\geq}{\geqslant}          %% mayor o igual (variante)
+\newcommand{\hookto}{\hookrightarrow}     %% inclusion arrow
+\newcommand{\isom}{\simeq}              %% isomorfismo
+\renewcommand{\l}{\ell}                   %% ele cursiva
+\renewcommand{\leq}{\leqslant}          %% menor o igual (variante)
+\newcommand{\less}{\setminus}           %% set difference
+\newcommand{\To}{\Rightarrow}
+\newcommand{\ov}{\overline}
+\newcommand{\un}{\underline}
+\newcommand{\del}{\partial}
+\newcommand{\ind}{\mathbf{1}}       %%%indicator function
+
+%%% Small fractions in displays:
+
+\newcommand{\half}{{\mathchoice{\nhalf}{\thalf}{\shalf}{\shalf}}} %%display text script script^2
+\newcommand{\happi}{{\tfrac{\pi}{2}}} %% small fraction  \pi/2
+\newcommand{\quarter}{\tfrac{1}{4}} %% small fraction  1/4
+\newcommand{\nhalf}{\frac{1}{2}}
+\newcommand{\shalf}{{\scriptstyle\frac{1}{2}}} %% tiny fraction 1/2
+\newcommand{\thalf}{{\tfrac{1}{2}}} %% small fraction  1/2
+\newcommand{\third}{\tfrac{1}{3}}   %% small fraction  1/3 %Hay que renew porque mathabx toma second y third como x'' y x''' por ejemplo
+
+\newcommand{\ihalf}{{\tfrac{i}{2}}} %% small fraction  i/2
+
+\newcommand{\suci}{_{i=1}^\infty} %% diminutivo
+\newcommand{\sucj}{_{j=1}^\infty} %% diminutivo
+\newcommand{\suck}{_{k=1}^\infty} %% diminutivo
+\newcommand{\sucl}{_{\l=1}^\infty} %% diminutivo
+\newcommand{\sucm}{_{m=1}^\infty} %% diminutivo
+\newcommand{\sucn}{_{n=1}^\infty} %% diminutivo
+
+\newcommand*{\Cdot}{{\raisebox{-0.25ex}{\scalebox{1.5}{$\cdot$}}}}      %% cdot más grande
+\renewcommand{\.}{\Cdot}                %% producto escalar
+\newcommand{\cupdot}{\charfusion[\mathbin]{\cup}{\.}}
+\newcommand{\bigcupdot}{\charfusion[\mathbin]{\bigcup}{\.}}
+\DeclareMathOperator{\Var}{Var}     %%%variance
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Agenda}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+
+\section{La Relación entre las Integrales}
+
+\subsection{Recordatorio de Particiones}
+\begin{frame}{Particiones}
+Sea $f:[a,b]\to\bR$ acotada y 
+$$\Ga_k=\set{a=x_1^k<x_2^k<\dots<x_{m_k}^k=b}.$$
+Consideremos 
+\begin{enumerate}[a)]
+  \item Si $m_i=\inf_{\bonj{x_{i-1},x_i}}f(x)$, entonces 
+  $$\l_k(x)=\sum_{i=1}^{n-1}m_i\ind_{\lbonj{x_{i-1},x_i}}+m_n\ind_{\bonj{x_{n-1},x_n}}.$$
+  \item Si $M_i=\sup_{\bonj{x_{i-1},x_i}}f(x)$, entonces
+  $$u_k(x)=\sum_{i=1}^{n-1}M_i\ind_{\lbonj{x_{i-1},x_i}}+M_n\ind_{\bonj{x_{n-1},x_n}}.$$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+  Note que 
+  $$\l_k(x)\leq f(x)\leq u_k(x).$$
+  Recordemos que si $\Ga_k\subseteq\Ga_{k+1}$, entonces 
+  \begin{enumerate}[(i)]
+    \item $\l_k\leq\l_{k+1}$.
+    \item $u_k\geq u_{k+1}$.
+  \end{enumerate}
+  Si $|f(x)|\leq M$ para $x\in[a,b]$, entonces $|\l_k|,|u_k|\leq M$ en $[a,b]$. Y también
+  $$
+  \begin{cases}\displaystyle
+    \l=\lim_{k\to\infty}\l_k\\
+    \displaystyle u=\lim_{k\to\infty}u_k
+  \end{cases}
+  \overbrace{\To}^{\text{(TCD)}}
+  \begin{cases}\displaystyle
+    \lim_{k\to\infty}\int\limits_{\bonj{a,b}}\l_k(x)\dd x=\int\limits_{\bonj{a,b}}\l(x)\dd x.\\
+    \displaystyle\lim_{k\to\infty}\int\limits_{\bonj{a,b}}u_k(x)\dd x=\int\limits_{\bonj{a,b}}u(x)\dd x.
+  \end{cases}
+  $$
+\end{frame}
+
+\begin{frame}
+  Luego tenemos que
+  \begin{align*}
+    &\int\limits_{\bonj{a,b}}u(x)\dd x=\int\limits_{\bonj{a,b}}\l(x)\dd x\\
+    \iff&\int\limits_{\bonj{a,b}}(u(x)-\l(x))\dd x=0\\
+    \iff&u=\l\ \text{c.p.d.}
+  \end{align*}
+  Como 
+  $$\int\limits_{\bonj{a,b}}\l_k(x)\dd x=\sum_{i=1}^{n}m_i(x_i-x_{i-1}),\ \int\limits_{\bonj{a,b}}u_k(x)\dd x=\sum_{i=1}^{n}M_i(x_i-x_{i-1}),$$
+  entonces concluimos que $u=\l$ c.p.d. si y sólo si las sumas inferiores y superiores convergen al mismo punto.
+\end{frame}
+
+\subsection{El Teorema Clave}
+\begin{frame}
+  \begin{Th}\label{th:riemannIffContAE}
+    Sea $f:[a,b]\to\bR$ acotada. Entonces son equivalentes
+    \begin{enumerate}[(i)]
+      \item $f$ es Riemann-integrable.
+      \item $f$ es continua c.p.d.
+    \end{enumerate}
+  \end{Th}
+  Comenzamos asumiendo que $f$ es Riemann-integrable. Tomemos 
+  $$Z=\set{\l\neq f}\cap\set{\l\neq u}\cap\set{f\neq u}\cap\bigcup\suck\Ga_k.$$
+  Como $f$ es Riemann-integrable, entonces $m(Z)=0$. 
+\end{frame}
+
+\begin{frame}{Continuamos la Prueba}
+  Si fuese que $x\not\in Z$, entonces 
+  $$u(x)=\l(x)=f(x),\ x\not\in\Ga_k,\ k\geq 1.$$
+  Supongamos a manera de contradicción que $f$ no es continua en $x$. Entonces existe un $\eps>0$ tal que para $\dl>0$, existe $x_\dl$ tal que 
+  $$|x_\dl-x|<\dl,\ \text{y}\ |f(x)-f(x_\dl)|>\eps.$$
+\end{frame}
+
+  \begin{frame}{Continuamos la Prueba}
+  Dado $k$, existen $x_i^k,x_{i+1}^k$ tales que $x\in\obonj{x_i^k,x_{i+1}^k}$. Tomemos $\dl_0$ tal que 
+  $$\obonj{x-\dl,x+\dl}\subseteq\obonj{x_i^k,x_{i+1}^k},\ \dl\leq \dl_0.$$
+  Entonces 
+  \begin{align*}
+    x_\dl\in\obonj{x_i^k,x_{i+1}^k}&\To \eps\leq M_i-m_i\\
+    &\To u_k(x)-\l_k(x)>\eps, \text{para todo }k.
+  \end{align*}
+\end{frame}
+
+\begin{frame}{La Otra Dirección}
+  Asumamos que $f$ es continua c.p.d. Sea entonces 
+  $$Z=\set{x:\ f(x)\ \text{es discontinua en }x}$$
+  y tomemos $x\in Z\cup\set{a,b}$. Dado $\eps>0$, existe $\dl>0$ tal que si $y\in\obonj{a,b}$, entonces
+  $$|x-y|<\dl\To|f(x)-f(y)|<\frac{\eps}{2}.$$
+\end{frame}
+
+\begin{frame}{Continuamos la Prueba}
+  Tome ahora $|\Ga_k|<\frac{\dl}{2}$. Sea $i$ tal que $x\in \lbonj{x_{i-1},x_i}$ para $1\leq i\leq n$. Como $\lbonj{x_{i-1},x_i}\subseteq\obonj{x-\dl,x+\dl}$ tenemos que 
+  $$f(x)-\frac{\eps}{2}\leq f(x)<f(x)+\frac{\eps}{2},\ y\in \lbonj{x_{i-1},x_i}.$$
+  Luego 
+  $$f(x)-\frac{\eps}{2}<m_i\leq M_i\leq f(x)+\frac{\eps}{2}$$
+  y así concluimos que si $|\Ga_k|\xrightarrow[k\to\infty]{}0$, existe $k_0$ tal que 
+  $$k\geq k_0\To |u_k(x)-f(x)|,|\l_k(x)-f(x)|<\frac{\eps}{2}.$$
+\end{frame}
+
+\begin{frame}{Concluimos la Prueba}
+  Lo anterior nos dice que 
+  $$\l_k(x)\xrightarrow[k\to\infty]{}f(x),\ u_k(x)\xrightarrow[k\to\infty]{}f(x).$$
+  Por el T.C.D. se cumple que 
+  \begin{align*}
+    &\lim_{k\to\infty}\int\limits_{\bonj{a,b}}\l_k(x)\dd x=\int\limits_{\bonj{a,b}}f(x)\dd x.
+    &\lim_{k\to\infty}\int\limits_{\bonj{a,b}}u_k(x)\dd x=\int\limits_{\bonj{a,b}}f(x)\dd x.
+  \end{align*}
+  En conclusión las integrales de Riemann y Lebesgue concuerdan.
+\end{frame}
+\section*{Resumen}
+
+\subsection*{Qu\'e vimos hoy}
+
+\begin{frame}{Resumen}
+
+  % Keep the summary *very short*.
+  \begin{itemize}
+  \item El teorema \ref{th:riemannIffContAE} que nos da la equivalencia entre integrabilidad de Riemann y continuidad casi por doquier.
+  \end{itemize}
+  
+\end{frame}
+
+\subsection*{Ejercicios a trabajar}
+\begin{frame}{Ejercicios}
+    
+  \begin{itemize}
+    \item
+      Lista 22
+      \begin{itemize}
+      \item No hay ejercicios para hoy.
+      \end{itemize}
+    \end{itemize}
+  
+\end{frame}
+
+
+% All of the following is optional and typically not needed. 
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{Lectura adicional}
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{Lecturas adicionales}
+    
+  \begin{thebibliography}{10}
+    
+  \beamertemplatebookbibitems
+  % Start with overview books.
+
+  \bibitem{CambroNotas}
+    S.Cambronero.
+    \newblock {\em Notas MA0505}.
+    \newblock 20XX.
+
+    \bibitem{NachoNotas}
+    I.Rojas
+    \newblock {\em Notas MA0505}.
+    \newblock 2018.
+ 
+  \end{thebibliography}
+  
+\end{frame}
+%% 6 - 2:10:52 48
+%% 7 - 1:17:44 44
+%% 8 - 27:37 69
+%% 9 - 1:07:47 86 + 59:38 40 approx 2 h c 7 min
+%% 10 - 2:22:39 63
+%% 11 - Approx 2h c 2 min
+%% 12 - Motiv y figs 1:00:17.53, en tot: 2:22:23.43
+%% 13 - 1:18:03.51
+%% 14 - 2:05:13.72
+%% 15 - 1:13:41.49
+%% 16 - 46:11.67
+%% 17 - 44:18.85
+%% 18 - 1:03:50.64
+%% 19 - 51:57.37
+%% 20 - 30:52.52
+%% 21 - 1:06:30.84
+%% 22 - 26:47.73
+\end{document}
+
+
